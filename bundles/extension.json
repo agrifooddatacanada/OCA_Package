@@ -1,0 +1,37 @@
+{
+  "separator_ov": {
+    "type": "separator",
+    "dataset_separator": {
+      "delimiter": ",",
+      "escape": "\\"
+    },
+    "attribute_separators": {
+      "d": {
+        "delimiter": ",",
+        "escape": "\\"
+      },
+      "i": {
+        "delimiter": ";",
+        "escape": ""
+      }
+    }
+  },
+  "examples_ov": [
+    {
+      "type": "example",
+      "language": "eng",
+      "attribute_examples": {
+        "d": ["come", "go"],
+        "i": ["me", "you"]
+      }
+    },
+    {
+      "type": "example",
+      "language": "fra",
+      "attribute_examples": {
+        "d": ["va", "aller"],
+        "i": ["toi", "moi"]
+      }
+    }
+  ]
+}

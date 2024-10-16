@@ -1,0 +1,65 @@
+{
+  "name": "oca_package",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "dev": "node dist/index.js",
+    "test": "jest",
+    "lint": "eslint . -c eslint.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agrifooddatacanada/OCA_Package.git"
+  },
+  "author": "Steven Mugisha Mizero <smugisha@uoguelph.ca>",
+  "license": "ISC",
+  "description": "The wrapper of OCA bundle to generate OCA Package at ADC",
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.7.3",
+    "eslint": "^9.11.1",
+    "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^@src/(.*)$": "<rootDir>/src/$1",
+      "^oca\\.js$": "<rootDir>/node_modules/oca.js",
+      "^(.*)\\.js$": "$1"
+    },
+    "transform": {
+      "^.+\\.tsx?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.json"
+        }
+      ]
+    },
+    "testMatch": [
+      "**/tests/**/*.test.ts"
+    ]
+  },
+  "dependencies": {
+    "oca.js": "^0.5.4",
+    "saidify": "^0.2.2"
+  }
+}
