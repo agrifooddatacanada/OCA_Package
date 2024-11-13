@@ -1,8 +1,9 @@
 import { Overlay, OverlayType } from '../overlay.js';
-import { saidify } from 'saidify';
-import { OcaBundleCaptureBase } from '../../../oca_package.js';
+import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
 
-export interface SeparatorOverlay {
+import { saidify } from 'saidify';
+
+export interface ISeparatorOverlay {
   said?: string;
   type: OverlayType.Separator;
   capture_base: OcaBundleCaptureBase;
@@ -23,7 +24,7 @@ export interface SeparatorsInput {
   };
 }
 
-class Separator implements Overlay, SeparatorOverlay {
+class Separator implements Overlay, ISeparatorOverlay {
   said?: string;
   type: OverlayType.Separator = OverlayType.Separator;
   capture_base: OcaBundleCaptureBase;
@@ -86,6 +87,7 @@ class Separator implements Overlay, SeparatorOverlay {
     return this.saidifying();
   }
 
+  // TODO: find out if it neccessary to implement this methood for all overlays
   static deser(separator_ov_json_string: string): Separator {
     const separator_ov_json = JSON.parse(separator_ov_json_string);
     return new Separator(separator_ov_json, separator_ov_json.capture_base);

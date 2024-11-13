@@ -1,6 +1,6 @@
 import { Overlay, OverlayType } from '../overlay.js';
 import { saidify } from 'saidify';
-import { OcaBundleCaptureBase } from '../../../oca_package.js';
+import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
 
 export interface IExampleOverlay {
   said?: string;

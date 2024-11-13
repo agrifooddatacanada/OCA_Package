@@ -42,7 +42,7 @@
       "node"
     ],
     "moduleNameMapper": {
-      "^@src/(.*)$": "<rootDir>/src/$1",
+      "^@oca_package/(.*)$": "<rootDir>/src/$1",
       "^oca\\.js$": "<rootDir>/node_modules/oca.js",
       "^(.*)\\.js$": "$1"
     },
@@ -50,7 +50,8 @@
       "^.+\\.tsx?$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.json"
+          "tsconfig": "tsconfig.json",
+          "useESM": true
         }
       ]
     },
@@ -59,6 +60,7 @@
     ]
   },
   "dependencies": {
+    "canonicalize": "^2.0.0",
     "oca.js": "^0.5.4",
     "saidify": "^0.2.2"
   }

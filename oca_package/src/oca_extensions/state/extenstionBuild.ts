@@ -1,74 +1,78 @@
-// import Attribute from './attribute.js';
-// import Separator from './overlays/separator.js';
-// // import { NullOverlayError, InvalidOverlayError } from '../errors.js';
-// import { OverlayType } from '../state/overlay.js';
+// TODO: Build the extention container for the attribute state
 
-// type ExtensionOverlayType = Separator | null;
+/*
+import Attribute from './attribute.js';
+import Separator from './overlays/separator.js';
+// import { NullOverlayError, InvalidOverlayError } from '../errors.js';
+import { OverlayType } from '../state/overlay.js';
 
-// interface IExtensionObject {
-//   separators: OverlayType.Separator | null;
-// }
+type ExtensionOverlayType = Separator | null;
 
-// interface IExtensions {
-//   extensions: ExtensionOverlayType[];
-// }
+interface IExtensionObject {
+  separators: OverlayType.Separator | null;
+}
 
-// class Extensions implements IExtensions {
-//   #extensions: ExtensionOverlayType[];
+interface IExtensions {
+  extensions: ExtensionOverlayType[];
+}
 
-//   constructor(extension_obj: IExtensionObject[]) {
-//     this.#extensions = this.buildExtensions(extension_obj);
-//   }
+class Extensions implements IExtensions {
+  #extensions: ExtensionOverlayType[];
 
-//   private buildExtensions(extension_obj: IExtensionObject[]): ExtensionOverlayType[] {
-//     const extensions: ExtensionOverlayType[] = [];
+  constructor(extension_obj: IExtensionObject[]) {
+    this.#extensions = this.buildExtensions(extension_obj);
+  }
 
-//     for (const ext of extension_obj) {
-//       if (ext.separators) {
-//         extensions.push(new Separator(ext.separators));
-//       } else {
-//         extensions.push(null);
-//       }
-//     }
+  private buildExtensions(extension_obj: IExtensionObject[]): ExtensionOverlayType[] {
+    const extensions: ExtensionOverlayType[] = [];
 
-//     return extensions;
-//   }
+    for (const ext of extension_obj) {
+      if (ext.separators) {
+        extensions.push(new Separator(ext.separators));
+      } else {
+        extensions.push(null);
+      }
+    }
 
-//   public get extensions(): ExtensionOverlayType[] {
-//     // Implementing the required property
-//     return this.#extensions;
-//   }
+    return extensions;
+  }
 
-//   public get extension(): ExtensionOverlayType[] {
-//     return this.#extensions;
-//   }
-// }
+  public get extensions(): ExtensionOverlayType[] {
+    // Implementing the required property
+    return this.#extensions;
+  }
 
-// interface IExtensionContainer {
-//   attributes: { [key: string]: Attribute };
-// }
+  public get extension(): ExtensionOverlayType[] {
+    return this.#extensions;
+  }
+}
 
-// class ExtenstionContainer extends Extensions implements IExtensionContainer {
-//   #attributes: { [key: string]: Attribute };
+interface IExtensionContainer {
+  attributes: { [key: string]: Attribute };
+}
 
-//   constructor() {
-//     super([]);
-//     this.#attributes = {} as { [key: string]: Attribute };
-//   }
+class ExtenstionContainer extends Extensions implements IExtensionContainer {
+  #attributes: { [key: string]: Attribute };
 
-//   public get attributes(): { [key: string]: Attribute } {
-//     return this.#attributes;
-//   }
+  constructor() {
+    super([]);
+    this.#attributes = {} as { [key: string]: Attribute };
+  }
 
-//   public addAttribute(attribute: Attribute): void {
-//     this.#attributes[attribute.name] = attribute;
-//   }
+  public get attributes(): { [key: string]: Attribute } {
+    return this.#attributes;
+  }
 
-//   //   public generate_extension(): string {}
+  public addAttribute(attribute: Attribute): void {
+    this.#attributes[attribute.name] = attribute;
+  }
 
-//   public generate_extension_overlays(): Extensions {
-//     return new Extensions([]);
-//   }
-// }
+  //   public generate_extension(): string {}
 
-// export default ExtenstionContainer;
+  public generate_extension_overlays(): Extensions {
+    return new Extensions([]);
+  }
+}
+
+export default ExtenstionContainer;
+*/
