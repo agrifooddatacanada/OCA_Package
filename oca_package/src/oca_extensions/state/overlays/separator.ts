@@ -1,28 +1,12 @@
-import { Overlay, OverlayType } from '../overlay.js';
 import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
-
+import {
+  ISeparatorOverlay,
+  SeparatorsFields,
+  SeparatorsInput,
+  Overlay,
+  OverlayType,
+} from '@oca_package/types/types.js';
 import { saidify } from 'saidify';
-
-export interface ISeparatorOverlay {
-  said?: string;
-  type: OverlayType.Separator;
-  capture_base: OcaBundleCaptureBase;
-  dataset_separator?: SeparatorsInput['dataset_separator'];
-  attribute_separators?: SeparatorsInput['attribute_separators'];
-}
-
-export interface SeparatorsFields {
-  delimiter: string;
-  escape: string;
-}
-
-export interface SeparatorsInput {
-  type: string;
-  dataset_separator?: SeparatorsFields;
-  attribute_separators?: {
-    [key: string]: SeparatorsFields;
-  };
-}
 
 class Separator implements Overlay, ISeparatorOverlay {
   said?: string;

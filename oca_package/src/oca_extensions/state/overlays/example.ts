@@ -1,22 +1,12 @@
-import { Overlay, OverlayType } from '../overlay.js';
+import {
+  OcaBundleCaptureBase,
+  IExampleOverlay,
+  ExamplesFields,
+  ExampleInput,
+  OverlayType,
+  Overlay,
+} from '@oca_package/types/types.js';
 import { saidify } from 'saidify';
-import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
-
-export interface IExampleOverlay {
-  said?: string;
-  language: string;
-  type: OverlayType.Example;
-  capture_base: OcaBundleCaptureBase;
-  attribute_examples?: ExamplesFields<string>;
-}
-
-type ExamplesFields<T> = { [key: string]: T[] };
-
-export type ExampleInput = {
-  type: string;
-  language: string;
-  attribute_examples: ExamplesFields<string>;
-};
 
 export class ExampleOverlay implements Overlay, IExampleOverlay {
   said?: string;

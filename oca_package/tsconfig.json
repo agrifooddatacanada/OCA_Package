@@ -14,6 +14,6 @@
       "@oca_package/*": ["src/*"]
     }
   },
-  "include": ["src/**/*", "tests/**/*.ts", "tests/extensions.test.ts", "utils/canonical.ts"],
+  "include": ["index.ts", "src/**/*", "tests/**/*.ts", "tests/extensions.test.ts", "utils/canonical.ts"],
   "exclude": ["node_modules", "dist"]
 }

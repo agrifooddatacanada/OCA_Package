@@ -1,10 +1,6 @@
 import Extensions from './oca_extensions/extensions.js';
+import { IOcaPackage } from './types/types.js';
 import { saidify } from 'saidify';
-
-interface IOcaPackage {
-  oca_bundle: string;
-  extensions: Extensions;
-}
 
 export interface OcaBundleCaptureBase {
   d: string;

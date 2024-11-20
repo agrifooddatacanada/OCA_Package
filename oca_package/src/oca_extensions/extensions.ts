@@ -1,12 +1,8 @@
-import Separator, { SeparatorsInput } from './state/overlays/separator.js';
-import ExampleOverlaysContainer, { ExampleInput } from './state/overlays/example.js';
-import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
-import { OCABox } from 'oca.js';
+import Separator from './state/overlays/separator.js';
+import ExampleOverlaysContainer from './state/overlays/example.js';
+import { OcaBundleCaptureBase, IExtensionsInputJSON, ExampleInput, SeparatorsInput } from '@oca_package/types/types.js';
 
-interface IExtensionsInputJSON {
-  separator_ov: SeparatorsInput;
-  examples_ov: ExampleInput[];
-}
+import { OCABox } from 'oca.js';
 
 class Extensions {
   #serialized_extensions: string = '';
