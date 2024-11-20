@@ -1,12 +1,8 @@
-import Separator, { SeparatorsInput } from './state/overlays/separator.js';
-import ExampleOverlaysContainer, { ExampleInput } from './state/overlays/example.js';
-import { OcaBundleCaptureBase } from '../oca_package.js';
-import { OCABox } from 'oca.js';
+import Separator from './state/overlays/separator.js';
+import ExampleOverlaysContainer from './state/overlays/example.js';
+import { OcaBundleCaptureBase, IExtensionsInputJSON, ExampleInput, SeparatorsInput } from '@oca_package/types/types.js';
 
-interface IExtensionsInputJSON {
-  separator_ov: SeparatorsInput;
-  examples_ov: ExampleInput[];
-}
+import { OCABox } from 'oca.js';
 
 class Extensions {
   #serialized_extensions: string = '';
@@ -15,7 +11,7 @@ class Extensions {
 
   constructor(extensions_obj: IExtensionsInputJSON, oca_bundle: string) {
     if (!extensions_obj || !oca_bundle) {
-      throw new Error('Invalid constructor arguments');
+      throw new Error('Extensions object and OCA bundle are required');
     }
     this.extension_obj = extensions_obj;
     this.oca_bundle = oca_bundle;
@@ -25,20 +21,34 @@ class Extensions {
     return this.#serialized_extensions;
   }
 
-  public get_capture_base_from_oca_bundle(): OcaBundleCaptureBase {
+  get_capture_base_from_oca_bundle(): OcaBundleCaptureBase {
     try {
+      if (typeof this.oca_bundle !== 'string') {
+        throw new Error('OCA bundle must be a string');
+      }
+
       const parsedBundle = JSON.parse(this.oca_bundle);
-      if (!parsedBundle.bundle) {
+
+      if (!parsedBundle || typeof parsedBundle !== 'object') {
         throw new Error('Invalid OCA bundle format');
       }
+
+      if (!parsedBundle.bundle) {
+        throw new Error('OCA bundle does not contain a bundle property');
+      }
+
       const oca_box = new OCABox().load(parsedBundle.bundle);
+
       return oca_box.generateBundle().capture_base;
     } catch (error) {
+      console.error('Error in get_capture_base_from_oca_bundle:', error);
       throw new Error(`Failed to get capture base from OCA bundle: ${error}`);
     }
   }
 
   generate_extensions(): string {
+    // TODO: define the canonical rules for the extension overlays
+
     const extension_overlays: { [key: string]: string } = {};
 
     try {
@@ -64,6 +74,7 @@ class Extensions {
         extension_overlays['separator'] = separatorOverlays;
       }
 
+      // deserialize individual overlay to avoid escaping characters in the final JSON
       const deser_obj: { [key: string]: object } = {};
 
       for (const key of Object.keys(extension_overlays)) {

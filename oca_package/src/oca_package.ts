@@ -1,17 +1,13 @@
 import Extensions from './oca_extensions/extensions.js';
+import { IOcaPackage } from './types/types.js';
 import { saidify } from 'saidify';
-
-interface IOcaPackage {
-  oca_bundle: string;
-  extensions: Extensions;
-}
 
 export interface OcaBundleCaptureBase {
   d: string;
   type: string;
   classification: string;
   attributes: { [key: string]: string };
-  flagged_attributes: unknown[];
+  flagged_attributes: string[];
 }
 
 class OcaPackage implements IOcaPackage {
@@ -44,7 +40,13 @@ class OcaPackage implements IOcaPackage {
 
   private saidifying(): string {
     const [, sad] = saidify(this.toJSON());
-    return JSON.stringify(sad, null, 2);
+    return JSON.stringify(sad);
+  }
+
+  // Returns oca_package digest
+  said(): string {
+    const [said] = saidify(this.toJSON());
+    return said;
   }
 
   generate_oca_package(): string {

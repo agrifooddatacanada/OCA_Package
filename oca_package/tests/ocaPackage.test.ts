@@ -5,18 +5,17 @@ import fs from 'fs';
 
 describe('oca_package', () => {
   it('should check if an oca_package is deterministic', () => {
+    // Load the OCA bundle
     const oca_bundle_path = path.join(__dirname, '../..', 'bundles', 'oca_bundle.json');
     const oca_bundle = fs.readFileSync(oca_bundle_path, 'utf8');
 
+    // Load the extension
     const extension_path = path.join(__dirname, '../..', 'bundles', 'extension.json');
     const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
 
+    // Create instances of the OcaPackage and Extensions classes
     const extensions = new Extensions(extension_obj, oca_bundle);
-    const ocaPackageInstance = new OcaPackage(oca_bundle, extensions);
-
-    const saidifiedOcaPackage = ocaPackageInstance.generate_oca_package();
-
-    console.log('saidifiedOcaPackage : ', saidifiedOcaPackage);
+    const ocaPackage = new OcaPackage(oca_bundle, extensions);
 
     const reversed_extension_obj = {
       examples_ov: [
@@ -57,9 +56,9 @@ describe('oca_package', () => {
     };
 
     const reversed_extensions = new Extensions(reversed_extension_obj, oca_bundle);
-    const reversedOcaPackageInstance = new OcaPackage(oca_bundle, reversed_extensions);
-    const reversedSaidifiedOcaPackage = reversedOcaPackageInstance.generate_oca_package();
+    const reversedOcaPackage = new OcaPackage(oca_bundle, reversed_extensions);
 
-    expect(JSON.parse(saidifiedOcaPackage).d).toEqual(JSON.parse(reversedSaidifiedOcaPackage).d);
+    expect(ocaPackage.said()).toEqual('EIc5n0Q5QzChXlJZnIAk7KbhmEFZuI5dLA2pVbRrrcjH');
+    expect(reversedOcaPackage.said()).toEqual(ocaPackage.said());
   });
 });

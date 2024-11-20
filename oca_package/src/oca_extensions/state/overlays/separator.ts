@@ -1,29 +1,14 @@
-import { Overlay, OverlayType } from '../overlay.js';
+import { OcaBundleCaptureBase } from '@oca_package/oca_package.js';
+import {
+  ISeparatorOverlay,
+  SeparatorsFields,
+  SeparatorsInput,
+  Overlay,
+  OverlayType,
+} from '@oca_package/types/types.js';
 import { saidify } from 'saidify';
-import { OcaBundleCaptureBase } from '../../../oca_package.js';
 
-export interface SeparatorOverlay {
-  said?: string;
-  type: OverlayType.Separator;
-  capture_base: OcaBundleCaptureBase;
-  dataset_separator?: SeparatorsInput['dataset_separator'];
-  attribute_separators?: SeparatorsInput['attribute_separators'];
-}
-
-export interface SeparatorsFields {
-  delimiter: string;
-  escape: string;
-}
-
-export interface SeparatorsInput {
-  type: string;
-  dataset_separator?: SeparatorsFields;
-  attribute_separators?: {
-    [key: string]: SeparatorsFields;
-  };
-}
-
-class Separator implements Overlay, SeparatorOverlay {
+class Separator implements Overlay, ISeparatorOverlay {
   said?: string;
   type: OverlayType.Separator = OverlayType.Separator;
   capture_base: OcaBundleCaptureBase;
@@ -86,6 +71,7 @@ class Separator implements Overlay, SeparatorOverlay {
     return this.saidifying();
   }
 
+  // TODO: find out if it neccessary to implement this methood for all overlays
   static deser(separator_ov_json_string: string): Separator {
     const separator_ov_json = JSON.parse(separator_ov_json_string);
     return new Separator(separator_ov_json, separator_ov_json.capture_base);
