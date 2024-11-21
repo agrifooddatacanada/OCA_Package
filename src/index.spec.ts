@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import OcaPackage from '../src/oca_package.js';
 import Extensions from '../src/oca_extensions/extensions.js';
 import path from 'path';
@@ -6,11 +7,11 @@ import fs from 'fs';
 describe('oca_package', () => {
   it('should check if an oca_package is deterministic', () => {
     // Load the OCA bundle
-    const oca_bundle_path = path.join(__dirname, '../..', 'bundles', 'oca_bundle.json');
+    const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
     const oca_bundle = fs.readFileSync(oca_bundle_path, 'utf8');
 
     // Load the extension
-    const extension_path = path.join(__dirname, '../..', 'bundles', 'extension.json');
+    const extension_path = path.join(__dirname, '../bundles', 'extension.json');
     const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
 
     // Create instances of the OcaPackage and Extensions classes
