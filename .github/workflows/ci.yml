@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 16.x, 22.x]
 
     steps:
       - name: Checkout repository
@@ -27,12 +27,10 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: oca_package
-
+  
       - name: Run tests
         run: npm test
-        working-directory: oca_package
 
       - name: Build project
         run: npm run build
-        working-directory: oca_package
+  
