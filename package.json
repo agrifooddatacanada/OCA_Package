@@ -1,0 +1,53 @@
+{
+  "name": "oca_package",
+  "version": "1.0.0",
+  "description": "The wrapper of OCA bundle to generate OCA Package at ADC",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --project tsconfig.esm.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "dev": "node dist/index.js",
+    "test": "vitest run",
+    "lint": "eslint . -c eslint.config.js",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agrifooddatacanada/OCA_Package.git"
+  },
+  "author": "Steven Mugisha Mizero <smugisha@uoguelph.ca>",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "@types/node": "^22.7.3",
+    "eslint": "^9.11.1",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.11",
+    "vite-tsconfig-paths": "^5.1.3",
+    "vitest": "^2.1.5"
+  },
+  "dependencies": {
+    "canonicalize": "^2.0.0",
+    "oca.js": "^0.5.4",
+    "saidify": "^0.2.2"
+  }
+}
