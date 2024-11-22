@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "./dist",
     "rootDir": "./src",
-    "declaration": true,
-    "declarationDir": "./dist",
     "strict": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/types",
+    "sourceMap": true,
+    "incremental": true,
+    "tsBuildInfoFile": "./node_modules/.cache/.tsbuildinfo",
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@oca_package/*": ["src/*"]
@@ -20,5 +23,5 @@
     "experimentalDecorators": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "utils", "tests/**/*.ts"]
+  "exclude": ["node_modules", "dist", "bundles", "**/*.test.ts", "**/*.spec.ts"]
 }

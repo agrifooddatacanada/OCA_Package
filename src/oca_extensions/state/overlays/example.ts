@@ -1,4 +1,4 @@
-import { OcaBundleCaptureBase } from '@oca_package/types.js';
+import { OcaBundleCaptureBase } from '../../extensions.js';
 import { OverlayTypes } from './overlalyTypes.js';
 import { saidify } from 'saidify';
 

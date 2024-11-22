@@ -16,7 +16,7 @@ describe('oca_package', () => {
 
     // Create instances of the OcaPackage and Extensions classes
     const extensions = new Extensions(extension_obj, oca_bundle);
-    const ocaPackage = new OcaPackage(oca_bundle, extensions);
+    const ocaPackage = new OcaPackage(extensions, oca_bundle);
 
     const reversed_extension_obj = {
       examples_ov: [
@@ -57,7 +57,7 @@ describe('oca_package', () => {
     };
 
     const reversed_extensions = new Extensions(reversed_extension_obj, oca_bundle);
-    const reversedOcaPackage = new OcaPackage(oca_bundle, reversed_extensions);
+    const reversedOcaPackage = new OcaPackage(reversed_extensions, oca_bundle);
 
     expect(ocaPackage.said()).toEqual('EIc5n0Q5QzChXlJZnIAk7KbhmEFZuI5dLA2pVbRrrcjH');
     expect(reversedOcaPackage.said()).toEqual(ocaPackage.said());

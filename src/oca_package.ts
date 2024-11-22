@@ -10,7 +10,7 @@ class OcaPackage implements IOcaPackage {
   public oca_bundle: string;
   public extensions: Extensions;
 
-  constructor(oca_bundle: string, extensions: Extensions) {
+  constructor(extensions: Extensions, oca_bundle: string) {
     this.oca_bundle = oca_bundle;
     this.extensions = extensions;
   }
