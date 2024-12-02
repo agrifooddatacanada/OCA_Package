@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import OcaPackage from '../src/oca_package.js';
 import Extensions from '../src/oca_extensions/extensions.js';
+import Extensionbuild from './oca_extensions/state/extenstionsBuild.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -61,5 +62,27 @@ describe('oca_package', () => {
 
     expect(ocaPackage.said()).toEqual('EIc5n0Q5QzChXlJZnIAk7KbhmEFZuI5dLA2pVbRrrcjH');
     expect(reversedOcaPackage.said()).toEqual(ocaPackage.said());
+  });
+});
+
+describe('extensions build', () => {
+  it('should return a list of attributes only existing in both oca_bundle & extension input json', () => {
+    // Load the OCA bundle
+    const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
+    const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
+
+    // Load the extension
+    const extension_path = path.join(__dirname, '../bundles', 'extension.json');
+    const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
+
+    const extensionBuild = new Extensionbuild();
+
+    const attributeName = 'd';
+
+    extensionBuild.addAttribute(attributeName, extension_obj, oca_bundle);
+
+    console.log('attributeContainer:', extensionBuild.attributeContainer);
+
+    expect(extensionBuild.attributeContainer.length).toEqual(1);
   });
 });

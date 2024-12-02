@@ -1,11 +1,12 @@
 import { OcaBundleCaptureBase } from '../../extensions.js';
 import { OverlayTypes } from './overlalyTypes.js';
+import { saidify } from 'saidify';
 
 export interface SeparatorsInput {
   type: string;
-  dataset_separator?: SeparatorsFields;
+  dataset_separator?: SeparatorValues;
   attribute_separators?: {
-    [key: string]: SeparatorsFields;
+    [key: string]: SeparatorValues;
   };
 }
 
@@ -17,12 +18,10 @@ export interface ISeparatorOverlay {
   attribute_separators?: SeparatorsInput['attribute_separators'];
 }
 
-export interface SeparatorsFields {
+export interface SeparatorValues {
   delimiter: string;
   escape: string;
 }
-
-import { saidify } from 'saidify';
 
 class Separator implements ISeparatorOverlay {
   said?: string;
@@ -46,8 +45,8 @@ class Separator implements ISeparatorOverlay {
     return this.type;
   }
 
-  attributes(): { key: string; value: SeparatorsFields }[] {
-    const sorted_attribute_separators: { key: string; value: SeparatorsFields }[] = [];
+  attributes(): { key: string; value: SeparatorValues }[] {
+    const sorted_attribute_separators: { key: string; value: SeparatorValues }[] = [];
 
     if (this.separators.attribute_separators) {
       for (const key in this.separators.attribute_separators) {
@@ -64,7 +63,7 @@ class Separator implements ISeparatorOverlay {
   }
 
   private toJSON(): object {
-    const serialized_attribute_separators: { [key: string]: SeparatorsFields } = {};
+    const serialized_attribute_separators: { [key: string]: SeparatorValues } = {};
 
     for (const attr of this.attributes()) {
       serialized_attribute_separators[attr.key] = attr.value;

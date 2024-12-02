@@ -1,78 +1,56 @@
-// TODO: Build the extention container for the attribute state
-
-/*
 import Attribute from './attribute.js';
-import Separator from './overlays/separator.js';
-// import { NullOverlayError, InvalidOverlayError } from '../errors.js';
-import { OverlayType } from '../state/overlay.js';
+import { SeparatorValues, SeparatorsInput } from './overlays/separator.js';
+import { isPresent } from '../../utils/helpers.js';
 
-type ExtensionOverlayType = Separator | null;
-
-interface IExtensionObject {
-  separators: OverlayType.Separator | null;
+export interface Extensions {
+  separator_ov: SeparatorsInput;
 }
 
-interface IExtensions {
-  extensions: ExtensionOverlayType[];
+interface OCABundle {
+  bundle?: {
+    capture_base?: {
+      attributes?: {
+        [key: string]: any;
+      };
+    };
+  };
 }
 
-class Extensions implements IExtensions {
-  #extensions: ExtensionOverlayType[];
-
-  constructor(extension_obj: IExtensionObject[]) {
-    this.#extensions = this.buildExtensions(extension_obj);
-  }
-
-  private buildExtensions(extension_obj: IExtensionObject[]): ExtensionOverlayType[] {
-    const extensions: ExtensionOverlayType[] = [];
-
-    for (const ext of extension_obj) {
-      if (ext.separators) {
-        extensions.push(new Separator(ext.separators));
-      } else {
-        extensions.push(null);
-      }
-    }
-
-    return extensions;
-  }
-
-  public get extensions(): ExtensionOverlayType[] {
-    // Implementing the required property
-    return this.#extensions;
-  }
-
-  public get extension(): ExtensionOverlayType[] {
-    return this.#extensions;
-  }
-}
-
-interface IExtensionContainer {
-  attributes: { [key: string]: Attribute };
-}
-
-class ExtenstionContainer extends Extensions implements IExtensionContainer {
-  #attributes: { [key: string]: Attribute };
+class Extensionbuild {
+  attributeContainer: Attribute[];
 
   constructor() {
-    super([]);
-    this.#attributes = {} as { [key: string]: Attribute };
+    this.attributeContainer = [];
   }
 
-  public get attributes(): { [key: string]: Attribute } {
-    return this.#attributes;
-  }
+  public addAttribute(attrName: string, extensions: Extensions, oca_bundle: OCABundle): void {
+    if (!attrName || !extensions || !oca_bundle) {
+      throw new Error('Attribute, extension, or oca_bundle is undefined or null.');
+    }
 
-  public addAttribute(attribute: Attribute): void {
-    this.#attributes[attribute.name] = attribute;
-  }
+    const attribute = new Attribute(attrName);
 
-  //   public generate_extension(): string {}
+    try {
+      const attributeExistsInBundle = isPresent(attrName, oca_bundle);
+      const attributeSeparators = extensions?.separator_ov?.attribute_separators;
 
-  public generate_extension_overlays(): Extensions {
-    return new Extensions([]);
+      if (attributeExistsInBundle) {
+        if (attributeSeparators && attrName in attributeSeparators) {
+          const separatorValues: SeparatorValues = attributeSeparators[attrName];
+          attribute.setAttributeSeparators(separatorValues);
+        } else {
+          throw new Error(`Attribute ${attrName} not found in separators.`);
+        }
+      } else {
+        throw new Error(`Attribute ${attrName} not found in OCA bundle.`);
+      }
+
+      this.attributeContainer.push(attribute);
+    } catch (error) {
+      console.error('Error in addAttribute:', error);
+      throw new Error(`Failed to add attribute: ${error.message}`);
+    }
   }
 }
 
-export default ExtenstionContainer;
-*/
+export default Extensionbuild;
