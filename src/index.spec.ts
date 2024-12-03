@@ -9,16 +9,17 @@ describe('oca_package', () => {
   it('should check if an oca_package is deterministic', () => {
     // Load the OCA bundle
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
-    const oca_bundle = fs.readFileSync(oca_bundle_path, 'utf8');
+    const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
 
-    // Load the extension
+    // Load the extensions
     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
     const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
-
-    // Create instances of the OcaPackage and Extensions classes
     const extensions = new Extensions(extension_obj, oca_bundle);
+
+    // Create an OcaPackage
     const ocaPackage = new OcaPackage(extensions, oca_bundle);
 
+    // Testing the reverse of the extensions object for deterministic purposes
     const reversed_extension_obj = {
       examples_ov: [
         {
@@ -60,7 +61,9 @@ describe('oca_package', () => {
     const reversed_extensions = new Extensions(reversed_extension_obj, oca_bundle);
     const reversedOcaPackage = new OcaPackage(reversed_extensions, oca_bundle);
 
-    expect(ocaPackage.said()).toEqual('EIc5n0Q5QzChXlJZnIAk7KbhmEFZuI5dLA2pVbRrrcjH');
+    // console.log('ocaPackage:', ocaPackage.generate_oca_package());
+
+    expect(ocaPackage.said()).toEqual('EEHL3D7mg5FV0See7MBAvShVvONElImOgc7V1gnJt3tD');
     expect(reversedOcaPackage.said()).toEqual(ocaPackage.said());
   });
 });
@@ -75,13 +78,13 @@ describe('extensions build', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
     const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
 
+    // Create an Extension Build
     const extensionBuild = new Extensionbuild();
 
     const attributeName = 'd';
-
     extensionBuild.addAttribute(attributeName, extension_obj, oca_bundle);
 
-    console.log('attributeContainer:', extensionBuild.attributeContainer);
+    // console.log('attributeContainer:', extensionBuild.attributeContainer);
 
     expect(extensionBuild.attributeContainer.length).toEqual(1);
   });

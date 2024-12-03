@@ -1,6 +1,7 @@
-import { OcaBundleCaptureBase } from '../../extensions.js';
 import { OverlayTypes } from './overlalyTypes.js';
 import { saidify } from 'saidify';
+import { getDigest } from '../../../utils/helpers.js';
+import { Said } from '../../../types/types.js';
 
 export interface SeparatorsInput {
   type: string;
@@ -11,11 +12,12 @@ export interface SeparatorsInput {
 }
 
 export interface ISeparatorOverlay {
-  said?: string;
+  said?: Said;
   type: OverlayTypes.Separator;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   dataset_separator?: SeparatorsInput['dataset_separator'];
   attribute_separators?: SeparatorsInput['attribute_separators'];
+  overlay_type(): string;
 }
 
 export interface SeparatorValues {
@@ -24,28 +26,24 @@ export interface SeparatorValues {
 }
 
 class Separator implements ISeparatorOverlay {
-  said?: string;
+  said?: Said;
   type: OverlayTypes.Separator;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   dataset_separator?: SeparatorsInput['dataset_separator'];
   attribute_separators?: SeparatorsInput['attribute_separators'];
   separators: SeparatorsInput;
 
-  constructor(separators: SeparatorsInput, oca_bundle_capture_base: OcaBundleCaptureBase) {
+  constructor(separators: SeparatorsInput, oca_bundle: any) {
     this.type = OverlayTypes.Separator;
     this.separators = separators;
-    this.capture_base = oca_bundle_capture_base;
+    this.capture_base = getDigest(oca_bundle);
   }
 
-  oca_bundle_capture_base_said(): string {
-    return this.capture_base.d;
-  }
-
-  overlay_type(): string {
+  public overlay_type(): string {
     return this.type;
   }
 
-  attributes(): { key: string; value: SeparatorValues }[] {
+  public attributes(): { key: string; value: SeparatorValues }[] {
     const sorted_attribute_separators: { key: string; value: SeparatorValues }[] = [];
 
     if (this.separators.attribute_separators) {
@@ -62,6 +60,7 @@ class Separator implements ISeparatorOverlay {
     return sorted_attribute_separators;
   }
 
+  // serialize the separator overlay
   private toJSON(): object {
     const serialized_attribute_separators: { [key: string]: SeparatorValues } = {};
 
@@ -71,20 +70,20 @@ class Separator implements ISeparatorOverlay {
 
     return {
       d: '',
-      type: 'adc/overlays/separator/1.0',
-      capture_base: this.oca_bundle_capture_base_said(),
+      type: 'community/adc/overlays/separator/1.0',
+      capture_base: this.capture_base,
       dataset_separator: this.separators.dataset_separator,
       attribute_separators: serialized_attribute_separators,
     };
   }
 
-  saidifying(): string {
+  private saidifying(): Record<string, any> {
     const [, sad] = saidify(this.toJSON());
-    return JSON.stringify(sad);
+    return sad;
   }
 
-  generate_overlay(): string {
-    return this.saidifying();
+  public generate_overlay(): string {
+    return JSON.stringify(this.saidifying());
   }
 
   // TODO: find out if it neccessary to implement this methood for all overlays

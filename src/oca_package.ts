@@ -10,7 +10,7 @@ class OcaPackage implements IOcaPackage {
   public oca_bundle: string;
   public extensions: Extensions;
 
-  constructor(extensions: Extensions, oca_bundle: string) {
+  constructor(extensions: Extensions, oca_bundle: any) {
     this.oca_bundle = oca_bundle;
     this.extensions = extensions;
   }
@@ -18,7 +18,7 @@ class OcaPackage implements IOcaPackage {
   private toJSON(): object {
     try {
       const ext_container = JSON.parse(this.extensions.generate_extensions());
-      const oca_bundle = JSON.parse(this.oca_bundle);
+      const oca_bundle = this.oca_bundle;
 
       return {
         d: '',

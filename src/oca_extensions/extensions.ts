@@ -2,6 +2,7 @@ import Separator from './state/overlays/separator.js';
 import ExampleOverlaysContainer from './state/overlays/example.js';
 import { ExampleInput } from './state/overlays/example.js';
 import { SeparatorsInput } from './state/overlays/separator.js';
+// import { OCABox } from 'oca.js';
 
 export interface IExtensionsInputJSON {
   separator_ov: SeparatorsInput;
@@ -16,14 +17,12 @@ export interface OcaBundleCaptureBase {
   flagged_attributes: string[];
 }
 
-import { OCABox } from 'oca.js';
-
 class Extensions {
   #serialized_extensions: string = '';
   private extension_obj: IExtensionsInputJSON;
   oca_bundle: string;
 
-  constructor(extensions_obj: IExtensionsInputJSON, oca_bundle: string) {
+  constructor(extensions_obj: IExtensionsInputJSON, oca_bundle: any) {
     if (!extensions_obj || !oca_bundle) {
       throw new Error('Extensions object and OCA bundle are required');
     }
@@ -35,32 +34,7 @@ class Extensions {
     return this.#serialized_extensions;
   }
 
-  get_capture_base_from_oca_bundle(): OcaBundleCaptureBase {
-    try {
-      if (typeof this.oca_bundle !== 'string') {
-        throw new Error('OCA bundle must be a string');
-      }
-
-      const parsedBundle = JSON.parse(this.oca_bundle);
-
-      if (!parsedBundle || typeof parsedBundle !== 'object') {
-        throw new Error('Invalid OCA bundle format');
-      }
-
-      if (!parsedBundle.bundle) {
-        throw new Error('OCA bundle does not contain a bundle property');
-      }
-
-      const oca_box = new OCABox().load(parsedBundle.bundle);
-
-      return oca_box.generateBundle().capture_base;
-    } catch (error) {
-      console.error('Error in get_capture_base_from_oca_bundle:', error);
-      throw new Error(`Failed to get capture base from OCA bundle: ${error}`);
-    }
-  }
-
-  generate_extensions(): string {
+  public generate_extensions(): string {
     // TODO: define the canonical rules for the extension overlays
 
     const extension_overlays: { [key: string]: string } = {};
@@ -69,7 +43,7 @@ class Extensions {
       if (this.extension_obj.examples_ov) {
         const examples_ov = new ExampleOverlaysContainer(
           this.extension_obj.examples_ov as ExampleInput[],
-          this.get_capture_base_from_oca_bundle(),
+          this.oca_bundle,
         );
 
         const exampleOverlays = examples_ov.generate_overlay();
@@ -79,12 +53,10 @@ class Extensions {
       }
 
       if (this.extension_obj.separator_ov) {
-        const separator_ov = new Separator(
-          this.extension_obj.separator_ov as SeparatorsInput,
-          this.get_capture_base_from_oca_bundle(),
-        );
+        const separator_ov = new Separator(this.extension_obj.separator_ov as SeparatorsInput, this.oca_bundle);
 
-        const separatorOverlays = separator_ov.saidifying();
+        // const separatorOverlays = separator_ov.saidifying();
+        const separatorOverlays = separator_ov.generate_overlay();
         extension_overlays['separator'] = separatorOverlays;
       }
 
