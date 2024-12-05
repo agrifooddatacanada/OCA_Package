@@ -1,7 +1,6 @@
-import { OverlayTypes } from './overlalyTypes.js';
 import { saidify } from 'saidify';
-import { getDigest } from '../../../utils/helpers.js';
-import { Said } from '../../../types/types.js';
+import { getDigest, isPresent } from '../../../utils/helpers.js';
+import { Said, OverlayTypes } from '../../../types/types.js';
 
 export interface SeparatorsInput {
   type: string;
@@ -32,11 +31,14 @@ class Separator implements ISeparatorOverlay {
   dataset_separator?: SeparatorsInput['dataset_separator'];
   attribute_separators?: SeparatorsInput['attribute_separators'];
   separators: SeparatorsInput;
+  oca_bundle: any;
 
   constructor(separators: SeparatorsInput, oca_bundle: any) {
+    this.said = '';
     this.type = OverlayTypes.Separator;
     this.separators = separators;
-    this.capture_base = getDigest(oca_bundle);
+    this.oca_bundle = oca_bundle;
+    this.capture_base = getDigest(this.oca_bundle);
   }
 
   public overlay_type(): string {
@@ -49,14 +51,15 @@ class Separator implements ISeparatorOverlay {
     if (this.separators.attribute_separators) {
       for (const key in this.separators.attribute_separators) {
         if (Object.prototype.hasOwnProperty.call(this.separators.attribute_separators, key)) {
+          if (!isPresent(key, this.oca_bundle)) {
+            throw new Error(`Attribute ${key} not found in OCA bundle Capture Base.`);
+          }
           sorted_attribute_separators.push({ key, value: this.separators.attribute_separators[key] });
         }
       }
-
       // Sort the attribute separators by key
       sorted_attribute_separators.sort((a, b) => a.key.localeCompare(b.key));
     }
-
     return sorted_attribute_separators;
   }
 
@@ -69,7 +72,7 @@ class Separator implements ISeparatorOverlay {
     }
 
     return {
-      d: '',
+      d: this.said,
       type: 'community/adc/overlays/separator/1.0',
       capture_base: this.capture_base,
       dataset_separator: this.separators.dataset_separator,

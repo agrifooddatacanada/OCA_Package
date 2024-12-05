@@ -62,7 +62,6 @@ describe('oca_package', () => {
     const reversedOcaPackage = new OcaPackage(reversed_extensions, oca_bundle);
 
     // console.log('ocaPackage:', ocaPackage.generate_oca_package());
-
     expect(ocaPackage.said()).toEqual('EEHL3D7mg5FV0See7MBAvShVvONElImOgc7V1gnJt3tD');
     expect(reversedOcaPackage.said()).toEqual(ocaPackage.said());
   });
@@ -84,7 +83,7 @@ describe('extensions build', () => {
     const attributeName = 'd';
     extensionBuild.addAttribute(attributeName, extension_obj, oca_bundle);
 
-    // console.log('attributeContainer:', extensionBuild.attributeContainer);
+    console.log('attributeContainer:', extensionBuild.attributeContainer);
 
     expect(extensionBuild.attributeContainer.length).toEqual(1);
   });

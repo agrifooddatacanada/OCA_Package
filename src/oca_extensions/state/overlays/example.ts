@@ -1,8 +1,6 @@
-import { OverlayTypes } from './overlalyTypes.js';
 import { saidify } from 'saidify';
-
-import { getDigest } from '../../../utils/helpers.js';
-import { Said } from '../../../types/types.js';
+import { getDigest, isPresent } from '../../../utils/helpers.js';
+import { Said, OverlayTypes } from '../../../types/types.js';
 
 export type ExamplesFields<T> = { [key: string]: T[] };
 
@@ -26,6 +24,7 @@ export class ExampleOverlay implements IExampleOverlay {
   type: OverlayTypes.Example;
   capture_base: Said;
   attribute_examples?: ExamplesFields<string>;
+  oca_bundle: any;
 
   constructor(example: ExampleInput, oca_bundle: any) {
     if (!example || !oca_bundle) {
@@ -33,7 +32,8 @@ export class ExampleOverlay implements IExampleOverlay {
     }
     this.type = OverlayTypes.Example;
     this.language = example.language;
-    this.capture_base = getDigest(oca_bundle);
+    this.oca_bundle = oca_bundle;
+    this.capture_base = getDigest(this.oca_bundle);
     this.attribute_examples = example.attribute_examples;
   }
 
@@ -43,14 +43,15 @@ export class ExampleOverlay implements IExampleOverlay {
     if (this.attribute_examples) {
       for (const key in this.attribute_examples) {
         if (Object.prototype.hasOwnProperty.call(this.attribute_examples, key)) {
+          if (!isPresent(key, this.oca_bundle)) {
+            throw new Error(`Attribute ${key} not found in OCA bundle Capture Base`);
+          }
           sorted_attribute_examples.push({ key, value: this.attribute_examples[key] });
         }
       }
-
       // Sort the attribute examples by key
       sorted_attribute_examples.sort((a, b) => a.key.localeCompare(b.key));
     }
-
     return sorted_attribute_examples;
   }
 

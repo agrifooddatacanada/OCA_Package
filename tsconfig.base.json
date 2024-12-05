@@ -14,9 +14,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@overlays/*": ["src/oca_extensions/state/overlays/*"]
     },
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
