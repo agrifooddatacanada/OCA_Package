@@ -104,7 +104,7 @@
     ],
     "separator": {
       "d": "EAkvK2G3OaeXzib_OCA2c9uQAtggmIY0o5nLooVTo1Dk",
-      "type": "adc/overlays/separator/1.0",
+      "type": "community/adc/overlays/separator/1.0",
       "capture_base": "EL4q2aahA0RN-ftw97E_fmbVDVTyDbIaQR2B44HGsqFG",
       "dataset_separator": {
         "delimiter": ",",

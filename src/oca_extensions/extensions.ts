@@ -1,81 +1,81 @@
-import Separator from './state/overlays/separator.js';
-import ExampleOverlaysContainer from './state/overlays/example.js';
-import { ExampleInput } from './state/overlays/example.js';
-import { SeparatorsInput } from './state/overlays/separator.js';
-// import { OCABox } from 'oca.js';
+import Attribute from './state/attribute.js';
+import { getCaptureBase } from '../utils/helpers';
+import Ordering from './state/overlays/ordering.js';
 
-export interface IExtensionsInputJSON {
-  separator_ov: SeparatorsInput;
-  examples_ov: ExampleInput[];
+type ExtensionInputJson = {
+  ordering_ov: any;
+};
+
+export interface IExtensionState {
+  ordering_arr: string[];
+  entry_code_ordering_arr: object;
+  // attributes: Attribute[];
 }
+export class ExtensionState implements IExtensionState {
+  private _ordering_arr: string[];
+  private _entry_code_ordering_arr: object = {};
 
-export interface OcaBundleCaptureBase {
-  d: string;
-  type: string;
-  classification: string;
-  attributes: { [key: string]: string };
-  flagged_attributes: string[];
-}
-
-class Extensions {
-  #serialized_extensions: string = '';
-  private extension_obj: IExtensionsInputJSON;
-  oca_bundle: string;
-
-  constructor(extensions_obj: IExtensionsInputJSON, oca_bundle: any) {
-    if (!extensions_obj || !oca_bundle) {
-      throw new Error('Extensions object and OCA bundle are required');
+  constructor(extension_obj: ExtensionInputJson) {
+    if (!extension_obj) {
+      throw new Error('Extension object is required');
     }
-    this.extension_obj = extensions_obj;
-    this.oca_bundle = oca_bundle;
+    this._ordering_arr = this.setAttributeOrdering(extension_obj);
+    this.setEntryCodeOrdering(extension_obj);
   }
 
-  get ser_extensions(): string {
-    return this.#serialized_extensions;
-  }
-
-  public generate_extensions(): string {
-    // TODO: define the canonical rules for the extension overlays
-
-    const extension_overlays: { [key: string]: string } = {};
-
-    try {
-      if (this.extension_obj.examples_ov) {
-        const examples_ov = new ExampleOverlaysContainer(
-          this.extension_obj.examples_ov as ExampleInput[],
-          this.oca_bundle,
-        );
-
-        const exampleOverlays = examples_ov.generate_overlay();
-        extension_overlays['example'] = Array.isArray(exampleOverlays)
-          ? JSON.stringify(exampleOverlays)
-          : exampleOverlays;
-      }
-
-      if (this.extension_obj.separator_ov) {
-        const separator_ov = new Separator(this.extension_obj.separator_ov as SeparatorsInput, this.oca_bundle);
-
-        // const separatorOverlays = separator_ov.saidifying();
-        const separatorOverlays = separator_ov.generate_overlay();
-        extension_overlays['separator'] = separatorOverlays;
-      }
-
-      // deserialize individual overlay to avoid escaping characters in the final JSON
-      const deser_obj: { [key: string]: object } = {};
-
-      for (const key of Object.keys(extension_overlays)) {
-        const ov = extension_overlays[key];
-        if (typeof ov === 'string') {
-          deser_obj[key] = JSON.parse(ov);
-        }
-      }
-
-      this.#serialized_extensions = JSON.stringify(deser_obj);
-      return this.#serialized_extensions;
-    } catch (error) {
-      throw new Error(`Failed to generate extensions: ${error}`);
+  public setAttributeOrdering(extension_obj: ExtensionInputJson): string[] {
+    if (extension_obj['ordering_ov']) {
+      this._ordering_arr = extension_obj.ordering_ov.ordering_attribute;
+      return this._ordering_arr;
+    } else {
+      throw new Error('Ordering overlay is required');
     }
   }
+
+  public get ordering_arr(): string[] {
+    return this._ordering_arr;
+  }
+
+  public setEntryCodeOrdering(extension_obj: ExtensionInputJson): void {
+    if (extension_obj['ordering_ov']) {
+      this._entry_code_ordering_arr = extension_obj.ordering_ov.ordering_entry_codes || {};
+    } else {
+      this._entry_code_ordering_arr = {};
+    }
+  }
+
+  public get entry_code_ordering_arr(): object {
+    return this._entry_code_ordering_arr;
+  }
 }
 
-export default Extensions;
+class Extension {
+  public extensionState: ExtensionState;
+  public oca_bundle: any;
+
+  constructor(extensionState: ExtensionState, oca_bundle: any) {
+    if (!extensionState || !oca_bundle) {
+      throw new Error('Extension state and OCA bundle are required');
+    }
+  }
+
+  public generate_overlays(extensionState: ExtensionState, oca_bundle: any): object {
+    return {};
+  }
+
+  private toJSON(): object {
+    return {
+      d: '',
+      type: 'community/adc/extension/1.0',
+      bundle_digest: getCaptureBase(this.oca_bundle),
+      overlays: this.generate_overlays(this.extensionState, this.oca_bundle),
+    };
+  }
+
+  // Todo: Implement the generate_extension method and calculate the digest(said) for the extension
+  public generate_extension(): string {
+    return JSON.stringify(this.toJSON());
+  }
+}
+
+export default Extension;

@@ -1,0 +1,10 @@
+{
+  "ordering_ov": {
+    "type": "ordering",
+    "ordering_attribute": ["i", "d"],
+    "ordering_entry_codes": {
+      "i": ["Google", "ISNI", "ORCiD", "ResearcherID", "Scopus"],
+      "d": ["001", "002", "003", "004", "005"]
+    }
+  }
+}

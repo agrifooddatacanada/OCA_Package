@@ -1,3 +1,33 @@
+/*
+Separator overlay
+
+This overlay is used to define the separators used in the dataset and the attributes in the dataset.
+
+Canoncial rules:
+- d, type, capture_base has to be present in this order
+- other properties (dataset_separator, attribute_separators) will be lexically sorted by key
+- attributes in attribute_separators will lexically sorted by key as currently current canonical rules applied in the OCA bundle
+
+- Example:
+{
+  "d": "said:...",
+  "type": "community/adc/overlays/separator/1.0",
+  "capture_base": "said:...",
+  "attribute_separators": {
+    "attribute_name": {
+      "attr1": {  
+        "delimiter": "...",
+        "escape": "..."
+      }
+    }
+  },
+  "dataset_separator": {
+    "delimiter": "...",
+    "escape": "..."
+  }
+}
+*/
+
 import { saidify } from 'saidify';
 import { getDigest, isPresent } from '../../../utils/helpers.js';
 import { Said, OverlayTypes } from '../../../types/types.js';
