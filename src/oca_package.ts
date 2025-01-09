@@ -1,34 +1,21 @@
-import Extensions from './oca_extensions/extensions.js';
+import ExtensionContainer from './oca_extensions/state/extenstionsBuild';
+import { ExtensionInputJson } from './oca_extensions/extensions';
 import { saidify } from 'saidify';
 
 interface IOcaPackage {
   oca_bundle: string;
-  extensions: Extensions;
+  extensions: ExtensionContainer;
 }
 
 class OcaPackage implements IOcaPackage {
   public oca_bundle: string;
-  public extensions: Extensions;
+  public extension_input: ExtensionInputJson;
+  public extensions: ExtensionContainer;
 
-  constructor(extensions: Extensions, oca_bundle: any) {
+  constructor(extension_input: ExtensionInputJson, oca_bundle: string) {
+    this.extensions = new ExtensionContainer();
+    this.extension_input = extension_input;
     this.oca_bundle = oca_bundle;
-    this.extensions = extensions;
-  }
-
-  private toJSON(): object {
-    try {
-      const ext_container = JSON.parse(this.extensions.generate_extensions());
-      const oca_bundle = this.oca_bundle;
-
-      return {
-        d: '',
-        type: 'adc/package/1.0',
-        oca_bundle: oca_bundle,
-        extensions: ext_container,
-      };
-    } catch (error) {
-      throw new Error(`Failed to parse Extension JSON: ${error}`);
-    }
   }
 
   private saidifying(): string {
@@ -39,6 +26,20 @@ class OcaPackage implements IOcaPackage {
   public said(): string {
     const [said] = saidify(this.toJSON());
     return said;
+  }
+
+  private toJSON(): object {
+    try {
+      const extension_container = this.extensions.generate_extensions(this.extension_input, this.oca_bundle);
+      return {
+        d: '',
+        type: 'adc/package/1.0',
+        oca_bundle: this.oca_bundle,
+        extensions: extension_container,
+      };
+    } catch (error) {
+      throw new Error(`Failed to parse Extension JSON: ${error}`);
+    }
   }
 
   public generate_oca_package(): string {

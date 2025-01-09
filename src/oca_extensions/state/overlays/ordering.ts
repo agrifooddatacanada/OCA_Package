@@ -1,5 +1,5 @@
 import { ExtensionState } from '../../extensions';
-import { getCaptureBase } from '../../../utils/helpers';
+import { getDigest } from '../../../utils/helpers';
 import { saidify } from 'saidify';
 
 export interface IOrdering {
@@ -32,7 +32,7 @@ class Ordering implements IOrdering {
     return {
       d: '',
       type: 'community/adc/ordering/1.0',
-      capture_base: getCaptureBase(this.oca_bundle).d,
+      capture_base: getDigest(this.oca_bundle),
       ordering_attribute: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),
     };

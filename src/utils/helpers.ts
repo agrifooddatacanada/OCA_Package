@@ -45,3 +45,14 @@ export const getDigest = (oca_bundle: any): Said => {
     throw new Error(`Failed to get the said from the capture base: ${error.message}`);
   }
 };
+
+// Get oca bundle digest
+export const ocabundleDigest = (oca_bundle: any): string => {
+  try {
+    const oca_bundle_d = oca_bundle.bundle.d;
+    return oca_bundle_d;
+  } catch (error) {
+    console.error('Error in getting oca bundle digest:', error);
+    throw new Error(`Failed to get the oca bundle digest: ${error.message}`);
+  }
+};
