@@ -15,15 +15,3 @@ export enum OverlayTypes {
   Separator = 'separator',
   Example = 'example',
 }
-
-// separator overlay types and interfaces
-export type SeparatorValues = {
-  delimiter: string;
-  escape: string;
-};
-
-export interface SeparatorOverlayInput {
-  type: string;
-  dataset_separator: SeparatorValues;
-  attribute_separators: { [key: string]: SeparatorValues };
-}

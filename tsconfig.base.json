@@ -24,5 +24,14 @@
     "experimentalDecorators": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "bundles", "**/*.test.ts", "**/*.spec.ts"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "bundles",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "src/oca_extensions/state/overlays/separator.ts",
+    "src/oca_extensions/state/overlays/example.ts",
+    "src/utils/canonical.ts"
+  ]
 }

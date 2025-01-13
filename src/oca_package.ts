@@ -1,5 +1,5 @@
-import ExtensionContainer from './oca_extensions/state/extenstionsBuild';
-import { ExtensionInputJson } from './oca_extensions/extensions';
+import ExtensionContainer from './oca_extensions/state/extenstionContainer.js';
+import { ExtensionInputJson } from './oca_extensions/extensions.js';
 import { saidify } from 'saidify';
 
 interface IOcaPackage {
@@ -42,7 +42,7 @@ class OcaPackage implements IOcaPackage {
     }
   }
 
-  public generate_oca_package(): string {
+  public generateOcaPackage(): string {
     return this.saidifying();
   }
 }

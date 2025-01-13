@@ -1,5 +1,5 @@
-import { ExtensionState } from '../../extensions';
-import { getDigest } from '../../../utils/helpers';
+import { ExtensionState } from '../../extensions.js';
+import { getDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
 
 export interface IOrdering {
@@ -43,7 +43,7 @@ class Ordering implements IOrdering {
     return sad;
   }
 
-  public generate_overlay(): string {
+  public generateOverlay(): string {
     return JSON.stringify(this.saidifying());
   }
 }

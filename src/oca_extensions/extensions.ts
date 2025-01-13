@@ -1,11 +1,14 @@
-import { ocabundleDigest } from '../utils/helpers';
+import { ocabundleDigest } from '../utils/helpers.js';
 import Ordering from './state/overlays/ordering.js';
 import { Said } from '../types/types.js';
 import { saidify } from 'saidify';
 
-export type ExtensionInputJson = {
-  ordering_ov: any;
-};
+export interface ExtensionInputJson {
+  ordering_ov?: {
+    ordering_attributes: any;
+    ordering_entry_codes?: Record<string, any>;
+  };
+}
 
 export interface IExtensionState {
   ordering_arr: string[];
@@ -16,31 +19,31 @@ export interface IExtensionState {
 // Internal representation of the extension json input
 // From this state, we can generate the extension overlay in any format
 export class ExtensionState implements IExtensionState {
-  private _ordering_arr: string[];
+  private _attributes_ordering_arr: string[];
   private _entry_code_ordering_arr: Record<string, any>;
 
   constructor(extension_obj: ExtensionInputJson) {
     if (!extension_obj) {
       throw new Error('Extension object is required');
     }
-    this._ordering_arr = this.extractAttributeOrdering(extension_obj);
+    this._attributes_ordering_arr = this.extractAttributeOrdering(extension_obj);
     this._entry_code_ordering_arr = this.extractEntryCodeOrdering(extension_obj);
   }
 
   private extractAttributeOrdering(extension_obj: ExtensionInputJson): string[] {
-    if (extension_obj.ordering_ov) {
-      return extension_obj.ordering_ov.ordering_attribute;
+    if (extension_obj['ordering_ov']) {
+      return extension_obj.ordering_ov.ordering_attributes;
     } else {
       throw new Error('Ordering overlay is required');
     }
   }
 
   private extractEntryCodeOrdering(extension_obj: ExtensionInputJson): Record<string, any> {
-    return extension_obj.ordering_ov?.ordering_entry_codes || {};
+    return extension_obj.ordering_ov ? extension_obj.ordering_ov.ordering_entry_codes || {} : {};
   }
 
   public get ordering_arr(): string[] {
-    return this._ordering_arr;
+    return this._attributes_ordering_arr;
   }
 
   public get entry_code_ordering_arr(): Record<string, any> {
@@ -71,16 +74,16 @@ class Extension implements IExtension {
     }
     this.extensionState = new ExtensionState(extension_obj);
     this.oca_bundle = oca_bundle;
-    this.overlays = this.generate_overlays();
+    this.overlays = this.generateOverlays();
   }
 
-  private generate_overlays(): Record<string, any> {
+  private generateOverlays(): Record<string, any> {
     const overlays: Record<string, any> = {};
 
     try {
       if (this.extensionState.ordering_arr) {
         const ordering = new Ordering(this.extensionState, this.oca_bundle);
-        overlays['ordering'] = JSON.parse(ordering.generate_overlay());
+        overlays['ordering'] = JSON.parse(ordering.generateOverlay());
       }
     } catch (error) {
       console.error('Error generating overlays:', error);
@@ -104,7 +107,7 @@ class Extension implements IExtension {
     return sad;
   }
 
-  public generate_extension(): string {
+  public generateExtension(): string {
     return JSON.stringify(this.saidifying());
   }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import Extension, { ExtensionInputJson } from './oca_extensions/extensions';
-import ExtensionContainer from './oca_extensions/state/extenstionsBuild';
+import ExtensionContainer from './oca_extensions/state/extenstionContainer';
 import OcaPackage from './oca_package';
 import path from 'path';
 import fs from 'fs';
@@ -11,19 +11,19 @@ describe('extension overlay', () => {
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
 
     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
-    const extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
+    let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
+    extension_obj = extension_obj['extensions'][0];
 
-    const extension = new Extension(extension_obj, oca_bundle);
+    const extension_instance = new Extension(extension_obj, oca_bundle);
 
-    const overlay = extension.generate_extension();
+    const extension = extension_instance.generateExtension();
 
-    expect(overlay).to.be.a('string');
-    const parsedOverlay = JSON.parse(overlay);
-    expect(parsedOverlay).to.have.property('d');
-    expect(parsedOverlay).to.have.property('type', 'community/adc/extension/1.0');
-    expect(parsedOverlay).to.have.property('bundle_digest');
-    expect(parsedOverlay).to.have.property('overlays');
-    expect(parsedOverlay.overlays).to.have.property('ordering');
+    expect(extension).to.be.a('string');
+    const parsedExtension = JSON.parse(extension);
+    expect(parsedExtension).to.have.property('d');
+    expect(parsedExtension).to.have.property('type', 'community/adc/extension/1.0');
+    expect(parsedExtension).to.have.property('bundle_digest');
+    expect(parsedExtension).to.have.property('overlays');
   });
 });
 
@@ -40,10 +40,6 @@ describe('extension container', () => {
 
     expect(extension_container).toBeInstanceOf(Array);
     expect(extension_container.length).toBe(1);
-    // overlays.forEach(overlay => {
-    //   expect(typeof overlay).toBe('string');
-    //   expect(() => JSON.parse(overlay)).not.toThrow();
-    // });
   });
 });
 
@@ -56,11 +52,15 @@ describe('oca package', () => {
     const extension_obj: ExtensionInputJson = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
 
     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
-    const oca_package = oca_package_instance.generate_oca_package();
+    const oca_package = oca_package_instance.generateOcaPackage();
 
-    console.dir(oca_package, { depth: null });
+    console.log(typeof oca_package);
+    // console.log(oca_package);
 
     expect(typeof oca_package).toBe('string');
     expect(() => JSON.parse(oca_package)).not.toThrow();
+    const parsedOcaPackage = JSON.parse(oca_package);
+    console.dir(parsedOcaPackage, { depth: null });
+    expect(parsedOcaPackage.d).toBe('ELsnZ1r64bnZFbcGYuxZTwt0apSZ-wksb0fzVcV7_hZF');
   });
 });

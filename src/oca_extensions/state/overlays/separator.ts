@@ -32,6 +32,12 @@ import { saidify } from 'saidify';
 import { getDigest, isPresent } from '../../../utils/helpers.js';
 import { Said, OverlayTypes } from '../../../types/types.js';
 
+export interface SeparatorOverlayInput {
+  type: string;
+  dataset_separator: SeparatorValues;
+  attribute_separators: { [key: string]: SeparatorValues };
+}
+
 export interface SeparatorsInput {
   type: string;
   dataset_separator?: SeparatorValues;
