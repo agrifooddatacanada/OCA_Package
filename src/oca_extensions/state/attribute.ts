@@ -1,27 +1,23 @@
-// TODO: create internal state of attributes pass via extentsion
-// verify if they exist in the ocabundle else ignore them and log a warning
-
-/*
-import { SeparatorsFields } from '../state/overlays/separator.js';
+/* The states of attributes from the extensions */
+import { SeparatorValues } from '../state/overlays/separator.js';
 
 interface IAttribute {
   name: string;
-  attribute_separators: SeparatorsFields;
+  attribute_separators: SeparatorValues;
 }
 
 class Attribute implements IAttribute {
   public name: string;
-  public attribute_separators: SeparatorsFields;
+  public attribute_separators: SeparatorValues;
 
-  constructor(name: string) {
-    this.name = name;
-    this.attribute_separators = {} as SeparatorsFields;
+  constructor(attribute: string) {
+    this.name = attribute;
+    this.attribute_separators = {} as SeparatorValues;
   }
 
-  public setAttributeSeparators(attribute_separators: SeparatorsFields): void {
+  public setAttributeSeparators(attribute_separators: SeparatorValues): void {
     this.attribute_separators = attribute_separators;
   }
 }
 
 export default Attribute;
-*/

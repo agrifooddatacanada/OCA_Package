@@ -1,36 +1,13 @@
 {
-  "separator_ov": {
-    "type": "separator",
-    "dataset_separator": {
-      "delimiter": ",",
-      "escape": "\\"
-    },
-    "attribute_separators": {
-      "d": {
-        "delimiter": ",",
-        "escape": "\\"
-      },
-      "i": {
-        "delimiter": ";",
-        "escape": ""
-      }
-    }
-  },
-  "examples_ov": [
+  "extensions": [
     {
-      "type": "example",
-      "language": "eng",
-      "attribute_examples": {
-        "d": ["come", "go"],
-        "i": ["me", "you"]
-      }
-    },
-    {
-      "type": "example",
-      "language": "fra",
-      "attribute_examples": {
-        "d": ["va", "aller"],
-        "i": ["toi", "moi"]
+      "ordering_overlay": {
+        "type": "ordering",
+        "ordering_attributes": ["i", "d"],
+        "ordering_entry_codes": {
+          "i": ["Google", "ISNI", "ORCiD", "ResearcherID", "Scopus"],
+          "d": ["001", "002", "003", "004", "005"]
+        }
       }
     }
   ]

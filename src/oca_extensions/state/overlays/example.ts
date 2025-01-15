@@ -1,6 +1,6 @@
-import { OcaBundleCaptureBase } from '../../extensions.js';
-import { OverlayTypes } from './overlalyTypes.js';
 import { saidify } from 'saidify';
+import { getDigest, isPresent } from '../../../utils/helpers.js';
+import { Said, OverlayTypes } from '../../../types/types.js';
 
 export type ExamplesFields<T> = { [key: string]: T[] };
 
@@ -11,41 +11,47 @@ export type ExampleInput = {
 };
 
 export interface IExampleOverlay {
-  said?: string;
+  said?: Said;
   language: string;
   type: OverlayTypes.Example;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   attribute_examples?: ExamplesFields<string>;
 }
 
 export class ExampleOverlay implements IExampleOverlay {
-  d?: string;
+  d?: Said;
   language: string;
   type: OverlayTypes.Example;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   attribute_examples?: ExamplesFields<string>;
+  oca_bundle: any;
 
-  constructor(example: ExampleInput, capture_base: OcaBundleCaptureBase) {
+  constructor(example: ExampleInput, oca_bundle: any) {
+    if (!example || !oca_bundle) {
+      throw new Error('Example or OCA bundle is undefined or null.');
+    }
     this.type = OverlayTypes.Example;
     this.language = example.language;
-    this.capture_base = capture_base;
+    this.oca_bundle = oca_bundle;
+    this.capture_base = getDigest(this.oca_bundle);
     this.attribute_examples = example.attribute_examples;
   }
 
-  attributes(): { key: string; value: string[] }[] {
+  public attributes(): { key: string; value: string[] }[] {
     const sorted_attribute_examples: { key: string; value: string[] }[] = [];
 
     if (this.attribute_examples) {
       for (const key in this.attribute_examples) {
         if (Object.prototype.hasOwnProperty.call(this.attribute_examples, key)) {
+          if (!isPresent(key, this.oca_bundle)) {
+            throw new Error(`Attribute ${key} not found in OCA bundle Capture Base`);
+          }
           sorted_attribute_examples.push({ key, value: this.attribute_examples[key] });
         }
       }
-
       // Sort the attribute examples by key
       sorted_attribute_examples.sort((a, b) => a.key.localeCompare(b.key));
     }
-
     return sorted_attribute_examples;
   }
 
@@ -60,8 +66,8 @@ export class ExampleOverlay implements IExampleOverlay {
     return {
       d: '',
       language: this.language,
-      type: 'adc/overlays/example/1.0',
-      capture_base: this.capture_base.d,
+      type: 'community/adc/overlays/example/1.0',
+      capture_base: this.capture_base,
       attribute_examples: example_inputs,
     };
   }
@@ -74,11 +80,13 @@ export class ExampleOverlay implements IExampleOverlay {
 
 class ExampleOverlaysContainer {
   private example_overlays: ExampleInput[] = [];
-  private capture_base: OcaBundleCaptureBase;
+  public capture_base: Said;
+  public oca_bundle: any;
 
-  constructor(example_overlays: ExampleInput[], capture_base: OcaBundleCaptureBase) {
+  constructor(example_overlays: ExampleInput[], oca_bundle: any) {
     this.example_overlays = example_overlays;
-    this.capture_base = capture_base;
+    this.capture_base = getDigest(oca_bundle);
+    this.oca_bundle = oca_bundle;
   }
 
   generate_overlay(): string {
@@ -87,7 +95,7 @@ class ExampleOverlaysContainer {
     }
 
     const example_ovs: ExampleOverlay[] = this.example_overlays.map(example => {
-      const example_ov = new ExampleOverlay(example, this.capture_base);
+      const example_ov = new ExampleOverlay(example, this.oca_bundle);
       return JSON.parse(example_ov.saidifying());
     });
 

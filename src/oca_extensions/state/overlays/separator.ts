@@ -1,91 +1,128 @@
-import { OcaBundleCaptureBase } from '../../extensions.js';
-import { OverlayTypes } from './overlalyTypes.js';
+/*
+Separator overlay
+
+This overlay is used to define the separators used in the dataset and the attributes in the dataset.
+
+Canoncial rules:
+- d, type, capture_base has to be present in this order
+- other properties (dataset_separator, attribute_separators) will be lexically sorted by key
+- attributes in attribute_separators will lexically sorted by key as currently current canonical rules applied in the OCA bundle
+
+- Example:
+{
+  "d": "said:...",
+  "type": "community/adc/overlays/separator/1.0",
+  "capture_base": "said:...",
+  "attribute_separators": {
+    "attribute_name": {
+      "attr1": {  
+        "delimiter": "...",
+        "escape": "..."
+      }
+    }
+  },
+  "dataset_separator": {
+    "delimiter": "...",
+    "escape": "..."
+  }
+}
+*/
+
+import { saidify } from 'saidify';
+import { getDigest, isPresent } from '../../../utils/helpers.js';
+import { Said, OverlayTypes } from '../../../types/types.js';
+
+export interface SeparatorOverlayInput {
+  type: string;
+  dataset_separator: SeparatorValues;
+  attribute_separators: { [key: string]: SeparatorValues };
+}
 
 export interface SeparatorsInput {
   type: string;
-  dataset_separator?: SeparatorsFields;
+  dataset_separator?: SeparatorValues;
   attribute_separators?: {
-    [key: string]: SeparatorsFields;
+    [key: string]: SeparatorValues;
   };
 }
 
 export interface ISeparatorOverlay {
-  said?: string;
+  said?: Said;
   type: OverlayTypes.Separator;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   dataset_separator?: SeparatorsInput['dataset_separator'];
   attribute_separators?: SeparatorsInput['attribute_separators'];
+  overlay_type(): string;
 }
 
-export interface SeparatorsFields {
+export interface SeparatorValues {
   delimiter: string;
   escape: string;
 }
 
-import { saidify } from 'saidify';
-
 class Separator implements ISeparatorOverlay {
-  said?: string;
+  said?: Said;
   type: OverlayTypes.Separator;
-  capture_base: OcaBundleCaptureBase;
+  capture_base: Said;
   dataset_separator?: SeparatorsInput['dataset_separator'];
   attribute_separators?: SeparatorsInput['attribute_separators'];
   separators: SeparatorsInput;
+  oca_bundle: any;
 
-  constructor(separators: SeparatorsInput, oca_bundle_capture_base: OcaBundleCaptureBase) {
+  constructor(separators: SeparatorsInput, oca_bundle: any) {
+    this.said = '';
     this.type = OverlayTypes.Separator;
     this.separators = separators;
-    this.capture_base = oca_bundle_capture_base;
+    this.oca_bundle = oca_bundle;
+    this.capture_base = getDigest(this.oca_bundle);
   }
 
-  oca_bundle_capture_base_said(): string {
-    return this.capture_base.d;
-  }
-
-  overlay_type(): string {
+  public overlay_type(): string {
     return this.type;
   }
 
-  attributes(): { key: string; value: SeparatorsFields }[] {
-    const sorted_attribute_separators: { key: string; value: SeparatorsFields }[] = [];
+  public attributes(): { key: string; value: SeparatorValues }[] {
+    const sorted_attribute_separators: { key: string; value: SeparatorValues }[] = [];
 
     if (this.separators.attribute_separators) {
       for (const key in this.separators.attribute_separators) {
         if (Object.prototype.hasOwnProperty.call(this.separators.attribute_separators, key)) {
+          if (!isPresent(key, this.oca_bundle)) {
+            throw new Error(`Attribute ${key} not found in OCA bundle Capture Base.`);
+          }
           sorted_attribute_separators.push({ key, value: this.separators.attribute_separators[key] });
         }
       }
-
       // Sort the attribute separators by key
       sorted_attribute_separators.sort((a, b) => a.key.localeCompare(b.key));
     }
-
     return sorted_attribute_separators;
   }
 
+  // serialize the separator overlay
   private toJSON(): object {
-    const serialized_attribute_separators: { [key: string]: SeparatorsFields } = {};
+    const serialized_attribute_separators: { [key: string]: SeparatorValues } = {};
 
     for (const attr of this.attributes()) {
       serialized_attribute_separators[attr.key] = attr.value;
     }
 
     return {
-      d: '',
-      type: 'adc/overlays/separator/1.0',
-      capture_base: this.oca_bundle_capture_base_said(),
+      d: this.said,
+      type: 'community/adc/overlays/separator/1.0',
+      capture_base: this.capture_base,
       dataset_separator: this.separators.dataset_separator,
       attribute_separators: serialized_attribute_separators,
     };
   }
 
-  saidifying(): string {
+  private saidifying(): Record<string, any> {
     const [, sad] = saidify(this.toJSON());
-    return JSON.stringify(sad);
+    return sad;
   }
 
-  generate_overlay(): string {
-    return this.saidifying();
+  public generate_overlay(): string {
+    return JSON.stringify(this.saidifying());
   }
 
   // TODO: find out if it neccessary to implement this methood for all overlays
