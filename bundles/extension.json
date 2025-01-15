@@ -1,7 +1,7 @@
 {
   "extensions": [
     {
-      "ordering_ov": {
+      "ordering_overlay": {
         "type": "ordering",
         "ordering_attributes": ["i", "d"],
         "ordering_entry_codes": {

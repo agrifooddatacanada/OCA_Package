@@ -23,7 +23,6 @@ class ExtensionContainer implements IExtensionContainer {
         // const extension = new Extension(extension_obj['extensions'][0], oca_bundle);
         const extension = new Extension((extension_obj as any)['extensions'][0], oca_bundle);
 
-
         this.extensionsContainer.push(JSON.parse(extension.generateExtension()));
       }
     } catch (error) {

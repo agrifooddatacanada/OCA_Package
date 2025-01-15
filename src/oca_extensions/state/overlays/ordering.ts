@@ -3,11 +3,11 @@ import { getDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
 
 export interface IOrdering {
-  ordering_ov: string[];
+  ordering_overlay: string[];
 }
 
 class Ordering implements IOrdering {
-  public ordering_ov: string[];
+  public ordering_overlay: string[];
   public oca_bundle: any;
   private extensionState: ExtensionState;
 
@@ -17,7 +17,7 @@ class Ordering implements IOrdering {
     }
     this.oca_bundle = oca_bundle;
     this.extensionState = extensionState;
-    this.ordering_ov = this.getAttributeOrdering();
+    this.ordering_overlay = this.getAttributeOrdering();
   }
 
   private getAttributeOrdering(): string[] {
@@ -31,7 +31,7 @@ class Ordering implements IOrdering {
   private toJSON(): object {
     return {
       d: '',
-      type: 'community/adc/ordering/1.0',
+      type: 'community/overlays/adc/ordering/1.0',
       capture_base: getDigest(this.oca_bundle),
       ordering_attribute: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),

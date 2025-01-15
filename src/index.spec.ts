@@ -44,7 +44,7 @@ describe('extension container', () => {
 });
 
 describe('oca package', () => {
-  it('should return a serialized oca package string', () => {
+  it('should return a serialized oca package', () => {
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
 
@@ -55,12 +55,12 @@ describe('oca package', () => {
     const oca_package = oca_package_instance.generateOcaPackage();
 
     console.log(typeof oca_package);
-    // console.log(oca_package);
+    console.log(oca_package);
 
     expect(typeof oca_package).toBe('string');
     expect(() => JSON.parse(oca_package)).not.toThrow();
     const parsedOcaPackage = JSON.parse(oca_package);
-    console.dir(parsedOcaPackage, { depth: null });
-    expect(parsedOcaPackage.d).toBe('ELsnZ1r64bnZFbcGYuxZTwt0apSZ-wksb0fzVcV7_hZF');
+    // console.dir(parsedOcaPackage, { depth: null });
+    expect(parsedOcaPackage.d).toBe('EMPEq444F7ByZup3npz-v32f5oTO51hBVT-aLmd0md8y');
   });
 });

@@ -4,7 +4,7 @@ import { Said } from '../types/types.js';
 import { saidify } from 'saidify';
 
 export interface ExtensionInputJson {
-  ordering_ov?: {
+  ordering_overlay?: {
     ordering_attributes: any;
     ordering_entry_codes?: Record<string, any>;
   };
@@ -31,15 +31,15 @@ export class ExtensionState implements IExtensionState {
   }
 
   private extractAttributeOrdering(extension_obj: ExtensionInputJson): string[] {
-    if (extension_obj['ordering_ov']) {
-      return extension_obj.ordering_ov.ordering_attributes;
+    if (extension_obj['ordering_overlay']) {
+      return extension_obj.ordering_overlay?.ordering_attributes;
     } else {
       throw new Error('Ordering overlay is required');
     }
   }
 
   private extractEntryCodeOrdering(extension_obj: ExtensionInputJson): Record<string, any> {
-    return extension_obj.ordering_ov ? extension_obj.ordering_ov.ordering_entry_codes || {} : {};
+    return extension_obj.ordering_overlay ? extension_obj.ordering_overlay.ordering_entry_codes || {} : {};
   }
 
   public get ordering_arr(): string[] {
