@@ -61,6 +61,7 @@ describe('oca package', () => {
     expect(() => JSON.parse(oca_package)).not.toThrow();
     const parsedOcaPackage = JSON.parse(oca_package);
     // console.dir(parsedOcaPackage, { depth: null });
-    expect(parsedOcaPackage.d).toBe('EMPEq444F7ByZup3npz-v32f5oTO51hBVT-aLmd0md8y');
+    expect(parsedOcaPackage.d).toBe('EBpX82P-HmRjGe3Qr-zQbQmvN7uqxVh0Xt_nM61I9oqA');
+
   });
 });
