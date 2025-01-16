@@ -1,4 +1,4 @@
-name: pushing to dev
+name: pushing to main
 
 on:
   push:
