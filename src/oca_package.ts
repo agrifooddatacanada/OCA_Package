@@ -33,7 +33,7 @@ class OcaPackage implements IOcaPackage {
       const extension_container = this.extensions.generate_extensions(this.extension_input, this.oca_bundle);
       return {
         d: '',
-        type: 'adc/oca_package/1.0',
+        type: 'oca_package/1.0',
         oca_bundle: this.oca_bundle,
         extensions: extension_container,
       };

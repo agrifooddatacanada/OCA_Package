@@ -1,6 +1,6 @@
 {
   "name": "oca_package",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The wrapper of OCA bundle to generate OCA Package at ADC",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -15,9 +15,8 @@
   },
   "keywords": [
     "oca",
-    "oca-package",
-    "oca-extensions",
-    "ordering overlay"
+    "oca_package",
+    "oca extensions"
   ],
   "sideEffects": false,
   "files": [
@@ -35,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/agrifooddatacanada/OCA_Package.git"
+    "url": "https://github.com/agrifooddatacanada/OCA_Package"
   },
   "author": "Steven Mugisha Mizero <smugisha@uoguelph.ca>",
   "license": "EUPL-1.2",
