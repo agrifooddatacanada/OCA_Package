@@ -21,8 +21,8 @@ const extension = {
     {
       ordering_overlay: {
         type: 'ordering',
-        ordering_attributes: ['i', 'd'],
-        ordering_entry_codes: {
+        attribute_ordering: ['i', 'd'],
+        entry_codes_ordering: {
           i: ['Google', 'ISNI', 'ORCiD', 'ResearcherID', 'Scopus'],
           d: ['001', '002', '003', '004', '005'],
         },
@@ -145,5 +145,5 @@ const oca_bundle = {
 };
 
 const oca_package = new OcaPackage(extension, oca_bundle);
-expect(JSON.parse(oca_package.generateOcaPackage()).d).toBe('EBpX82P-HmRjGe3Qr-zQbQmvN7uqxVh0Xt_nM61I9oqA');
+expect(JSON.parse(oca_package.generateOcaPackage()).d).toBe('EGww-Ni9LMDNY3BiiYH7u_AP6UK4_XoZ1BerppSe4oLE');
 ```

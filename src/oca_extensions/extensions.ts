@@ -5,13 +5,13 @@ import { saidify } from 'saidify';
 
 export interface ExtensionInputJson {
   ordering_overlay?: {
-    ordering_attributes: any;
-    ordering_entry_codes?: Record<string, any>;
+    attribute_ordering: any;
+    entry_code_ordering?: Record<string, any>;
   };
 }
 
 export interface IExtensionState {
-  ordering_arr: string[];
+  attribute_ordering_arr: string[];
   entry_code_ordering_arr: object;
   // attributes: Attribute[];
 }
@@ -32,17 +32,17 @@ export class ExtensionState implements IExtensionState {
 
   private extractAttributeOrdering(extension_obj: ExtensionInputJson): string[] {
     if (extension_obj['ordering_overlay']) {
-      return extension_obj.ordering_overlay?.ordering_attributes;
+      return extension_obj.ordering_overlay?.attribute_ordering;
     } else {
       throw new Error('Ordering overlay is required');
     }
   }
 
   private extractEntryCodeOrdering(extension_obj: ExtensionInputJson): Record<string, any> {
-    return extension_obj.ordering_overlay ? extension_obj.ordering_overlay.ordering_entry_codes || {} : {};
+    return extension_obj.ordering_overlay ? extension_obj.ordering_overlay.entry_code_ordering || {} : {};
   }
 
-  public get ordering_arr(): string[] {
+  public get attribute_ordering_arr(): string[] {
     return this._attributes_ordering_arr;
   }
 
@@ -81,7 +81,7 @@ class Extension implements IExtension {
     const overlays: Record<string, any> = {};
 
     try {
-      if (this.extensionState.ordering_arr) {
+      if (this.extensionState.attribute_ordering_arr) {
         const ordering = new Ordering(this.extensionState, this.oca_bundle);
         overlays['ordering'] = JSON.parse(ordering.generateOverlay());
       }
