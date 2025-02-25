@@ -1,5 +1,5 @@
 {
-  "d": "EGww-Ni9LMDNY3BiiYH7u_AP6UK4_XoZ1BerppSe4oLE",
+  "d": "EK6sIfmeA5LCud5GqTGkClIXyWTJ7_VXd4Sv43TffVAH",
   "type": "oca_package/1.0",
   "oca_bundle": {
     "v": "OCAA11JSON0008bc_",
@@ -84,19 +84,16 @@
   },
   "extensions": [
     {
-      "d": "EPVCGQSbZauj6Yuu0Bj_eXhb_1YY8DLRs0LaaxXq4qRv",
+      "d": "ECE38YhKvnJ9jnFQigJs17rwoxs5hfqrARvn_zPeRe3Q",
       "type": "community/adc/extension/1.0",
       "bundle_digest": "ECpSix7tE3wyQM5jH5oaqdizR77rWdQ_BDP3AJn-Jykz",
       "overlays": {
         "ordering": {
-          "d": "EFgKWDOmf5r_jEVNVFYR8M9h2p8TXo-RQrZUzfv8nK9h",
+          "d": "EPekRl2mblENs-8A1XKVwDGyz_yrrW0o5hYxifNyiTjA",
           "type": "community/overlays/adc/ordering/1.0",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
           "attribute_ordering": ["i", "d"],
-          "entry_code_ordering": {
-            "i": ["Google", "ISNI", "ORCiD", "ResearcherID", "Scopus"],
-            "d": ["001", "002", "003", "004", "005"]
-          }
+          "entry_code_ordering": { "i": ["G", "I", "O", "R", "S"], "d": ["001", "002", "003", "004", "005"] }
         }
       }
     }

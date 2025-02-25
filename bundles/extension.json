@@ -5,7 +5,7 @@
         "type": "ordering",
         "attribute_ordering": ["i", "d"],
         "entry_code_ordering": {
-          "i": ["Google", "ISNI", "ORCiD", "ResearcherID", "Scopus"],
+          "i": ["G", "I", "O", "R", "S"],
           "d": ["001", "002", "003", "004", "005"]
         }
       }

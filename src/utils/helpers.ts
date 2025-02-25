@@ -54,3 +54,7 @@ export const ocabundleDigest = (oca_bundle: any): string => {
     throw new Error(`Failed to get the oca bundle digest: ${error.message}`);
   }
 };
+
+export const isSaid = (value: any): value is Said => {
+  return typeof value === 'string' && value.length == 44;
+};

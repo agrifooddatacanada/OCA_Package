@@ -1,0 +1,101 @@
+{
+  "v": "OCAA11JSON00080e_",
+  "bundle": {
+    "v": "OCAS11JSON00024b_",
+    "d": "EMJBLxoU5SS7mFzwZ3tD2-j8ffRWZ2tbrryN3cfU6f-f",
+    "capture_base": {
+      "d": "EIWetiMASdYLay1G_RuuCWuhUXPCitYooZJVVyLNdfPl",
+      "type": "spec/capture_base/1.0",
+      "attributes": {
+        "book": "refs:EGGIeXkf9a7vpl4njjMVTDXAb_ZueZ9fVsmb8SzXYdl1",
+        "library.location": "Text",
+        "library.name": "Text"
+      },
+      "classification": "",
+      "flagged_attributes": []
+    },
+    "overlays": {
+      "meta": [
+        {
+          "d": "EHRj6PqyOM9SE07qUS_PHKqHc_sDEAw5GXKZTkc4xPPe",
+          "capture_base": "EIWetiMASdYLay1G_RuuCWuhUXPCitYooZJVVyLNdfPl",
+          "type": "spec/overlays/meta/1.0",
+          "language": "eng",
+          "description": "Library of different books",
+          "name": "Library"
+        }
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "v": "OCAS11JSON00031b_",
+      "d": "EGGIeXkf9a7vpl4njjMVTDXAb_ZueZ9fVsmb8SzXYdl1",
+      "capture_base": {
+        "d": "EA0Y8RLK-9pRoT-jldE5K-VPwThHiapFflB-vI1VHjv_",
+        "type": "spec/capture_base/1.0",
+        "attributes": {
+          "book.author": "Text",
+          "book.id": "refs:EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf",
+          "book.name": "Text"
+        },
+        "classification": "",
+        "flagged_attributes": []
+      },
+      "overlays": {
+        "conformance": {
+          "d": "ENt7GowzmO8XcwlDCVcGkDcoItxGbtNIuek2xPHcDusM",
+          "capture_base": "EA0Y8RLK-9pRoT-jldE5K-VPwThHiapFflB-vI1VHjv_",
+          "type": "spec/overlays/conformance/1.0",
+          "attribute_conformance": {
+            "book.author": "M",
+            "book.id": "M"
+          }
+        },
+        "meta": [
+          {
+            "d": "EDFw4CtnsqyeGas_MWVLAOgt1tMGmb7m33YrdiT7NBo1",
+            "capture_base": "EA0Y8RLK-9pRoT-jldE5K-VPwThHiapFflB-vI1VHjv_",
+            "type": "spec/overlays/meta/1.0",
+            "language": "eng",
+            "description": "Book",
+            "name": "Book Description"
+          }
+        ]
+      }
+    },
+    {
+      "v": "OCAS11JSON0002ba_",
+      "d": "EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf",
+      "capture_base": {
+        "d": "EIYnEvFv8mVhaNdHFgeLZZVwO9B1u3DeG0qvrJywe2AW",
+        "type": "spec/capture_base/1.0",
+        "attributes": {
+          "book.id": "Text"
+        },
+        "classification": "",
+        "flagged_attributes": []
+      },
+      "overlays": {
+        "conformance": {
+          "d": "EKFM8ic77N16E15PMPdnuU7QxEb01ZuCXhBrrdI_5QDc",
+          "capture_base": "EIYnEvFv8mVhaNdHFgeLZZVwO9B1u3DeG0qvrJywe2AW",
+          "type": "spec/overlays/conformance/1.0",
+          "attribute_conformance": {
+            "book.id": "M"
+          }
+        },
+        "meta": [
+          {
+            "d": "EOCpQmT_Yj-efLRP8Dq_XKVjUg7rD4ZAfvc-WDOjQlIm",
+            "capture_base": "EIYnEvFv8mVhaNdHFgeLZZVwO9B1u3DeG0qvrJywe2AW",
+            "type": "spec/overlays/meta/1.0",
+            "language": "eng",
+            "description": "Book ID",
+            "name": "Book Identification"
+          }
+        ]
+      }
+    }
+  ]
+}

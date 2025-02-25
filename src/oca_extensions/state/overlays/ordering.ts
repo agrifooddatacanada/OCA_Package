@@ -1,6 +1,8 @@
-import { ExtensionState } from '../../extensions.js';
-import { getDigest } from '../../../utils/helpers.js';
+// import { ExtensionState } from '../../extensions.js';
+import { DynOverlay } from '../../extensions.js';
+import { getDigest, ocabundleDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
+import { Said } from '../../../types/types.js';
 
 export interface IOrdering {
   ordering_overlay: string[];
@@ -9,23 +11,25 @@ export interface IOrdering {
 class Ordering implements IOrdering {
   public ordering_overlay: string[];
   public oca_bundle: any;
-  private extensionState: ExtensionState;
+  public dynOverlay: DynOverlay;
+  public oca_bundle_digest: Said;
 
-  constructor(extensionState: ExtensionState, oca_bundle: any) {
-    if (!oca_bundle || !extensionState) {
-      throw new Error('OCA bundle and ExtensionState are required');
+  constructor(dynOverlay: DynOverlay, oca_bundle: any) {
+    if (!oca_bundle || !dynOverlay) {
+      throw new Error('OCA bundle and a dynamic extension overlay are required');
     }
     this.oca_bundle = oca_bundle;
-    this.extensionState = extensionState;
+    this.dynOverlay = dynOverlay;
     this.ordering_overlay = this.getAttributeOrdering();
+    this.oca_bundle_digest = ocabundleDigest(this.oca_bundle);
   }
 
-  private getAttributeOrdering(): string[] {
-    return this.extensionState.attribute_ordering_arr;
+  private getAttributeOrdering(): any[] {
+    return this.dynOverlay.ordering_overlay.attribute_ordering;
   }
 
   private getEntryCodeOrdering(): object {
-    return this.extensionState.entry_code_ordering_arr;
+    return this.dynOverlay.ordering_overlay.entry_code_ordering;
   }
 
   private toJSON(): object {

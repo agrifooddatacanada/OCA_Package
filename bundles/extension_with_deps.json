@@ -1,0 +1,34 @@
+{
+  "extensions": {
+    "adc": {
+      "EMJBLxoU5SS7mFzwZ3tD2-j8ffRWZ2tbrryN3cfU6f-f": [
+        {
+          "ordering_overlay": {
+            "type": "ordering",
+            "attribute_ordering": ["library.name", "library.location", "book"],
+            "entry_code_ordering": {}
+          }
+        }
+      ],
+      "EGGIeXkf9a7vpl4njjMVTDXAb_ZueZ9fVsmb8SzXYdl1": [
+        {
+          "ordering_overlay": {
+            "type": "ordering",
+            "attribute_ordering": ["book.name", "book.author", "book.id"],
+            "entry_code_ordering": {}
+          }
+        }
+      ]
+    },
+    "example": {
+      "EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf": [
+        {
+          "attribute_ordering": {
+            "type": "attribute_ordering",
+            "attributes": ["book.id"]
+          }
+        }
+      ]
+    }
+  }
+}

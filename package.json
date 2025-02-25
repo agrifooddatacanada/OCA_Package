@@ -51,8 +51,9 @@
     "vitest": "^2.1.5"
   },
   "dependencies": {
+    "assert": "^2.1.0",
     "canonicalize": "^2.0.0",
-    "oca.js": "^0.5.4",
-    "saidify": "^0.2.2"
+    "saidify": "^0.2.2",
+    "util": "^0.12.5"
   }
 }
