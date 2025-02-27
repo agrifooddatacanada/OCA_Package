@@ -1,15 +1,15 @@
-// import { ExtensionState } from '../../extensions.js';
 import { DynOverlay } from '../../extensions.js';
 import { getDigest, ocabundleDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
 import { Said } from '../../../types/types.js';
 
 export interface IOrdering {
-  ordering_overlay: string[];
+  readonly oca_bundle: any;
+  dynOverlay: DynOverlay;
+  generateOverlay(): string;
 }
 
 class Ordering implements IOrdering {
-  public ordering_overlay: string[];
   public oca_bundle: any;
   public dynOverlay: DynOverlay;
   public oca_bundle_digest: Said;
@@ -20,7 +20,6 @@ class Ordering implements IOrdering {
     }
     this.oca_bundle = oca_bundle;
     this.dynOverlay = dynOverlay;
-    this.ordering_overlay = this.getAttributeOrdering();
     this.oca_bundle_digest = ocabundleDigest(this.oca_bundle);
   }
 

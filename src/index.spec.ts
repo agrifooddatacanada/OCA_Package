@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 // import Extension, { ExtensionInputJson } from './oca_extensions/extensions';
 // import ExtensionContainer from './oca_extensions/state/extenstionContainer';
-// import OcaPackage from './oca_package';
+import OcaPackage from './oca_package';
 import path from 'path';
 import fs from 'fs';
-import { ExtensionState, DynOverlay, Overlay } from './oca_extensions/extensions';
+import ExtensionBox, { ExtensionState, DynOverlay, Overlay } from './oca_extensions/extensions';
 
 // describe('extension overlay', () => {
 //   it('should return a saidified extension overlay', () => {
@@ -70,37 +70,12 @@ describe('extension state: ', () => {
   it('should a dynamic extension state', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension_with_deps.json');
     let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
-    // extension_obj = extension_obj['extensions'][0];
-
-    // console.dir(extension_obj, { depth: null });
-
-    const extensionState = new ExtensionState(extension_obj);
-
-    const dynOverlay = {
-      ordering_overlay: {
-        type: 'ordering',
-        attribute_ordering: ['library.name', 'library.location', 'book'],
-        entry_code_ordering: {},
-      },
-    };
-
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle_with_deps.json');
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
 
-    const overlay = new Overlay(dynOverlay, oca_bundle);
+    const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
+    const oca_package = oca_package_instance.generateOcaPackage();
 
-    const overlayObj = overlay.generateOverlay();
-    console.dir(overlayObj, { depth: null });
-
-    // const extension_instance = new Extension(extension_obj, oca_bundle);
-
-    // const extension = extension_instance.generateExtension();
-
-    // expect(extension).to.be.a('string');
-    // const parsedExtension = JSON.parse(extension);
-    // expect(parsedExtension).to.have.property('d');
-    // expect(parsedExtension).to.have.property('type', 'community/adc/extension/1.0');
-    // expect(parsedExtension).to.have.property('bundle_digest');
-    // expect(parsedExtension).to.have.property('overlays');
+    console.dir(JSON.parse(oca_package), { depth: null });
   });
 });
