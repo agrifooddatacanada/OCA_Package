@@ -22,7 +22,7 @@ export interface IExtensionState {
 
 export class ExtensionState {
   private _extension_input_json: ExtensionInputJson;
-  public _extensionState: IExtensionState;
+  private _extensionState: IExtensionState;
 
   constructor(ExtensionInputJson: ExtensionInputJson) {
     this._extension_input_json = ExtensionInputJson;
@@ -41,6 +41,10 @@ export class ExtensionState {
     }
 
     return state;
+  }
+
+  public get extensions(): IExtensionState {
+    return this._extensionState;
   }
 }
 
@@ -108,11 +112,15 @@ export class Extension implements IExtension {
 
   private generateOverlays(): DynOverlay[] {
     const overlays: DynOverlay[] = [];
+    const extensionState_communities = this._extensionState.extensions;
 
     switch (this._community) {
       case ADC_COMMUNITY:
-        for (const bundle_digest in this._extensionState._extensionState[this._community]) {
-          for (const overlay of this._extensionState._extensionState[this._community][bundle_digest]) {
+        for (const bundle_digest in extensionState_communities.extensions[this._community]) {
+          const current_extension: DynOverlay = extensionState_communities.extensions[this._community][bundle_digest];
+
+          for (const overlayType in current_extension) {
+            const overlay = current_extension[overlayType];
             let current_oca_bundle = '';
 
             if (this.hasUsedParentOcaBundle === false) {
@@ -171,10 +179,12 @@ class ExtensionBox {
 
   public generateExtensionsBox(): ExtensionBoxType[] {
     const extensionState = new ExtensionState(this._extension_input_json);
+    const extensionState_communities = extensionState.extensions;
 
-    for (const community in extensionState._extensionState) {
+    for (const community in extensionState_communities.extensions) {
       this._extensions_box[community] = [];
       const extension = new Extension(this._extension_input_json, this._oca_bundle, community);
+
       this._extensions_box[community].push(JSON.parse(extension.generateExtension()));
     }
     return this._extensions_box;

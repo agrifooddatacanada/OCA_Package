@@ -67,15 +67,21 @@ import ExtensionBox, { ExtensionState, DynOverlay, Overlay } from './oca_extensi
 // });
 
 describe('extension state: ', () => {
-  it('should a dynamic extension state', () => {
+  it('should produce a dynamic extension state', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension_with_deps.json');
     let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle_with_deps.json');
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
 
+    const extension_state = new ExtensionBox(extension_obj, oca_bundle);
+    const extension_state_obj = extension_state.generateExtensionsBox();
+
+    console.dir(extension_state_obj, { depth: null });
+
+  
     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
     const oca_package = oca_package_instance.generateOcaPackage();
 
-    console.dir(JSON.parse(oca_package), { depth: null });
+    // console.dir(JSON.parse(oca_package), { depth: null });
   });
 });

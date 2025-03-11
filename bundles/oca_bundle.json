@@ -2,10 +2,10 @@
   "v": "OCAA11JSON0008bc_",
   "bundle": {
     "v": "OCAS11JSON00089f_",
-    "d": "ECpSix7tE3wyQM5jH5oaqdizR77rWdQ_BDP3AJn-Jykz",
+    "d": "EONqZyr2iKg7y-DsbftX2KKgSEuHAc96PWj3masbseNb",
     "capture_base": {
-      "d": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-      "type": "spec/capture_base/1.0",
+      "d": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+      "type": "spec/capture_base/1.1",
       "attributes": {
         "d": "Text",
         "i": "Text",
@@ -16,9 +16,9 @@
     },
     "overlays": {
       "character_encoding": {
-        "d": "ED6Eio9KG2jHdFg3gXQpc0PX2xEI7aHnGDOpjU6VBfjs",
-        "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-        "type": "spec/overlays/character_encoding/1.0",
+        "d": "EDWMDcwTNnJEoPNXyYlnIAnwKwW-dpjFYxkUmbmJnN3p",
+        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+        "type": "spec/overlays/character_encoding/1.1",
         "attribute_character_encoding": {
           "d": "utf-8",
           "i": "utf-8",
@@ -26,9 +26,9 @@
         }
       },
       "conformance": {
-        "d": "EJSRe8DnLonKf6GVT_bC1QHoY0lQOG6-ldqxu7pqVCU8",
-        "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-        "type": "spec/overlays/conformance/1.0",
+        "d": "ELOuO40fogTXK9B-7c4w8ARwscsRVZjO6B359uFSg68p",
+        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+        "type": "spec/overlays/conformance/1.1",
         "attribute_conformance": {
           "d": "M",
           "i": "M",
@@ -37,9 +37,9 @@
       },
       "entry": [
         {
-          "d": "EDQVwDAmYssKbGCcLYjYB_Kg5LPOgCTdT3ODzvXqKc1A",
-          "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-          "type": "spec/overlays/entry/1.0",
+          "d": "EP8ta__ra75Ef0HtjfmEGtYFhTGn4dwMkWF11gNC1kJ1",
+          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "type": "spec/overlays/entry/1.1",
           "language": "eng",
           "attribute_entries": {
             "d": {
@@ -60,9 +60,9 @@
         }
       ],
       "entry_code": {
-        "d": "EHrwr6xT_k3PHwd0y8RbIPGe0hDaELjJbjrKs_o8LfGY",
-        "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-        "type": "spec/overlays/entry_code/1.0",
+        "d": "ELi_sf0fZwFC0YsW_7vPkbpTj-nvLgOz0yYFdo44lQ6W",
+        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+        "type": "spec/overlays/entry_code/1.1",
         "attribute_entry_codes": {
           "d": ["001", "002", "003", "004", "005"],
           "i": ["G", "I", "O", "R", "S"]
@@ -70,9 +70,9 @@
       },
       "information": [
         {
-          "d": "EIBXpVvka3_4lheeajtitiafIP78Ig8LDMVX9dXpCC2l",
-          "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-          "type": "spec/overlays/information/1.0",
+          "d": "ENp-IQtGBgy5VEg1ex_ImVxlwcyKVhXCyGY0zQ1gsAeT",
+          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "type": "spec/overlays/information/1.1",
           "language": "eng",
           "attribute_information": {
             "d": "Schema digest",
@@ -83,9 +83,9 @@
       ],
       "label": [
         {
-          "d": "ECZc26INzjxVbNo7-hln6xN3HW3e1r6NGDmA5ogRo6ef",
-          "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-          "type": "spec/overlays/label/1.0",
+          "d": "EOa8JNfp1XcdDUYApKl7cVid4e8pkPt7M1Q4Q-ShGf2T",
+          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "type": "spec/overlays/label/1.1",
           "language": "eng",
           "attribute_categories": [],
           "attribute_labels": {
@@ -98,9 +98,9 @@
       ],
       "meta": [
         {
-          "d": "EOxvie-zslkGmFzVqYAzTVtO7RyFXAG8aCqE0OougnGV",
-          "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-          "type": "spec/overlays/meta/1.0",
+          "d": "ELXVRNIxfYpsiOmcesbjUTASnWfdYZ_6eHE3VEqbx3Qm",
+          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "type": "spec/overlays/meta/1.1",
           "language": "eng",
           "description": "Entrance credential",
           "name": "Entrance credential"
