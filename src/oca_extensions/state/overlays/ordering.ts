@@ -21,7 +21,7 @@ class Ordering implements IOrdering {
   }
 
   private getAttributeOrdering(): string[] {
-    return this.extensionState.ordering_arr;
+    return this.extensionState.attribute_ordering_arr;
   }
 
   private getEntryCodeOrdering(): object {
@@ -33,7 +33,7 @@ class Ordering implements IOrdering {
       d: '',
       type: 'community/overlays/adc/ordering/1.1',
       capture_base: getDigest(this.oca_bundle),
-      ordering_attribute: this.getAttributeOrdering(),
+      attribute_ordering: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),
     };
   }

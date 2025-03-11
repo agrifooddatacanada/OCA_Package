@@ -1,5 +1,5 @@
 {
-  "d": "EEuopafp8gTROTWi7FTmzwJfP4QHitmQMY-s971y43Lc",
+  "d": "EGww-Ni9LMDNY3BiiYH7u_AP6UK4_XoZ1BerppSe4oLE",
   "type": "oca_package/1.0",
   "oca_bundle": {
     "v": "OCAA11JSON0008bc_",
@@ -115,15 +115,15 @@
   },
   "extensions": [
     {
-      "d": "EAbhG2eWjfB4Y8WbDOEzG8iRKFSyQvpo0vjHavxQmOmZ",
+      "d": "EPVCGQSbZauj6Yuu0Bj_eXhb_1YY8DLRs0LaaxXq4qRv",
       "type": "community/adc/extension/1.0",
       "bundle_digest": "ECpSix7tE3wyQM5jH5oaqdizR77rWdQ_BDP3AJn-Jykz",
       "overlays": {
         "ordering": {
-          "d": "EFqSh09N-NnaVIcxg2XatgshxZlt1wDHsuauhSJZL8Ni",
-          "type": "community/overlays/adc/ordering/1.1",
+          "d": "EFgKWDOmf5r_jEVNVFYR8M9h2p8TXo-RQrZUzfv8nK9h",
+          "type": "community/overlays/adc/ordering/1.0",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
-          "ordering_attribute": ["i", "d"],
+          "attribute_ordering": ["i", "d"],
           "entry_code_ordering": {
             "i": ["Google", "ISNI", "ORCiD", "ResearcherID", "Scopus"],
             "d": ["001", "002", "003", "004", "005"]
