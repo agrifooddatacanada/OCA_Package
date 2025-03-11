@@ -145,5 +145,5 @@ const oca_bundle = {
 };
 
 const oca_package = new OcaPackage(extension, oca_bundle);
-expect(JSON.parse(oca_package.generateOcaPackage()).d).toBe('EEPEKJapIJ8rLCjj0ahr4Bty9kjIfGr5xwx8-M_skoBO');
+expect(JSON.parse(oca_package.generateOcaPackage()).d).toBe('EAMvqPRrf6F_8aERtYd02F3ts_e9fmh5th1e_4JDkqZn');
 ```
