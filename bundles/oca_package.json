@@ -1,5 +1,5 @@
 {
-  "d": "EBpX82P-HmRjGe3Qr-zQbQmvN7uqxVh0Xt_nM61I9oqA",
+  "d": "EEuopafp8gTROTWi7FTmzwJfP4QHitmQMY-s971y43Lc",
   "type": "oca_package/1.0",
   "oca_bundle": {
     "v": "OCAA11JSON0008bc_",
@@ -9,7 +9,11 @@
       "capture_base": {
         "d": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
         "type": "spec/capture_base/1.0",
-        "attributes": { "d": "Text", "i": "Text", "passed": "Boolean" },
+        "attributes": {
+          "d": "Text",
+          "i": "Text",
+          "passed": "Boolean"
+        },
         "classification": "",
         "flagged_attributes": []
       },
@@ -18,13 +22,21 @@
           "d": "ED6Eio9KG2jHdFg3gXQpc0PX2xEI7aHnGDOpjU6VBfjs",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
           "type": "spec/overlays/character_encoding/1.0",
-          "attribute_character_encoding": { "d": "utf-8", "i": "utf-8", "passed": "utf-8" }
+          "attribute_character_encoding": {
+            "d": "utf-8",
+            "i": "utf-8",
+            "passed": "utf-8"
+          }
         },
         "conformance": {
           "d": "EJSRe8DnLonKf6GVT_bC1QHoY0lQOG6-ldqxu7pqVCU8",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
           "type": "spec/overlays/conformance/1.0",
-          "attribute_conformance": { "d": "M", "i": "M", "passed": "M" }
+          "attribute_conformance": {
+            "d": "M",
+            "i": "M",
+            "passed": "M"
+          }
         },
         "entry": [
           {
@@ -33,8 +45,20 @@
             "type": "spec/overlays/entry/1.0",
             "language": "eng",
             "attribute_entries": {
-              "d": { "001": "code1", "002": "code2", "003": "code3", "004": "code4", "005": "code5" },
-              "i": { "G": "Google", "I": "ISNI", "O": "ORCiD", "R": "ResearcherID", "S": "Scopus" }
+              "d": {
+                "001": "code1",
+                "002": "code2",
+                "003": "code3",
+                "004": "code4",
+                "005": "code5"
+              },
+              "i": {
+                "G": "Google",
+                "I": "ISNI",
+                "O": "ORCiD",
+                "R": "ResearcherID",
+                "S": "Scopus"
+              }
             }
           }
         ],
@@ -42,7 +66,10 @@
           "d": "EHrwr6xT_k3PHwd0y8RbIPGe0hDaELjJbjrKs_o8LfGY",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
           "type": "spec/overlays/entry_code/1.0",
-          "attribute_entry_codes": { "d": ["001", "002", "003", "004", "005"], "i": ["G", "I", "O", "R", "S"] }
+          "attribute_entry_codes": {
+            "d": ["001", "002", "003", "004", "005"],
+            "i": ["G", "I", "O", "R", "S"]
+          }
         },
         "information": [
           {
@@ -64,7 +91,11 @@
             "type": "spec/overlays/label/1.0",
             "language": "eng",
             "attribute_categories": [],
-            "attribute_labels": { "d": "Schema digest", "i": "Credential Issuee", "passed": "Passed" },
+            "attribute_labels": {
+              "d": "Schema digest",
+              "i": "Credential Issuee",
+              "passed": "Passed"
+            },
             "category_labels": {}
           }
         ],
@@ -84,13 +115,13 @@
   },
   "extensions": [
     {
-      "d": "EEF4pNTAr85MbkbxG5D-vT1ifpm8S4Tzjy-1xK-rCEYy",
+      "d": "EAbhG2eWjfB4Y8WbDOEzG8iRKFSyQvpo0vjHavxQmOmZ",
       "type": "community/adc/extension/1.0",
       "bundle_digest": "ECpSix7tE3wyQM5jH5oaqdizR77rWdQ_BDP3AJn-Jykz",
       "overlays": {
         "ordering": {
-          "d": "EODHWbxqH_qIGfAtiDV5dmq2J63JBjqefqEu50qKq_q8",
-          "type": "community/overlays/adc/ordering/1.0",
+          "d": "EFqSh09N-NnaVIcxg2XatgshxZlt1wDHsuauhSJZL8Ni",
+          "type": "community/overlays/adc/ordering/1.1",
           "capture_base": "EBnF9U9XW1EqteIW0ucAR4CsTUqojvfIWkeifsLRuOUW",
           "ordering_attribute": ["i", "d"],
           "entry_code_ordering": {

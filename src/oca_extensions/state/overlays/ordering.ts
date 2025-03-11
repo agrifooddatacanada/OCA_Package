@@ -31,7 +31,7 @@ class Ordering implements IOrdering {
   private toJSON(): object {
     return {
       d: '',
-      type: 'community/overlays/adc/ordering/1.0',
+      type: 'community/overlays/adc/ordering/1.1',
       capture_base: getDigest(this.oca_bundle),
       ordering_attribute: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),
