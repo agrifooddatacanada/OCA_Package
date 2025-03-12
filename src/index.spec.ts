@@ -6,82 +6,23 @@ import path from 'path';
 import fs from 'fs';
 import ExtensionBox, { ExtensionState, DynOverlay, Overlay } from './oca_extensions/extensions';
 
-// describe('extension overlay', () => {
-//   it('should return a saidified extension overlay', () => {
-//     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
-//     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
-
-//     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
-//     let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
-//     extension_obj = extension_obj['extensions'][0];
-
-//     const extension_instance = new Extension(extension_obj, oca_bundle);
-
-//     const extension = extension_instance.generateExtension();
-
-//     expect(extension).to.be.a('string');
-//     const parsedExtension = JSON.parse(extension);
-//     expect(parsedExtension).to.have.property('d');
-//     expect(parsedExtension).to.have.property('type', 'community/adc/extension/1.0');
-//     expect(parsedExtension).to.have.property('bundle_digest');
-//     expect(parsedExtension).to.have.property('overlays');
-//   });
-// });
-
-// describe('extension container', () => {
-//   it('should return an array of serialized extension objects', () => {
-//     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
-//     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
-
-//     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
-//     const extension_obj: ExtensionInputJson = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
-
-//     const extension_container_instance = new ExtensionContainer();
-//     const extension_container = extension_container_instance.generate_extensions(extension_obj, oca_bundle);
-
-//     expect(extension_container).toBeInstanceOf(Array);
-//     expect(extension_container.length).toBe(1);
-//   });
-// });
-
-// describe('oca package', () => {
-//   it('should return a serialized oca package', () => {
-//     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
-//     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
-
-//     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
-//     const extension_obj: ExtensionInputJson = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
-
-//     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
-//     const oca_package = oca_package_instance.generateOcaPackage();
-
-//     // console.log(typeof oca_package);
-//     // console.log(oca_package);
-
-//     expect(typeof oca_package).toBe('string');
-//     expect(() => JSON.parse(oca_package)).not.toThrow();
-//     const parsedOcaPackage = JSON.parse(oca_package);
-//     // console.dir(parsedOcaPackage, { depth: null });
-//     expect(parsedOcaPackage.d).toBe('EK6sIfmeA5LCud5GqTGkClIXyWTJ7_VXd4Sv43TffVAH');
-//   });
-// });
-
-describe('extension state: ', () => {
-  it('should produce a dynamic extension state', () => {
+describe('oca-package: ', () => {
+  it('should produce serialized oca-package for multi-level schema', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension_with_deps.json');
     let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle_with_deps.json');
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
-
-    const extension_state = new ExtensionBox(extension_obj, oca_bundle);
-    const extension_state_obj = extension_state.generateExtensionsBox();
-
-    console.dir(extension_state_obj, { depth: null });
-
-  
     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
     const oca_package = oca_package_instance.generateOcaPackage();
 
-    // console.dir(JSON.parse(oca_package), { depth: null });
+    // console.log(oca_package);
+
+    expect(typeof oca_package).toBe('string');
+    expect(() => JSON.parse(oca_package)).not.toThrow();
+    const parsedOcaPackage = JSON.parse(oca_package);
+
+    console.dir(parsedOcaPackage, { depth: null });
+
+    expect(parsedOcaPackage.d).toBe('EO9qcIYd-jlup1lAwJfv7O6tA8FURYlU65vlF4Gow867');
   });
 });

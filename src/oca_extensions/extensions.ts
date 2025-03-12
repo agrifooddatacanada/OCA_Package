@@ -68,12 +68,15 @@ export class Overlay implements DynOverlay {
 
   public generateOverlay(): Required<DynOverlay> {
     const overlay: Required<DynOverlay> = {};
+    // const overlay: any = {};
 
     for (const ov_name in this._overlay) {
       switch (ov_name) {
         case 'ordering_overlay':
           const ordering = new Ordering(this._overlay, this._oca_bundle);
           overlay['ordering_overlay'] = JSON.parse(ordering.generateOverlay());
+          // overlay['ordering_overlay'] = ordering.generateOverlay();
+
           break;
 
         default:
@@ -159,25 +162,25 @@ export class Extension implements IExtension {
     return sad;
   }
 
-  public generateExtension(): string {
-    return JSON.stringify(this.saidifying());
+  public generateExtension(): any {
+    return this.saidifying();
   }
 }
 
 type ExtensionBoxType = { [community: string]: Extension[] };
 
 class ExtensionBox {
-  public _extensions_box: ExtensionBoxType[];
+  public _extensions_box: ExtensionBoxType;
   public _extension_input_json: ExtensionInputJson;
   public _oca_bundle: any;
 
   constructor(extension_input_json: ExtensionInputJson, oca_bundle: any) {
-    this._extensions_box = [];
+    this._extensions_box = {};
     this._extension_input_json = extension_input_json;
     this._oca_bundle = oca_bundle;
   }
 
-  public generateExtensionsBox(): ExtensionBoxType[] {
+  public generateExtensionsBox(): ExtensionBoxType {
     const extensionState = new ExtensionState(this._extension_input_json);
     const extensionState_communities = extensionState.extensions;
 
@@ -185,7 +188,7 @@ class ExtensionBox {
       this._extensions_box[community] = [];
       const extension = new Extension(this._extension_input_json, this._oca_bundle, community);
 
-      this._extensions_box[community].push(JSON.parse(extension.generateExtension()));
+      this._extensions_box[community].push(extension.generateExtension());
     }
     return this._extensions_box;
   }

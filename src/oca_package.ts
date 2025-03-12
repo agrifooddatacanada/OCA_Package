@@ -18,9 +18,9 @@ class OcaPackage implements IOcaPackage {
     this.oca_bundle = oca_bundle;
   }
 
-  private saidifying(): string {
+  private saidifying(): any {
     const [, sad] = saidify(this.toJSON());
-    return JSON.stringify(sad);
+    return sad;
   }
 
   public said(): string {
@@ -42,10 +42,7 @@ class OcaPackage implements IOcaPackage {
   }
 
   public generateOcaPackage(): string {
-    // console.log('I am here at least .....');
-    // console.log(this.extensions_box.generateExtensionsBox());
-
-    return this.saidifying();
+    return JSON.stringify(this.saidifying());
   }
 }
 
