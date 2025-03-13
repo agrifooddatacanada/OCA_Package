@@ -23,8 +23,8 @@
     "example": {
       "EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf": [
         {
-          "attribute_ordering": {
-            "type": "attribute_ordering",
+          "example_overlay": {
+            "type": "example_overlay",
             "attributes": ["book.id"]
           }
         }

@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 import OcaPackage from './oca_package';
 import path from 'path';
 import fs from 'fs';
-import ExtensionBox, { ExtensionState, DynOverlay, Overlay } from './oca_extensions/extensions';
+// import ExtensionBox, { ExtensionState, DynOverlay, Overlay, DynCommunityOverlay } from './oca_extensions/extensions';
 
 describe('oca-package: ', () => {
   it('should produce serialized oca-package for multi-level schema', () => {
@@ -15,14 +15,12 @@ describe('oca-package: ', () => {
     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
     const oca_package = oca_package_instance.generateOcaPackage();
 
-    // console.log(oca_package);
-
     expect(typeof oca_package).toBe('string');
     expect(() => JSON.parse(oca_package)).not.toThrow();
     const parsedOcaPackage = JSON.parse(oca_package);
 
     console.dir(parsedOcaPackage, { depth: null });
 
-    expect(parsedOcaPackage.d).toBe('EO9qcIYd-jlup1lAwJfv7O6tA8FURYlU65vlF4Gow867');
+    expect(parsedOcaPackage.d).toBe('EGeyIMV0AXQRDJP1JzsiImNAD-aM-1fsyI-uO8GYwWPw');
   });
 });
