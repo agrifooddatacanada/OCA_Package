@@ -1,6 +1,6 @@
 import Ordering from './state/overlays/ordering.js';
 import { Said } from '../types/types.js';
-import { ocabundleDigest, getOcaBundleFromDeps, getDigest } from '../utils/helpers.js';
+import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
 import { saidify } from 'saidify';
 
 const ADC_COMMUNITY = 'adc';
@@ -71,10 +71,10 @@ export class Overlay implements DynOverlay {
 
     for (const ov_name in this._overlay) {
       switch (ov_name) {
+        // TODO: change to ordering
         case 'ordering_overlay':
           const ordering = new Ordering(this._overlay, this._oca_bundle);
           overlay['ordering_overlay'] = JSON.parse(ordering.generateOverlay());
-          // overlay['ordering_overlay'] = ordering.generateOverlay();
 
           break;
 
@@ -89,8 +89,8 @@ export class Overlay implements DynOverlay {
 // Extension input key-value fields should follow the format of adc if they want to consume adc oca-package without any modification.
 // e.g: "example": {"EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf": [{"attribute_ordering": {"type": "attribute_ordering","attributes": ["book.id"]}}]}
 // where "example" is the community name, "EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf" is the bundle digest and "attribute_ordering" is the overlay name.
-// and the other properties specific to the overlay. In the above example we only have one overlay "attributes" which is an array of strings that contains the attribute names in the order they should appear.
-// The code below will then know how to work with the overlay and generate the serialized version of the extension, and integrate it with the oca-package.
+// and the other properties specific to the overlay. In the above example we only have one property "attributes" which is an array of strings that contains the attribute names in the order they should appear.
+// The code below will then know how to work with these properties & the whole overlay and generate the serialized version of the extension, and integrate it with the oca-package.
 export class DynCommunityOverlay {
   private communityExtensionInput: {
     [community: string]: {
@@ -106,12 +106,12 @@ export class DynCommunityOverlay {
     };
   }
 
-  private sadifying(capture_base: Said): Record<string, any> {
-    const [, sad] = saidify(this.toJSON(capture_base));
+  private sadifying(): Record<string, any> {
+    const [, sad] = saidify(this.toJSON());
     return sad;
   }
 
-  public toJSON(capture_base: Said): object {
+  public toJSON(): object {
     const community = Object.keys(this.communityExtensionInput)[0];
     const bundle_digest = Object.keys(this.communityExtensionInput[community])[0];
     const overlayData = this.communityExtensionInput[community][bundle_digest][0];
@@ -124,16 +124,16 @@ export class DynCommunityOverlay {
     return {
       d: '',
       type: `community/overlays/${community}/${overlay_type}/1.1`,
-      capture_base: capture_base,
       ...properties,
     };
   }
 
-  public generateCommunityOverlay(capture_base: Said): DynOverlay {
-    return this.sadifying(capture_base);
+  public generateCommunityOverlay(): DynOverlay {
+    return this.sadifying();
   }
 }
 
+// TODO: see the relevance of d, type and _community in IExtension?
 export interface IExtension {
   d: Said;
   type: string;
@@ -146,8 +146,7 @@ export class Extension implements IExtension {
   readonly type: string;
   readonly oca_bundle: any;
   public _extensionState: ExtensionState;
-  readonly overlays: DynOverlay[] = [];
-  private static hasUsedParentOcaBundle: boolean = false;
+  readonly overlays: { [key: string]: DynOverlay } = {};
 
   constructor(_extension_input_json: ExtensionInputJson, oca_bundle: any, community: string) {
     if (!_extension_input_json || !oca_bundle || !community) {
@@ -160,10 +159,10 @@ export class Extension implements IExtension {
     this.type = `community/${this._community}/extension/${SEM_VER}`;
   }
 
-  private generateOverlays(): DynOverlay[] {
-    const overlays: DynOverlay[] = [];
+  private generateOverlays(): { [key: string]: DynOverlay } {
     const extensionState_communities = this._extensionState.extensions;
 
+    // TODO: check the usefulness of having this.community and passing it as an argument to the Overlay class.
     switch (this._community) {
       case ADC_COMMUNITY:
         for (const bundle_digest in extensionState_communities.extensions[this._community]) {
@@ -171,17 +170,11 @@ export class Extension implements IExtension {
 
           for (const index in current_extension) {
             const overlay = current_extension[index];
-            let current_oca_bundle = '';
 
-            if (Extension.hasUsedParentOcaBundle === false) {
-              current_oca_bundle = this.oca_bundle;
-              Extension.hasUsedParentOcaBundle = true;
-            } else if (Extension.hasUsedParentOcaBundle === true) {
-              current_oca_bundle = getOcaBundleFromDeps(this.oca_bundle, bundle_digest);
-            }
-
-            const overlay_instance = new Overlay(overlay, current_oca_bundle);
-            overlays.push(overlay_instance.generateOverlay());
+            const overlay_instance = new Overlay(overlay, this.oca_bundle);
+            const generate_overlay = overlay_instance.generateOverlay();
+            const overlay_type = Object.keys(overlay)[0];
+            this.overlays[overlay_type] = generate_overlay[overlay_type];
           }
         }
         break;
@@ -192,35 +185,20 @@ export class Extension implements IExtension {
 
           for (const index in current_extension) {
             const overlay = current_extension[index];
-            const overlay_keys = Object.keys(overlay);
-            const overlay_type = overlay_keys[0];
-
-            let current_oca_bundle = '';
-
-            if (Extension.hasUsedParentOcaBundle === false) {
-              current_oca_bundle = this.oca_bundle;
-              Extension.hasUsedParentOcaBundle = true;
-            } else if (Extension.hasUsedParentOcaBundle === true) {
-              current_oca_bundle = getOcaBundleFromDeps(this.oca_bundle, bundle_digest);
-            }
-
+            const overlay_type = Object.keys(overlay)[0];
             const overlay_instance = new DynCommunityOverlay(this._community, bundle_digest, overlay);
-            const capture_base = getDigest(current_oca_bundle);
-            overlays.push({ [overlay_type]: overlay_instance.generateCommunityOverlay(capture_base) });
+            this.overlays[overlay_type] = overlay_instance.generateCommunityOverlay();
           }
         }
         break;
     }
-    return overlays;
+    return this.overlays;
   }
 
   private toJSON(): object {
-    const oca_bundle_digest = ocabundleDigest(this.oca_bundle);
-
     return {
       d: '',
       type: `community/${this._community}/extension/1.0`,
-      bundle_digest: oca_bundle_digest,
       overlays: this.generateOverlays(),
     };
   }
@@ -235,10 +213,9 @@ export class Extension implements IExtension {
   }
 }
 
-type ExtensionBoxType = { [community: string]: Extension[] };
-
+type ExtensionBoxType = { [community: string]: Extension };
 class ExtensionBox {
-  public _extensions_box: ExtensionBoxType;
+  public _extensions_box: {};
   public _extension_input_json: ExtensionInputJson;
   public _oca_bundle: any;
 
@@ -253,11 +230,26 @@ class ExtensionBox {
     const extensionState_communities = extensionState.extensions;
 
     for (const community in extensionState_communities.extensions) {
-      this._extensions_box[community] = [];
-      const extension = new Extension(this._extension_input_json, this._oca_bundle, community);
+      this._extensions_box[community] = {};
+      const current_community = extensionState_communities.extensions[community];
 
-      this._extensions_box[community].push(extension.generateExtension());
+      for (const bundle_digest in current_community) {
+        if (bundle_digest === ocabundleDigest(this._oca_bundle)) {
+          const capture_base_digest = getDigest(this._oca_bundle);
+          const extension = new Extension(this._extension_input_json, this._oca_bundle, community);
+          this._extensions_box[community][capture_base_digest] = extension.generateExtension();
+        } else if (bundle_digest !== ocabundleDigest(this._oca_bundle)) {
+          if (isOcaBundleWithDeps(this._oca_bundle)) {
+            const current_bundle = getOcaBundleFromDeps(this._oca_bundle, bundle_digest);
+            const capture_base_digest = getDigest(current_bundle);
+
+            const extension = new Extension(this._extension_input_json, current_bundle, community);
+            this._extensions_box[community][capture_base_digest] = extension.generateExtension();
+          }
+        }
+      }
     }
+
     return this._extensions_box;
   }
 }

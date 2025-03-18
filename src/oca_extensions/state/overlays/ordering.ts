@@ -35,7 +35,7 @@ class Ordering implements IOrdering {
     return {
       d: '',
       type: 'community/overlays/adc/ordering/1.0',
-      capture_base: getDigest(this.oca_bundle),
+      // capture_base: getDigest(this.oca_bundle),
       attribute_ordering: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),
     };
