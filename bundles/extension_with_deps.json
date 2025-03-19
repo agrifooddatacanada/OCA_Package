@@ -1,31 +1,23 @@
 {
   "extensions": {
     "adc": {
-      "EMJBLxoU5SS7mFzwZ3tD2-j8ffRWZ2tbrryN3cfU6f-f": [
+      "EDDBSQuhzsJtE9ksQxpWYVBblWwHhhtNxemYFeEFY1qX": [
         {
           "ordering_overlay": {
             "type": "ordering",
-            "attribute_ordering": ["library.name", "library.location", "book"],
-            "entry_code_ordering": {}
+            "attribute_ordering": ["book.title", "book.pages", "book.languages"],
+            "entry_code_ordering": {
+              "book.languages": { "book.languages": ["nb", "b"] }
+            }
           }
         }
       ],
-      "EGGIeXkf9a7vpl4njjMVTDXAb_ZueZ9fVsmb8SzXYdl1": [
+      "EKNGowNlfUGdnAiQ_2PdmzqUB705QgaWxvrYCwovlWqc": [
         {
           "ordering_overlay": {
             "type": "ordering",
-            "attribute_ordering": ["book.name", "book.author", "book.id"],
+            "attribute_ordering": ["page.number", "opened"],
             "entry_code_ordering": {}
-          }
-        }
-      ]
-    },
-    "example": {
-      "EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf": [
-        {
-          "example_overlay": {
-            "type": "example_overlay",
-            "attributes": ["book.id"]
           }
         }
       ]

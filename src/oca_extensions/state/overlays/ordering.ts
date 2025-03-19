@@ -1,26 +1,26 @@
 import { DynOverlay } from '../../extensions.js';
-import { getDigest, ocabundleDigest } from '../../../utils/helpers.js';
+// import { getDigest, ocabundleDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
 import { Said } from '../../../types/types.js';
 
 export interface IOrdering {
-  readonly oca_bundle: any;
+  // readonly oca_bundle: any;
   dynOverlay: DynOverlay;
   generateOverlay(): string;
 }
 
 class Ordering implements IOrdering {
-  public oca_bundle: any;
+  // public oca_bundle: any;
   public dynOverlay: DynOverlay;
   public oca_bundle_digest: Said;
 
-  constructor(dynOverlay: DynOverlay, oca_bundle: any) {
-    if (!oca_bundle || !dynOverlay) {
-      throw new Error('OCA bundle and a dynamic extension overlay are required');
+  constructor(dynOverlay: DynOverlay) {
+    if (!dynOverlay) {
+      throw new Error('a dynamic extension overlay are required');
     }
-    this.oca_bundle = oca_bundle;
+    // this.oca_bundle = oca_bundle;
     this.dynOverlay = dynOverlay;
-    this.oca_bundle_digest = ocabundleDigest(this.oca_bundle);
+    // this.oca_bundle_digest = ocabundleDigest(this.oca_bundle);
   }
 
   private getAttributeOrdering(): any[] {
@@ -34,8 +34,7 @@ class Ordering implements IOrdering {
   private toJSON(): object {
     return {
       d: '',
-      type: 'community/overlays/adc/ordering/1.0',
-      // capture_base: getDigest(this.oca_bundle),
+      type: 'community/overlays/adc/ordering/1.1',
       attribute_ordering: this.getAttributeOrdering(),
       entry_code_ordering: this.getEntryCodeOrdering(),
     };

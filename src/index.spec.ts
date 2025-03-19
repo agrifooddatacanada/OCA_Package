@@ -2,13 +2,6 @@ import { describe, it, expect } from 'vitest';
 import OcaPackage from './oca_package';
 import path from 'path';
 import fs from 'fs';
-// import ExtensionBox, {
-//   ExtensionState,
-//   Extension,
-//   DynOverlay,
-//   Overlay,
-//   DynCommunityOverlay,
-// } from './oca_extensions/extensions';
 
 describe('oca-package: ', () => {
   it('should produce serialized oca-package for multi-level schema', () => {
@@ -24,6 +17,6 @@ describe('oca-package: ', () => {
 
     console.dir(parsedOcaPackage, { depth: null });
 
-    expect(parsedOcaPackage.d).toBe('EIrvPxP71Pt7mLvn-_wwxrEXJ1xYQovUwuOQmiJJeQ_A');
+    expect(parsedOcaPackage.d).toBe('EE1U7ICM9mUCP83_MhmMFtOtZS6yhJms8vRkPJZVid9f');
   });
 });
