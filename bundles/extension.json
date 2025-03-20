@@ -1,14 +1,26 @@
 {
-  "extensions": [
-    {
-      "ordering_overlay": {
-        "type": "ordering",
-        "attribute_ordering": ["i", "d"],
-        "entry_code_ordering": {
-          "i": ["G", "I", "O", "R", "S"],
-          "d": ["001", "002", "003", "004", "005"]
+  "extensions": {
+    "adc": {
+      "EDDBSQuhzsJtE9ksQxpWYVBblWwHhhtNxemYFeEFY1qX": [
+        {
+          "ordering_overlay": {
+            "type": "ordering",
+            "attribute_ordering": ["book.title", "book.pages", "book.languages"],
+            "entry_code_ordering": {
+              "book.languages": { "book.languages": ["nb", "b"] }
+            }
+          }
         }
-      }
+      ],
+      "EKNGowNlfUGdnAiQ_2PdmzqUB705QgaWxvrYCwovlWqc": [
+        {
+          "ordering_overlay": {
+            "type": "ordering",
+            "attribute_ordering": ["page.number", "opened"],
+            "entry_code_ordering": {}
+          }
+        }
+      ]
     }
-  ]
+  }
 }

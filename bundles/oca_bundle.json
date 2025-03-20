@@ -1,112 +1,80 @@
 {
-  "v": "OCAA11JSON0008bc_",
+  "v": "OCAA11JSON000637_",
   "bundle": {
-    "v": "OCAS11JSON00089f_",
-    "d": "EONqZyr2iKg7y-DsbftX2KKgSEuHAc96PWj3masbseNb",
+    "v": "OCAS11JSON000425_",
+    "d": "EDDBSQuhzsJtE9ksQxpWYVBblWwHhhtNxemYFeEFY1qX",
     "capture_base": {
-      "d": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+      "d": "ELdpxPMcAE_-DsvUpkmjcM3OQ8QyHNlH1q6xJb-5Dih9",
       "type": "spec/capture_base/1.1",
       "attributes": {
-        "d": "Text",
-        "i": "Text",
-        "passed": "Boolean"
+        "book.languages": "Text",
+        "book.pages": "refs:EKNGowNlfUGdnAiQ_2PdmzqUB705QgaWxvrYCwovlWqc",
+        "book.title": "Text"
       },
       "classification": "",
       "flagged_attributes": []
     },
     "overlays": {
-      "character_encoding": {
-        "d": "EDWMDcwTNnJEoPNXyYlnIAnwKwW-dpjFYxkUmbmJnN3p",
-        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
-        "type": "spec/overlays/character_encoding/1.1",
-        "attribute_character_encoding": {
-          "d": "utf-8",
-          "i": "utf-8",
-          "passed": "utf-8"
-        }
-      },
-      "conformance": {
-        "d": "ELOuO40fogTXK9B-7c4w8ARwscsRVZjO6B359uFSg68p",
-        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
-        "type": "spec/overlays/conformance/1.1",
-        "attribute_conformance": {
-          "d": "M",
-          "i": "M",
-          "passed": "M"
-        }
-      },
       "entry": [
         {
-          "d": "EP8ta__ra75Ef0HtjfmEGtYFhTGn4dwMkWF11gNC1kJ1",
-          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "d": "EE1bnxtnlylwYS7rxuMXdoLw1_zWtcQV6qic7S2dBoPD",
+          "capture_base": "ELdpxPMcAE_-DsvUpkmjcM3OQ8QyHNlH1q6xJb-5Dih9",
           "type": "spec/overlays/entry/1.1",
           "language": "eng",
           "attribute_entries": {
-            "d": {
-              "001": "code1",
-              "002": "code2",
-              "003": "code3",
-              "004": "code4",
-              "005": "code5"
-            },
-            "i": {
-              "G": "Google",
-              "I": "ISNI",
-              "O": "ORCiD",
-              "R": "ResearcherID",
-              "S": "Scopus"
+            "book.languages": {
+              "b": "bilingual",
+              "nb": "non-bilingual"
             }
           }
         }
       ],
       "entry_code": {
-        "d": "ELi_sf0fZwFC0YsW_7vPkbpTj-nvLgOz0yYFdo44lQ6W",
-        "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+        "d": "EEdyjFBfM8YWXXsWmM0ojxSqU3fTCEUYSUTP9rlC_D5_",
+        "capture_base": "ELdpxPMcAE_-DsvUpkmjcM3OQ8QyHNlH1q6xJb-5Dih9",
         "type": "spec/overlays/entry_code/1.1",
         "attribute_entry_codes": {
-          "d": ["001", "002", "003", "004", "005"],
-          "i": ["G", "I", "O", "R", "S"]
+          "book.languages": ["b", "nb"]
         }
       },
-      "information": [
-        {
-          "d": "ENp-IQtGBgy5VEg1ex_ImVxlwcyKVhXCyGY0zQ1gsAeT",
-          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
-          "type": "spec/overlays/information/1.1",
-          "language": "eng",
-          "attribute_information": {
-            "d": "Schema digest",
-            "i": "Credential Issuee",
-            "passed": "Enables or disables passing"
-          }
-        }
-      ],
-      "label": [
-        {
-          "d": "EOa8JNfp1XcdDUYApKl7cVid4e8pkPt7M1Q4Q-ShGf2T",
-          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
-          "type": "spec/overlays/label/1.1",
-          "language": "eng",
-          "attribute_categories": [],
-          "attribute_labels": {
-            "d": "Schema digest",
-            "i": "Credential Issuee",
-            "passed": "Passed"
-          },
-          "category_labels": {}
-        }
-      ],
       "meta": [
         {
-          "d": "ELXVRNIxfYpsiOmcesbjUTASnWfdYZ_6eHE3VEqbx3Qm",
-          "capture_base": "EJ2RoG3pkaiBEXMfCaHeSrBv9iaRfPf_eDjymOeAD660",
+          "d": "EPiuBpZGvOlDSPr6nm7L3W-LnkY_F-ykLqMyNyBdm7Kx",
+          "capture_base": "ELdpxPMcAE_-DsvUpkmjcM3OQ8QyHNlH1q6xJb-5Dih9",
           "type": "spec/overlays/meta/1.1",
           "language": "eng",
-          "description": "Entrance credential",
-          "name": "Entrance credential"
+          "description": "Book Description",
+          "name": "Book of Interest"
         }
       ]
     }
   },
-  "dependencies": []
+  "dependencies": [
+    {
+      "v": "OCAS11JSON00020d_",
+      "d": "EKNGowNlfUGdnAiQ_2PdmzqUB705QgaWxvrYCwovlWqc",
+      "capture_base": {
+        "d": "ELauJG9lo9hBOPrxGasmTSleHfh8X8TQE_dUDzUMCuJW",
+        "type": "spec/capture_base/1.1",
+        "attributes": {
+          "opened": "Boolean",
+          "page.number": "Numeric"
+        },
+        "classification": "",
+        "flagged_attributes": []
+      },
+      "overlays": {
+        "meta": [
+          {
+            "d": "EFFOiK0t_EDxVABcUGIwQxpDD3Pwgd1gKpITUlipNcB3",
+            "capture_base": "ELauJG9lo9hBOPrxGasmTSleHfh8X8TQE_dUDzUMCuJW",
+            "type": "spec/overlays/meta/1.1",
+            "language": "eng",
+            "description": "Page Status",
+            "name": "Current Page in the Book"
+          }
+        ]
+      }
+    }
+  ]
 }

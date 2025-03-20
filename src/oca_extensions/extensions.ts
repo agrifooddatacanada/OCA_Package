@@ -26,10 +26,10 @@ export class ExtensionState {
 
   constructor(ExtensionInputJson: ExtensionInputJson) {
     this._extension_input_json = ExtensionInputJson;
-    this._extensionState = this.buildExtensionState();
+    this._extensionState = this.BuildExtensionState();
   }
 
-  private buildExtensionState(): IExtensionState {
+  private BuildExtensionState(): IExtensionState {
     const state: IExtensionState = {};
 
     for (const community in this._extension_input_json) {
@@ -65,7 +65,7 @@ export class Overlay implements DynOverlay {
     this._overlay = community_overlay;
   }
 
-  public generateOverlay(): Required<DynOverlay> {
+  public GenerateOverlay(): Required<DynOverlay> {
     const overlay: Required<DynOverlay> = {};
 
     for (const _ in this._overlay) {
@@ -73,7 +73,7 @@ export class Overlay implements DynOverlay {
       switch (ov_name) {
         case 'ordering_overlay':
           const ordering_instance = new Ordering(this._overlay);
-          const ordering = ordering_instance.generateOverlay();
+          const ordering = ordering_instance.GenerateOverlay();
           overlay['ordering'] = JSON.parse(ordering);
 
           break;
@@ -85,6 +85,8 @@ export class Overlay implements DynOverlay {
     return overlay;
   }
 }
+
+/* 
 
 // Extension input key-value fields should follow the format of adc if they want to consume adc oca-package without any modification.
 // e.g: "example": {"EPTBqhF1nhW_DaLMk6kr5EXceZAM9b327yWO5iGNwRkf": [{"attribute_ordering": {"type": "attribute_ordering","attributes": ["book.id"]}}]}
@@ -133,7 +135,31 @@ export class DynCommunityOverlay {
   }
 }
 
-// TODO: see the relevance of d, type and _community in IExtension?
+*/
+
+interface OverlayStrategy {
+  GenerateOverlay(extensions: DynOverlay[]): { [key: string]: {} };
+}
+
+class ADCOverlayStrategy implements OverlayStrategy {
+  GenerateOverlay(extensions: DynOverlay[]): { [key: string]: {} } {
+    const overlays = {};
+    for (const ext of extensions) {
+      const overlay_instance = new Overlay(ext);
+      const generated_overlay = overlay_instance.GenerateOverlay();
+      const overlay_type = Object.keys(generated_overlay)[0];
+      overlays[overlay_type] = generated_overlay[overlay_type];
+    }
+    return overlays;
+  }
+}
+
+class DefaultOverlayStrategy implements OverlayStrategy {
+  GenerateOverlay(extensions: DynOverlay[]): { [key: string]: {} } {
+    throw new Error('Unsupported community type');
+  }
+}
+
 export interface IExtension {
   d: Said;
   type: string;
@@ -157,67 +183,43 @@ export class Extension implements IExtension {
     this._community = community;
   }
 
-  private generateOverlays(): { [key: string]: {} } {
-    switch (this._community) {
-      case ADC_COMMUNITY:
-        for (const ext of this._exensions) {
-          const overlay_instance = new Overlay(ext);
-          const generated_overlay = overlay_instance.generateOverlay();
-          const overlay_type = Object.keys(generated_overlay)[0];
-          this.overlays[overlay_type] = generated_overlay[overlay_type];
-        }
-
-        break;
-
-      default:
-      // for (const bundle_digest in extensionState_communities.extensions[this._community]) {
-      //   const current_extension: DynOverlay = extensionState_communities.extensions[this._community][bundle_digest];
-
-      //   for (const index in current_extension) {
-      //     const overlay = current_extension[index];
-      //     const overlay_type = Object.keys(overlay)[0];
-      //     const overlay_instance = new DynCommunityOverlay(this._community, bundle_digest, overlay);
-      //     this.overlays[overlay_type] = overlay_instance.generateCommunityOverlay();
-      //   }
-      // }
-      // break;
-    }
-    return this.overlays;
+  private GenerateOverlays(): { [key: string]: {} } {
+    const strategy: OverlayStrategy =
+      this._community === ADC_COMMUNITY ? new ADCOverlayStrategy() : new DefaultOverlayStrategy();
+    return strategy.GenerateOverlay(this._exensions);
   }
 
   private toJSON(): object {
     return {
       d: '',
       type: `community/${this._community}/extension/1.0`,
-      overlays: this.generateOverlays(),
+      overlays: this.GenerateOverlays(),
     };
   }
 
-  private saidifying(): Record<string, any> {
+  private Saidifying(): Record<string, any> {
     const [, sad] = saidify(this.toJSON());
     return sad;
   }
 
-  public generateExtension(): any {
-    return this.saidifying();
+  public GenerateExtension(): any {
+    return this.Saidifying();
   }
 }
 
 type ExtensionBoxType = { [community: string]: Extension };
 class ExtensionBox {
   public _extensions_box: {};
-  private _extension_input_json: ExtensionInputJson;
   public _oca_bundle: any;
   public _extensionState: ExtensionState;
 
   constructor(extension_input_json: ExtensionInputJson, oca_bundle: any) {
     this._extensions_box = {};
-    this._extension_input_json = extension_input_json;
     this._oca_bundle = oca_bundle;
-    this._extensionState = new ExtensionState(this._extension_input_json);
+    this._extensionState = new ExtensionState(extension_input_json);
   }
 
-  public generateExtensionsBox(): ExtensionBoxType {
+  public GenerateExtensionsBox(): ExtensionBoxType {
     const extensionState_communities = this._extensionState.extensions;
 
     for (const community in extensionState_communities.extensions) {
@@ -230,7 +232,7 @@ class ExtensionBox {
           const community_extension_input = extensionState_communities.extensions[community][bundle_digest];
 
           const extension = new Extension([community_extension_input[0]], community);
-          this._extensions_box[community][capture_base_digest] = extension.generateExtension();
+          this._extensions_box[community][capture_base_digest] = extension.GenerateExtension();
         } else if (bundle_digest !== ocabundleDigest(this._oca_bundle)) {
           if (isOcaBundleWithDeps(this._oca_bundle)) {
             const current_bundle = getOcaBundleFromDeps(this._oca_bundle, bundle_digest);
@@ -238,7 +240,7 @@ class ExtensionBox {
             const community_extension_input = extensionState_communities.extensions[community][bundle_digest];
 
             const extension = new Extension([community_extension_input[0]], community);
-            this._extensions_box[community][capture_base_digest] = extension.generateExtension();
+            this._extensions_box[community][capture_base_digest] = extension.GenerateExtension();
           }
         }
       }

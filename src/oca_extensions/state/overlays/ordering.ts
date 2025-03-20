@@ -1,16 +1,13 @@
 import { DynOverlay } from '../../extensions.js';
-// import { getDigest, ocabundleDigest } from '../../../utils/helpers.js';
 import { saidify } from 'saidify';
 import { Said } from '../../../types/types.js';
 
 export interface IOrdering {
-  // readonly oca_bundle: any;
   dynOverlay: DynOverlay;
-  generateOverlay(): string;
+  GenerateOverlay(): string;
 }
 
 class Ordering implements IOrdering {
-  // public oca_bundle: any;
   public dynOverlay: DynOverlay;
   public oca_bundle_digest: Said;
 
@@ -18,16 +15,15 @@ class Ordering implements IOrdering {
     if (!dynOverlay) {
       throw new Error('a dynamic extension overlay are required');
     }
-    // this.oca_bundle = oca_bundle;
+
     this.dynOverlay = dynOverlay;
-    // this.oca_bundle_digest = ocabundleDigest(this.oca_bundle);
   }
 
-  private getAttributeOrdering(): any[] {
+  private GetAttributeOrdering(): any[] {
     return this.dynOverlay.ordering_overlay.attribute_ordering;
   }
 
-  private getEntryCodeOrdering(): object {
+  private GetEntryCodeOrdering(): object {
     return this.dynOverlay.ordering_overlay.entry_code_ordering;
   }
 
@@ -35,18 +31,18 @@ class Ordering implements IOrdering {
     return {
       d: '',
       type: 'community/overlays/adc/ordering/1.1',
-      attribute_ordering: this.getAttributeOrdering(),
-      entry_code_ordering: this.getEntryCodeOrdering(),
+      attribute_ordering: this.GetAttributeOrdering(),
+      entry_code_ordering: this.GetEntryCodeOrdering(),
     };
   }
 
-  private saidifying(): Record<string, any> {
+  private Saidifying(): Record<string, any> {
     const [, sad] = saidify(this.toJSON());
     return sad;
   }
 
-  public generateOverlay(): string {
-    return JSON.stringify(this.saidifying());
+  public GenerateOverlay(): string {
+    return JSON.stringify(this.Saidifying());
   }
 }
 
