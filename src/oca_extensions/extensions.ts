@@ -143,7 +143,8 @@ interface OverlayStrategy {
 
 class ADCOverlayStrategy implements OverlayStrategy {
   GenerateOverlay(extensions: DynOverlay[]): { [key: string]: {} } {
-    const overlays = {};
+    const overlays: { [key: string]: any } = {};
+
     for (const ext of extensions) {
       const overlay_instance = new Overlay(ext);
       const generated_overlay = overlay_instance.GenerateOverlay();
@@ -178,9 +179,9 @@ export class Extension implements IExtension {
       throw new Error('extension array is required from extension state and community is required');
     }
 
+    this._community = community;
     this._exensions = _extensions_input;
     this.type = `community/${this._community}/extension/${v}`;
-    this._community = community;
   }
 
   private GenerateOverlays(): { [key: string]: {} } {
@@ -207,9 +208,10 @@ export class Extension implements IExtension {
   }
 }
 
-type ExtensionBoxType = { [community: string]: Extension };
+type ExtensionBoxType = { [community: string]: { [capture_base_digest: string]: Extension } };
+
 class ExtensionBox {
-  public _extensions_box: {};
+  public _extensions_box: ExtensionBoxType;
   public _oca_bundle: any;
   public _extensionState: ExtensionState;
 

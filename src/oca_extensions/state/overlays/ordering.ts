@@ -1,6 +1,5 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
-import { Said } from '../../../types/types.js';
 
 export interface IOrdering {
   dynOverlay: DynOverlay;
@@ -9,7 +8,6 @@ export interface IOrdering {
 
 class Ordering implements IOrdering {
   public dynOverlay: DynOverlay;
-  public oca_bundle_digest: Said;
 
   constructor(dynOverlay: DynOverlay) {
     if (!dynOverlay) {

@@ -1,6 +1,6 @@
 {
   "name": "oca_package",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "The wrapper of OCA bundle to generate OCA Package at ADC",
   "type": "module",
   "main": "./dist/cjs/index.js",
@@ -30,7 +30,8 @@
     "dev": "node dist/index.js",
     "test": "vitest run",
     "lint": "eslint . -c eslint.config.js",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
