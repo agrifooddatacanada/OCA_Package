@@ -34,7 +34,7 @@ class OcaPackage implements IOcaPackage {
         d: '',
         type: 'oca_package/1.0',
         oca_bundle: this.oca_bundle,
-        extensions: this.extensions_box.GenerateExtensionsBox(),
+        extensions: this.extensions_box.buildExtensionsBox,
       };
     } catch (error) {
       throw new Error(`Failed to parse Extension JSON: ${error}`);

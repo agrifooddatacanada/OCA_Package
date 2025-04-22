@@ -1,23 +1,30 @@
 {
   "extensions": {
     "adc": {
-      "EDDBSQuhzsJtE9ksQxpWYVBblWwHhhtNxemYFeEFY1qX": [
+      "EFPGBEwn5Hzl9Cbx1r9Od54IwhkqJXc3vE4Jm7mjvHy2": [
         {
           "ordering_overlay": {
             "type": "ordering",
-            "attribute_ordering": ["book.title", "book.pages", "book.languages"],
+            "attribute_ordering": ["age", "height", "languages"],
             "entry_code_ordering": {
-              "book.languages": { "book.languages": ["nb", "b"] }
+              "languages": { "languages": ["eng", "fra"] }
             }
-          }
-        }
-      ],
-      "EKNGowNlfUGdnAiQ_2PdmzqUB705QgaWxvrYCwovlWqc": [
-        {
-          "ordering_overlay": {
-            "type": "ordering",
-            "attribute_ordering": ["page.number", "opened"],
-            "entry_code_ordering": {}
+          },
+          "unit_framing_overlay": {
+            "type": "unit_framing",
+            "properties": {
+              "id": "UCUM",
+              "label": "",
+              "location": "",
+              "version": ""
+            },
+            "units": {
+              "kg": {
+                "term_id": "kg",
+                "predicate_id": "skos:exactMatch",
+                "framing_justification": "semapv:ManualMappingCuration"
+              }
+            }
           }
         }
       ]
