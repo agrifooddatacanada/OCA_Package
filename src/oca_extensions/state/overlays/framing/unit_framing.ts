@@ -1,5 +1,6 @@
 import { DynOverlay } from '../../../extensions.js';
 import { saidify } from 'saidify';
+import canonicalize from '../../../../utils/canonical.js';
 
 // UCUM is used to map units
 // https://ucum.org/
@@ -21,19 +22,22 @@ class UnitFraming implements IUnitFraming {
   }
 
   private GetUnits(): any {
-    return this.dynOverlay.unit_framing_overlay.units;
+    const units = this.dynOverlay.units;
+    const canonicalizedUnits = canonicalize(units);
+    const sortedUnits = JSON.parse(canonicalizedUnits);
+    return sortedUnits;
   }
   private GetId(): string {
-    return this.dynOverlay.unit_framing_overlay.properties.id;
+    return this.dynOverlay.properties.id;
   }
   private GetLabel(): string {
-    return this.dynOverlay.unit_framing_overlay.properties.label;
+    return this.dynOverlay.properties.label;
   }
   private GetLocation(): string {
-    return this.dynOverlay.unit_framing_overlay.properties.location;
+    return this.dynOverlay.properties.location;
   }
   private GetVersion(): string {
-    return this.dynOverlay.unit_framing_overlay.properties.version;
+    return this.dynOverlay.properties.version;
   }
   private toJSON(): object {
     return {

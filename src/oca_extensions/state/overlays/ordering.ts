@@ -17,12 +17,12 @@ class Ordering implements IOrdering {
     this.dynOverlay = dynOverlay;
   }
 
-  private GetAttributeOrdering(): any[] {
-    return this.dynOverlay.ordering_overlay.attribute_ordering;
+  private GetAttributeOrdering(): any {
+    return this.dynOverlay.attribute_ordering;
   }
 
   private GetEntryCodeOrdering(): object {
-    return this.dynOverlay.ordering_overlay.entry_code_ordering;
+    return this.dynOverlay.entry_code_ordering;
   }
 
   private toJSON(): object {

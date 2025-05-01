@@ -1,5 +1,6 @@
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
+import ExampleOverlaysContainer from './state/overlays/example.js';
 import Range from './state/overlays/range.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
@@ -59,6 +60,7 @@ export class ExtensionState {
 export interface DynOverlay {
   [ov_name: string]: {
     type?: string;
+    // language?: string;
     [key: string]: any;
   };
 }
@@ -75,17 +77,21 @@ export class Overlay implements DynOverlay {
 
     for (const ov_type in this._overlay) {
       if (ov_type === 'ordering_overlay') {
-        const ordering_instance = new Ordering(this._overlay);
+        const ordering_instance = new Ordering(this._overlay.ordering_overlay);
         const ordering_ov = ordering_instance.GenerateOverlay();
         overlay['ordering'] = JSON.parse(ordering_ov);
       } else if (ov_type === 'unit_framing_overlay') {
-        const unit_framing_instance = new UnitFraming(this._overlay);
+        const unit_framing_instance = new UnitFraming(this._overlay.unit_framing_overlay);
         const unit_framing_ov = unit_framing_instance.GenerateOverlay();
         overlay['unit_framing'] = JSON.parse(unit_framing_ov);
       } else if (ov_type === 'range_overlay') {
-        const range_instance = new Range(this._overlay);
+        const range_instance = new Range(this._overlay.range_overlay);
         const range_ov = range_instance.GenerateOverlay();
         overlay['range'] = JSON.parse(range_ov);
+      } else if (ov_type === 'example_overlay') {
+        const example_instance = new ExampleOverlaysContainer(this._overlay.example_overlay);
+        const example_ov = example_instance.BuildExampleOverlays();
+        overlay['example'] = JSON.parse(example_ov);
       } else {
         throw new Error('Invalid overlay name');
       }
@@ -169,7 +175,7 @@ class ADCOverlayStrategy implements OverlayStrategy {
 // To implement overlays for external communities, create a new class that implements the OverlayStrategy interface.
 // For example, if you have a community called "external_community", you can create a class like this:
 class DefaultOverlayStrategy implements OverlayStrategy {
-  GenerateOverlay(extensions: DynOverlay): { [key: string]: {} } {
+  GenerateOverlay(_extensions: DynOverlay): { [key: string]: {} } {
     throw new Error('Unsupported community type');
   }
 }

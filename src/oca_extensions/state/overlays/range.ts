@@ -1,5 +1,6 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
+import canonicalize from '../../../utils/canonical.js';
 
 export interface IRange {
   dynOverlay: DynOverlay;
@@ -18,8 +19,11 @@ class Range implements IRange {
   }
 
   private GetAttributes(): any {
-    // TODO: check the order of the attributes
-    return this.dynOverlay.range_overlay.attributes;
+    const range_overlay_attributes = this.dynOverlay.attributes;
+    const canonicalized_attributes = canonicalize(range_overlay_attributes);
+    const sortedAttributes = JSON.parse(canonicalized_attributes);
+
+    return sortedAttributes;
   }
 
   private toJSON(): object {
