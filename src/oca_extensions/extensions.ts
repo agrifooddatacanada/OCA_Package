@@ -1,5 +1,6 @@
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
+import Range from './state/overlays/range.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
 import { saidify } from 'saidify';
@@ -81,6 +82,10 @@ export class Overlay implements DynOverlay {
         const unit_framing_instance = new UnitFraming(this._overlay);
         const unit_framing_ov = unit_framing_instance.GenerateOverlay();
         overlay['unit_framing'] = JSON.parse(unit_framing_ov);
+      } else if (ov_type === 'range_overlay') {
+        const range_instance = new Range(this._overlay);
+        const range_ov = range_instance.GenerateOverlay();
+        overlay['range'] = JSON.parse(range_ov);
       } else {
         throw new Error('Invalid overlay name');
       }
