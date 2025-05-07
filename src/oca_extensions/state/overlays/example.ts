@@ -4,7 +4,7 @@ import canonicalize from '../../../utils/canonical.js';
 
 export interface IExampleOverlay {
   dynOverlay: DynOverlay;
-  GenerateOverlay(): string;
+  GenerateExampleOverlay(): string;
 }
 
 class ExampleOverlay implements IExampleOverlay {
@@ -12,7 +12,7 @@ class ExampleOverlay implements IExampleOverlay {
 
   constructor(dynOverlay: DynOverlay) {
     if (!dynOverlay) {
-      throw new Error('a dynamic extension overlay are required');
+      throw new Error('A dynamic extension overlay is required');
     }
     this.dynOverlay = dynOverlay;
   }
@@ -42,28 +42,23 @@ class ExampleOverlay implements IExampleOverlay {
     return sad;
   }
 
-  public GenerateOverlay(): string {
+  // generates a single example overlay
+  public GenerateExampleOverlay(): string {
     return JSON.stringify(this.Saidifying());
   }
-}
 
-class ExampleOverlaysContainer {
-  private dynOverlays: DynOverlay[];
-
-  constructor(dynOverlay: DynOverlay[]) {
+  public static GenerateOverlay(dynOverlay: { example_overlays: any[] }): string {
     if (!dynOverlay || typeof dynOverlay !== 'object' || !Array.isArray(dynOverlay['example_overlays'])) {
       throw new Error('Invalid dynOverlay structure. Expected an object with an "example_overlays" array.');
     }
-    this.dynOverlays = dynOverlay['example_overlays'];
-  }
 
-  public BuildExampleOverlays(): string {
     const example_overlays: ExampleOverlay[] = [];
+    const overlays = dynOverlay['example_overlays'];
 
-    for (let example_ov of this.dynOverlays) {
+    for (let example_ov of overlays) {
       try {
         const example_overlay = new ExampleOverlay(example_ov);
-        example_overlays.push(JSON.parse(example_overlay.GenerateOverlay()));
+        example_overlays.push(JSON.parse(example_overlay.GenerateExampleOverlay()));
       } catch (error) {
         console.error('Failed to process example overlay:', error);
       }
@@ -75,4 +70,4 @@ class ExampleOverlaysContainer {
   }
 }
 
-export default ExampleOverlaysContainer;
+export default ExampleOverlay;

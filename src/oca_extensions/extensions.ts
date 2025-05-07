@@ -1,6 +1,6 @@
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
-import ExampleOverlaysContainer from './state/overlays/example.js';
+import ExampleOverlay from './state/overlays/example.js';
 import Range from './state/overlays/range.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
@@ -56,11 +56,10 @@ export class ExtensionState {
 
 // DynOverlay: dynamic overlay, the overlay must contain a key-value pair
 // where the key is the name_overlay (e.g: ordering_overlay) and type is a required key in the overlay value.
-// the type key should follow the format: community/[community_name]/extension/[semantic_version] e.g: community/adc/extension/1.0
+// type should follow the format: community/[community_name]/extension/[semantic_version] e.g: community/adc/extension/1.0
 export interface DynOverlay {
   [ov_name: string]: {
     type?: string;
-    // language?: string;
     [key: string]: any;
   };
 }
@@ -89,10 +88,10 @@ export class Overlay implements DynOverlay {
         const range_ov = range_instance.GenerateOverlay();
         overlay['range'] = JSON.parse(range_ov);
       } else if (ov_type === 'example_overlay') {
-        const example_instance = new ExampleOverlaysContainer(this._overlay.example_overlay);
-        const example_ov = example_instance.BuildExampleOverlays();
+        const example_ov = ExampleOverlay.GenerateOverlay(this._overlay.example_overlay);
         overlay['example'] = JSON.parse(example_ov);
       } else {
+        // throwing an error as all extension overlays authored by adc should be handled by the overlay class
         throw new Error('Invalid overlay name');
       }
     }
@@ -148,7 +147,6 @@ export class DynCommunityOverlay {
     return this.sadifying();
   }
 }
-
 */
 
 interface OverlayStrategy {
