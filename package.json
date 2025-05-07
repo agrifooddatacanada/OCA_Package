@@ -1,6 +1,6 @@
 {
   "name": "oca_package",
-  "version": "1.0.8",
+  "version": "1.2.1",
   "description": "The wrapper of OCA bundle to generate OCA Package at ADC",
   "type": "module",
   "main": "./dist/cjs/index.js",

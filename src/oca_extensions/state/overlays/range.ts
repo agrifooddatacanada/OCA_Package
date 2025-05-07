@@ -1,12 +1,13 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
+import canonicalize from '../../../utils/canonical.js';
 
-export interface IOrdering {
+export interface IRange {
   dynOverlay: DynOverlay;
   GenerateOverlay(): string;
 }
 
-class Ordering implements IOrdering {
+class Range implements IRange {
   public dynOverlay: DynOverlay;
 
   constructor(dynOverlay: DynOverlay) {
@@ -17,31 +18,27 @@ class Ordering implements IOrdering {
     this.dynOverlay = dynOverlay;
   }
 
-  private GetAttributeOrdering(): any {
-    return this.dynOverlay.attribute_ordering;
-  }
+  private GetAttributes(): any {
+    const range_overlay_attributes = this.dynOverlay.attributes;
+    const canonicalized_attributes = canonicalize(range_overlay_attributes);
+    const sortedAttributes = JSON.parse(canonicalized_attributes);
 
-  private GetEntryCodeOrdering(): object {
-    return this.dynOverlay.entry_code_ordering;
+    return sortedAttributes;
   }
 
   private toJSON(): object {
     return {
       d: '',
-      type: 'community/overlays/adc/ordering/1.1',
-      attribute_ordering: this.GetAttributeOrdering(),
-      entry_code_ordering: this.GetEntryCodeOrdering(),
+      type: 'community/overlays/adc/range/1.1',
+      attributes: this.GetAttributes(),
     };
   }
-
   private Saidifying(): Record<string, any> {
     const [, sad] = saidify(this.toJSON());
     return sad;
   }
-
   public GenerateOverlay(): string {
     return JSON.stringify(this.Saidifying());
   }
 }
-
-export default Ordering;
+export default Range;

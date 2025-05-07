@@ -2,6 +2,13 @@ type JsonObject = { [key: string]: JsonValue };
 type JsonArray = JsonValue[];
 type JsonValue = string | number | boolean | null | JsonObject | JsonArray;
 
+/**
+ * Canonicalizes a JSON object by sorting its properties and maintaining the order of array elements.
+ * This function is useful for generating a consistent string representation of JSON data.
+ *
+ * @param {JsonValue} object - The JSON object to canonicalize.
+ * @returns {string} - The canonicalized string representation of the JSON object.
+ */
 const canonicalize = (object: JsonValue): string => {
   let buffer = '';
   serialize(object);
