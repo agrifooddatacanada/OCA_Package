@@ -1,5 +1,5 @@
 {
-  "d": "EIDXfAq08QEpXVvUrylbxWZAfCyBqHI5JZAL-Ya-nR1r",
+  "d": "EME1KjyGWqp25U_1snb5kCN7KLIDe5UBae4czFYYXOq-",
   "type": "oca_package/1.0",
   "oca_bundle": {
     "v": "OCAA11JSON0004a4_",
@@ -52,45 +52,9 @@
   "extensions": {
     "adc": {
       "EJXNTP69W5wu-5ypWqLZX_nY4lQjCE2mdjw0diko-56l": {
-        "d": "EO12aGunKB2QfOdpY1tPhf1VMlgqWRNhNs7R4CXaZrJv",
+        "d": "EMB8WpIeu78Gdbq9pgJ9gOJmwW5pq13TLvLOQPuqxHvR",
         "type": "community/adc/extension/1.0",
         "overlays": {
-          "ordering": {
-            "d": "EDvp_MElDjSTw1nLpnKDQGsf0T3RO8L3Iaox5x0raQBZ",
-            "type": "community/overlays/adc/ordering/1.1",
-            "attribute_ordering": ["age", "height", "languages"],
-            "entry_code_ordering": { "languages": { "languages": ["eng", "fra"] } }
-          },
-          "unit_framing": {
-            "d": "EObBElHhoeff-oJx_bCQfav4qOZ3RCwFH7xdqzQx1qB7",
-            "type": "community/overlays/adc/unit_framing/1.1",
-            "framing_metadata": { "id": "UCUM", "label": "", "location": "", "version": "" },
-            "units": {
-              "kg": {
-                "framing_justification": "semapv:ManualMappingCuration",
-                "predicate_id": "skos:exactMatch",
-                "term_id": "kg"
-              }
-            }
-          },
-          "range": {
-            "d": "EJaUhjByzOY7joq5iMIJ4BcG62Ju73IMzmw70wNLBR_u",
-            "type": "community/overlays/adc/range/1.1",
-            "attributes": {
-              "age": {
-                "lower": "0",
-                "lower_inclusive": true,
-                "upper": "100",
-                "upper_inclusive": true
-              },
-              "height": {
-                "lower": "0",
-                "lower_inclusive": true,
-                "upper": "300",
-                "upper_inclusive": false
-              }
-            }
-          },
           "example": [
             {
               "d": "EIue3pCTsb60lSFkc6H71Y9zFe8R40pCuSoHJWVqP3gs",
@@ -114,7 +78,48 @@
                 "Sample_type": ["BLD003"]
               }
             }
-          ]
+          ],
+          "ordering": {
+            "d": "EDvp_MElDjSTw1nLpnKDQGsf0T3RO8L3Iaox5x0raQBZ",
+            "type": "community/overlays/adc/ordering/1.1",
+            "attribute_ordering": ["age", "height", "languages"],
+            "entry_code_ordering": { "languages": { "languages": ["eng", "fra"] } }
+          },
+          "range": {
+            "d": "EJaUhjByzOY7joq5iMIJ4BcG62Ju73IMzmw70wNLBR_u",
+            "type": "community/overlays/adc/range/1.1",
+            "attributes": {
+              "age": {
+                "lower": "0",
+                "lower_inclusive": true,
+                "upper": "100",
+                "upper_inclusive": true
+              },
+              "height": {
+                "lower": "0",
+                "lower_inclusive": true,
+                "upper": "300",
+                "upper_inclusive": false
+              }
+            }
+          },
+          "sensitive": {
+            "d": "EO8ftlqoiGmbsATLr9TAxUaE8a0bRrWpM2shXwszqLG6",
+            "type": "community/overlays/adc/sensitive/1.1",
+            "sensitive_attributes": ["age"]
+          },
+          "unit_framing": {
+            "d": "EObBElHhoeff-oJx_bCQfav4qOZ3RCwFH7xdqzQx1qB7",
+            "type": "community/overlays/adc/unit_framing/1.1",
+            "framing_metadata": { "id": "UCUM", "label": "", "location": "", "version": "" },
+            "units": {
+              "kg": {
+                "framing_justification": "semapv:ManualMappingCuration",
+                "predicate_id": "skos:exactMatch",
+                "term_id": "kg"
+              }
+            }
+          }
         }
       }
     }

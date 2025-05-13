@@ -2,8 +2,10 @@ import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
 import ExampleOverlay from './state/overlays/example.js';
 import Range from './state/overlays/range.js';
+import Sensitive from './state/overlays/sensitive.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
+import canonicalize from '../utils/canonical.js';
 import { saidify } from 'saidify';
 
 const ADC_COMMUNITY = 'adc';
@@ -90,12 +92,24 @@ export class Overlay implements DynOverlay {
       } else if (ov_type === 'example_overlay') {
         const example_ov = ExampleOverlay.GenerateOverlay(this._overlay.example_overlay);
         overlay['example'] = JSON.parse(example_ov);
+      } else if (ov_type === 'sensitive_overlay') {
+        const sensitive_instance = new Sensitive(this._overlay.sensitive_overlay);
+        const sensitive_ov = sensitive_instance.GenerateOverlay();
+        overlay['sensitive'] = JSON.parse(sensitive_ov);
       } else {
-        // throwing an error as all extension overlays authored by adc should be handled by the overlay class
-        throw new Error('Invalid overlay name');
+        throw new Error(
+          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, sensitive_overlay ]`,
+        );
       }
     }
-    return overlay;
+
+    const sortedOverlays: Required<DynOverlay> = Object.keys(overlay)
+      .sort()
+      .reduce((acc, key) => {
+        acc[key] = overlay[key];
+        return acc;
+      }, {} as Required<DynOverlay>);
+    return sortedOverlays;
   }
 }
 

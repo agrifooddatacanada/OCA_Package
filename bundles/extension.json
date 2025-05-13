@@ -65,6 +65,10 @@
                 }
               }
             ]
+          },
+          "sensitive_overlay": {
+            "type": "sensitive",
+            "sensitive_attributes": ["age"]
           }
         }
       ]
