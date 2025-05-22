@@ -18,7 +18,11 @@ class Sensitive implements ISensitive {
   }
 
   private GetSensitiveAttributes(): any {
-    return this.dynOverlay.sensitive_attributes;
+    const sensitive_overlay_attributes = this.dynOverlay.sensitive_attributes;
+    // to match the canonicalization of of attributs in the capture base
+    const sortedAttributes = sensitive_overlay_attributes.sort();
+
+    return sortedAttributes;
   }
 
   private toJSON(): object {

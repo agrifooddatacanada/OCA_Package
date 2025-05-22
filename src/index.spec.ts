@@ -10,6 +10,7 @@ describe('', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
     let extension_obj = JSON.parse(fs.readFileSync(extension_path, 'utf8'));
     const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
+
     const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
     const oca_package_instance = new OcaPackage(extension_obj, oca_bundle);
 

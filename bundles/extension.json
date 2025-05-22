@@ -29,17 +29,17 @@
           "range_overlay": {
             "type": "range",
             "attributes": {
-              "age": {
-                "lower": "0",
-                "lower_inclusive": true,
-                "upper": "100",
-                "upper_inclusive": true
-              },
               "height": {
                 "lower": "0",
                 "lower_inclusive": true,
                 "upper": "300",
                 "upper_inclusive": false
+              },
+              "age": {
+                "lower": "0",
+                "lower_inclusive": true,
+                "upper": "100",
+                "upper_inclusive": true
               }
             }
           },
@@ -68,7 +68,7 @@
           },
           "sensitive_overlay": {
             "type": "sensitive",
-            "sensitive_attributes": ["age"]
+            "sensitive_attributes": ["height", "age"]
           }
         }
       ]
