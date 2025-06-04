@@ -4,7 +4,6 @@ import { ExtensionState } from './oca_extensions/extensions.js';
 import OcaPackage from './oca_package';
 import path from 'path';
 import fs from 'fs';
-
 describe('', () => {
   it('should produce a serialized oca-package for multi-level schemas', () => {
     const extension_path = path.join(__dirname, '../bundles', 'extension.json');
@@ -18,10 +17,13 @@ describe('', () => {
     expect(typeof oca_package).toBe('string');
     expect(() => JSON.parse(oca_package)).not.toThrow();
     const parsedOcaPackage = JSON.parse(oca_package);
+    // console.dir(parsedOcaPackage, { depth: null, colors: true });
+    // expect(parsedOcaPackage).toHaveProperty('d');
 
-    console.dir(parsedOcaPackage, { depth: null });
-
-    // expect(parsedOcaPackage.d).toBe('EG5L9MmzrvRdscWysJKw7tfwutGD0MSkFNsbULms3AmV');
+    // Verify the OCA package
+    const digest = 'ECi0_xM9NtMhL44ejmjd7zWfsa2K3xBKbf__rYWOlgVO';
+    const isValid = oca_package_instance.VerifyOcaPackage(parsedOcaPackage, digest);
+    expect(isValid).toBe(true);
   });
 
   // it('attribute framing', () => {

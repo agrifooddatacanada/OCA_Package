@@ -1,6 +1,7 @@
 import ExtensionBox from './oca_extensions/extensions.js';
 import { ExtensionInputJson } from './oca_extensions/extensions.js';
-import { saidify } from 'saidify';
+// import { saidify, verify } from 'saidify';
+import { saidify, verify, SAIDDex, Serials } from 'saidify';
 
 interface IOcaPackage {
   oca_bundle: string;
@@ -43,6 +44,18 @@ class OcaPackage implements IOcaPackage {
 
   public GenerateOcaPackage(): string {
     return JSON.stringify(this.Saidifying());
+  }
+
+  /**
+   * Verifies the OCA package against a digest.
+   * @param oca_package - The OCA package to verify.
+   * @param digest - The digest to verify against.
+   * @returns {boolean} - Returns true if the verification is successful, otherwise false.
+   */
+  public VerifyOcaPackage(oca_package: IOcaPackage, digest: string): boolean {
+    const label = 'd';
+    // prefixed is set to true this avoid d = '' to be considered as a valid self-addressing data
+    return verify(oca_package, digest, label, SAIDDex.Blake3_256, Serials.JSON, true);
   }
 }
 
