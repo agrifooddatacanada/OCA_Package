@@ -1,5 +1,6 @@
 import { DynOverlay } from '../../../extensions.js';
 import { saidify } from 'saidify';
+import canonicalize from '../../../../utils/canonical.js';
 
 export interface IAttributeFraming {
   dynOverlay: DynOverlay;
@@ -17,32 +18,40 @@ class AttributeFraming implements IAttributeFraming {
     this.dynOverlay = dynOverlay;
   }
 
-  private GetAttributeFraming(): any {
-    return this.dynOverlay.attribute_framing_overlay.attributes;
+  private GetFramedAttributes(): any {
+    const attributes = this.dynOverlay.attributes;
+    const canonicalizedAttributes = canonicalize(attributes);
+    const sortedAttributes = JSON.parse(canonicalizedAttributes);
+    return sortedAttributes;
   }
   private GetId(): string {
-    return this.dynOverlay.attribute_framing_overlay.properties.id;
+    return this.dynOverlay.framing_metadata.id;
   }
   private GetLabel(): string {
-    return this.dynOverlay.attribute_framing_overlay.properties.label;
+    return this.dynOverlay.framing_metadata.label;
   }
   private GetLocation(): string {
-    return this.dynOverlay.attribute_framing_overlay.properties.location;
+    return this.dynOverlay.framing_metadata.location;
   }
   private GetVersion(): string {
-    return this.dynOverlay.attribute_framing_overlay.properties.version;
+    return this.dynOverlay.framing_metadata.version;
   }
+
+  private GetFramingMetadata(): any {
+    return {
+      id: this.GetId(),
+      label: this.GetLabel(),
+      location: this.GetLocation(),
+      version: this.GetVersion(),
+    };
+  }
+
   private toJSON(): object {
     return {
       d: '',
       type: 'community/overlays/adc/attribute_framing/1.1',
-      framing_metadata: {
-        id: this.GetId(),
-        label: this.GetLabel(),
-        location: this.GetLocation(),
-        version: this.GetVersion(),
-      },
-      attribute_framing: this.GetAttributeFraming(),
+      framing_metadata: this.GetFramingMetadata(),
+      attributes: this.GetFramedAttributes(),
     };
   }
   private Saidifying(): Record<string, any> {

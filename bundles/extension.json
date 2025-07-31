@@ -69,6 +69,27 @@
           "sensitive_overlay": {
             "type": "sensitive",
             "sensitive_attributes": ["height", "age"]
+          },
+          "attribute_framing_overlay": {
+            "type": "attribute_framing",
+            "framing_metadata": {
+              "id": "FOODON",
+              "label": "FoodOntology",
+              "location": "https://raw.githubusercontent.com/FoodOntology/foodon/master/foodon.owl",
+              "version": "1.0"
+            },
+            "attributes": {
+              "height": {
+                "framing_justification": "",
+                "predicate_id": "",
+                "term_id": ""
+              },
+              "age": {
+                "framing_justification": "",
+                "predicate_id": "",
+                "term_id": ""
+              }
+            }
           }
         }
       ]

@@ -1,15 +1,18 @@
+// TODO: use canonicalize to consistently order how properties of overlays should appear
+// Do validation for the generation exentension chunck, and parts of oca_package.
+
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
 import ExampleOverlay from './state/overlays/example.js';
 import Range from './state/overlays/range.js';
 import Sensitive from './state/overlays/sensitive.js';
+import AttributeFraming from './state/overlays/framing/attribute_framing.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
-import canonicalize from '../utils/canonical.js';
 import { saidify } from 'saidify';
 
 const ADC_COMMUNITY = 'adc';
-const v = '1.0';
+const EXTENSION_VERSION = '1.0';
 
 // ExtensionInputJson: the input json object that contains the extension overlays
 export interface ExtensionInputJson {
@@ -96,6 +99,10 @@ export class Overlay implements DynOverlay {
         const sensitive_instance = new Sensitive(this._overlay.sensitive_overlay);
         const sensitive_ov = sensitive_instance.GenerateOverlay();
         overlay['sensitive'] = JSON.parse(sensitive_ov);
+      } else if (ov_type === 'attribute_framing_overlay') {
+        const attribute_framing_instance = new AttributeFraming(this._overlay.attribute_framing_overlay);
+        const attribute_framing_ov = attribute_framing_instance.GenerateOverlay();
+        overlay['attribute_framing'] = JSON.parse(attribute_framing_ov);
       } else {
         throw new Error(
           `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, sensitive_overlay ]`,
@@ -212,7 +219,7 @@ export class Extension implements IExtension {
 
     this._community = community;
     this._exensions = _extensions_input;
-    this.type = `community/${this._community}/extension/${v}`;
+    this.type = `community/${this._community}/extension/${EXTENSION_VERSION}`;
   }
 
   private GenerateOverlays(): { [key: string]: {} } {
