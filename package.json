@@ -38,7 +38,6 @@
     "url": "https://github.com/agrifooddatacanada/OCA_Package"
   },
   "author": "Steven Mugisha Mizero <smugisha@uoguelph.ca>",
-  "license": "EUPL-1.2",
   "devDependencies": {
     "@eslint/js": "^9.11.1",
     "@types/node": "^22.7.3",
