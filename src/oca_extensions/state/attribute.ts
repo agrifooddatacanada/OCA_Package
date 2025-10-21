@@ -1,5 +1,6 @@
 /* The states of attributes from the extensions */
-import { SeparatorValues } from '../state/overlays/separator.js';
+
+/* import { SeparatorValues } from '../state/overlays/separator.js';
 
 interface IAttribute {
   name: string;
@@ -21,3 +22,6 @@ class Attribute implements IAttribute {
 }
 
 export default Attribute;
+
+
+*/

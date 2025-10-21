@@ -134,7 +134,7 @@ Canoncial rules:
 
 // export default Separator;
 
-import { DynOverlay } from '../../extensions';
+import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
 import canonicalize from '../../../utils/canonical.js';
 
