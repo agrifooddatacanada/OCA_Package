@@ -1,5 +1,7 @@
 // TODO: use canonicalize to consistently order how properties of overlays should appear
-// Do validation for the generation exentension chunck, and parts of oca_package.
+// TODO: Do validation for the generation exentension chunck, and parts of oca_package.
+// TODO: what happens when extension json input contains an extension overlay that does exist in the a given community? logging or throwing an error?
+// TODO: do validation for dynamic extension overlays (DynOverlay) input, per individual overlay.
 
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
@@ -7,6 +9,7 @@ import ExampleOverlay from './state/overlays/example.js';
 import Range from './state/overlays/range.js';
 import Sensitive from './state/overlays/sensitive.js';
 import AttributeFraming from './state/overlays/framing/attribute_framing.js';
+import Separator from './state/overlays/separator.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
 import { saidify } from 'saidify';
@@ -22,6 +25,10 @@ export interface ExtensionInputJson {
 }
 
 // IExtensionState: the interface that defines the extension state
+// Note that the extension state interface looks similar to ExtensionInputJson because we are using both as json objects.
+// If the input is in a different format that's when you can see the usage of the ExtensionState class.
+// For different formats of inputs, only the BuildExtensionState() method will change.
+
 export interface IExtensionState {
   [community: string]: {
     [bundle_digest: Said]: DynOverlay;
@@ -99,6 +106,10 @@ export class Overlay implements DynOverlay {
         const sensitive_instance = new Sensitive(this._overlay.sensitive_overlay);
         const sensitive_ov = sensitive_instance.GenerateOverlay();
         overlay['sensitive'] = JSON.parse(sensitive_ov);
+      } else if (ov_type === 'separator_overlay') {
+        const separator_instance = new Separator(this._overlay.separator_overlay);
+        const separator_ov = separator_instance.GenerateOverlay();
+        overlay['separator'] = JSON.parse(separator_ov);
       } else if (ov_type === 'attribute_framing_overlay') {
         const attribute_framing_instance = new AttributeFraming(this._overlay.attribute_framing_overlay);
         const attribute_framing_ov = attribute_framing_instance.GenerateOverlay();

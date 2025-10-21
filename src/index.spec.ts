@@ -33,4 +33,20 @@ describe('OCA Package', () => {
     const isValid = VerifyOcaPackage(parsedOcaPackage, digest);
     expect(isValid).toBe(true);
   });
+
+  it('should produce a serialized oca-package with separators', () => {
+    const ext_with_separators_path = path.join(__dirname, '../bundles', 'extension_input_with_separators.json');
+    const ext_obj_with_separators = JSON.parse(fs.readFileSync(ext_with_separators_path, 'utf8'));
+
+    const oca_with_separators_path = path.join(__dirname, '../bundles', 'oca_bundle_with_separators.json');
+    const oca_bundle_with_separators = JSON.parse(fs.readFileSync(oca_with_separators_path, 'utf8'));
+
+    const oca_pkg_instance_with_separators = new OcaPackage(ext_obj_with_separators, oca_bundle_with_separators);
+
+    const oca_pkg = oca_pkg_instance_with_separators.GenerateOcaPackage();
+
+    const parsed_oca_pkg = JSON.parse(oca_pkg);
+
+    console.dir(parsed_oca_pkg, { depth: null, colors: true });
+  });
 });

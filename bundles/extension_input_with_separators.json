@@ -1,0 +1,34 @@
+{
+  "extensions": {
+    "adc": {
+      "EOiqPhwZo4Kaw2iqTxYqBSp7uo0LaMb7Cft7V2bnSPK2": [
+        {
+          "ordering_overlay": {
+            "type": "ordering",
+            "attribute_ordering": ["d", "i", "passed"],
+            "entry_code_ordering": {
+              "i": {
+                "i": ["i"]
+              }
+            }
+          }
+        },
+        {
+          "separator_overlay": {
+            "type": "separator",
+            "attribute_separators": {
+              "i": {
+                "delimiter": ",",
+                "escape": "\\"
+              }
+            },
+            "dataset_separator": {
+              "delimiter": "",
+              "escape": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}
