@@ -15,8 +15,8 @@ class OcaPackage implements IOcaPackage {
   public extensions_box: ExtensionBox;
 
   constructor(extension_input_json: ExtensionInputJson, oca_bundle: string) {
-    this.extensions_box = new ExtensionBox(extension_input_json, oca_bundle);
     this.oca_bundle = oca_bundle;
+    this.extensions_box = new ExtensionBox(extension_input_json, oca_bundle);
   }
 
   private Saidifying(): any {
