@@ -232,17 +232,18 @@ export class Extension implements IExtension {
   readonly overlays = {};
   private capture_base_digest: string;
 
-  constructor(_extensions_input: DynOverlay, community: string, capture_base_digest?: string) {
+  constructor(_extensions_input: DynOverlay, community: string, capture_base_digest: string) {
     if (!_extensions_input || !community) {
       throw new Error('extension array is required from extension state and community is required');
+    }
+    if (!capture_base_digest) {
+      throw new Error('capture_base_digest is required');
     }
 
     this._community = community;
     this._exensions = _extensions_input;
     this.type = `community/${this._community}/extension/${EXTENSION_VERSION}`;
-    if (capture_base_digest) {
-      this.capture_base_digest = capture_base_digest;
-    }
+    this.capture_base_digest = capture_base_digest;
   }
 
   private GenerateOverlays(): { [key: string]: {} } {
