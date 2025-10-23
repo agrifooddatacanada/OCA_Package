@@ -12,13 +12,18 @@ export interface IUnitFraming {
 
 class UnitFraming implements IUnitFraming {
   public dynOverlay: DynOverlay;
+  private capture_base_digest: string;
 
-  constructor(dynOverlay: DynOverlay) {
+  constructor(dynOverlay: DynOverlay, capture_base_digest: string) {
     if (!dynOverlay) {
       throw new Error('a dynamic extension overlay are required');
     }
+    if (!capture_base_digest) {
+      throw new Error('capture_base_digest is required');
+    }
 
     this.dynOverlay = dynOverlay;
+    this.capture_base_digest = capture_base_digest;
   }
 
   private GetUnits(): any {
@@ -42,6 +47,7 @@ class UnitFraming implements IUnitFraming {
   private toJSON(): object {
     return {
       d: '',
+      capture_base: this.capture_base_digest,
       type: 'community/overlays/adc/unit_framing/1.1',
       framing_metadata: {
         id: this.GetId(),

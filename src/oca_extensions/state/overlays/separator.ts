@@ -145,14 +145,18 @@ interface Iseparator {
 
 class Separator implements Iseparator {
   public dynOverlay: DynOverlay;
+  private capture_base_digest: string;
 
-  // TODO: here you could validate if the dynamic overlay contains the required fields.
-  constructor(dynOverlay: DynOverlay) {
+  constructor(dynOverlay: DynOverlay, capture_base_digest: string) {
     if (!dynOverlay) {
       throw new Error('a dynamic extension overlay are required');
     }
+    if (!capture_base_digest) {
+      throw new Error('capture_base_digest is required');
+    }
 
     this.dynOverlay = dynOverlay;
+    this.capture_base_digest = capture_base_digest;
   }
 
   private GetAttributesSeparators(): any {
@@ -172,6 +176,7 @@ class Separator implements Iseparator {
   private toJSON(): object {
     return {
       d: '',
+      capture_base: this.capture_base_digest,
       type: 'community/overlays/adc/separator/1.1',
       attribute_separators: this.GetAttributesSeparators(),
       dataset_separator: this.GetDatasetSeparator(),

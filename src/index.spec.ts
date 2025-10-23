@@ -28,7 +28,7 @@ describe('OCA Package', () => {
     expect(parsedOcaPackage).toHaveProperty('extensions');
 
     // Verify the OCA package
-    const digest = 'EBc_Rp2ORodBJuTZacCFBJEyijL7dirtnc2aJ_uCwAsg';
+    const digest = 'EBk8K_P842ISrDfJdXMignemPtCcxlXhD461gGo34IkU';
     // const isValid = oca_package_instance.VerifyOcaPackage(parsedOcaPackage, digest);
     const isValid = VerifyOcaPackage(parsedOcaPackage, digest);
     expect(isValid).toBe(true);

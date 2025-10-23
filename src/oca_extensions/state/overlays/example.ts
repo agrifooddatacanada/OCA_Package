@@ -9,12 +9,17 @@ export interface IExampleOverlay {
 
 class ExampleOverlay implements IExampleOverlay {
   public dynOverlay: DynOverlay;
+  private capture_base_digest: string;
 
-  constructor(dynOverlay: DynOverlay) {
+  constructor(dynOverlay: DynOverlay, capture_base_digest: string) {
     if (!dynOverlay) {
       throw new Error('A dynamic extension overlay is required');
     }
+    if (!capture_base_digest) {
+      throw new Error('capture_base_digest is required');
+    }
     this.dynOverlay = dynOverlay;
+    this.capture_base_digest = capture_base_digest;
   }
 
   public get language(): any {
@@ -31,6 +36,7 @@ class ExampleOverlay implements IExampleOverlay {
   private toJSON(): object {
     return {
       d: '',
+      capture_base: this.capture_base_digest,
       type: 'community/overlays/adc/example/1.1',
       language: this.language,
       attribute_examples: this.GetAttributeExamples(),
@@ -47,7 +53,7 @@ class ExampleOverlay implements IExampleOverlay {
     return JSON.stringify(this.Saidifying());
   }
 
-  public static GenerateOverlay(dynOverlay: { example_overlays: any[] }): string {
+  public static GenerateOverlay(dynOverlay: { example_overlays: any[] }, capture_base_digest: string): string {
     if (!dynOverlay || typeof dynOverlay !== 'object' || !Array.isArray(dynOverlay['example_overlays'])) {
       throw new Error('Invalid dynOverlay structure. Expected an object with an "example_overlays" array.');
     }
@@ -57,7 +63,7 @@ class ExampleOverlay implements IExampleOverlay {
 
     for (let example_ov of overlays) {
       try {
-        const example_overlay = new ExampleOverlay(example_ov);
+        const example_overlay = new ExampleOverlay(example_ov, capture_base_digest);
         example_overlays.push(JSON.parse(example_overlay.GenerateExampleOverlay()));
       } catch (error) {
         console.error('Failed to process example overlay:', error);

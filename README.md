@@ -14,7 +14,6 @@ npm i oca_package
 
 ```typescript
 import { OcaPackage } from 'oca_package';
-import { except } from 'vitest'; // make sure to install vitest or use any other testing library
 
 const extension = {
   extensions: {
@@ -125,5 +124,4 @@ const oca_bundle = {
 };
 
 const oca_package = new OcaPackage(extension, oca_bundle);
-expect(JSON.parse(oca_package.GenerateOcaPackage()).d).toBe('EG5L9MmzrvRdscWysJKw7tfwutGD0MSkFNsbULms3AmV');
 ```
