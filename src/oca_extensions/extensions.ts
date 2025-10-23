@@ -6,6 +6,7 @@
 import Ordering from './state/overlays/ordering.js';
 import UnitFraming from './state/overlays/framing/unit_framing.js';
 import ExampleOverlay from './state/overlays/example.js';
+import FormOverlay from './state/overlays/form.js';
 import Range from './state/overlays/range.js';
 import Sensitive from './state/overlays/sensitive.js';
 import AttributeFraming from './state/overlays/framing/attribute_framing.js';
@@ -107,6 +108,9 @@ export class Overlay implements DynOverlay {
       } else if (ov_type === 'example_overlay') {
         const example_ov = ExampleOverlay.GenerateOverlay(this._overlay.example_overlay, this._capture_base_digest);
         overlay['example'] = JSON.parse(example_ov);
+      } else if (ov_type === 'form_overlay') {
+        const form_ov = FormOverlay.GenerateOverlay(this._overlay.form_overlay, this._capture_base_digest);
+        overlay['form'] = JSON.parse(form_ov);
       } else if (ov_type === 'sensitive_overlay') {
         const sensitive_instance = new Sensitive(this._overlay.sensitive_overlay, this._capture_base_digest);
         const sensitive_ov = sensitive_instance.GenerateOverlay();
@@ -124,7 +128,7 @@ export class Overlay implements DynOverlay {
         overlay['attribute_framing'] = JSON.parse(attribute_framing_ov);
       } else {
         throw new Error(
-          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, sensitive_overlay ]`,
+          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, form_overlay, sensitive_overlay, separator_overlay, attribute_framing_overlay ]`,
         );
       }
     }
