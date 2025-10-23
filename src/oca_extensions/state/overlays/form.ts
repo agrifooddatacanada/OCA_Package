@@ -9,12 +9,17 @@ export interface IFormOverlay {
 
 class FormOverlay implements IFormOverlay {
   public dynOverlay: DynOverlay;
+  private capture_base_digest: string;
 
-  constructor(dynOverlay: DynOverlay) {
+  constructor(dynOverlay: DynOverlay, capture_base_digest: string) {
     if (!dynOverlay) {
       throw new Error('A dynamic extension overlay is required');
     }
+    if (!capture_base_digest) {
+      throw new Error('capture_base_digest is required');
+    }
     this.dynOverlay = dynOverlay;
+    this.capture_base_digest = capture_base_digest;
   }
 
   public get language(): any {
@@ -123,8 +128,8 @@ class FormOverlay implements IFormOverlay {
   private toJSON(): object {
     return {
       d: '',
-      capture_base: this.dynOverlay.capture_base,
-      type: 'community/overlays/adc/form/1.0',
+      capture_base: this.capture_base_digest,
+      type: 'community/overlays/adc/form/1.1',
       language: this.language,
       pages: this.GetPages(),
       page_order: this.GetPageOrder(),
@@ -146,7 +151,7 @@ class FormOverlay implements IFormOverlay {
     return JSON.stringify(this.Saidifying());
   }
 
-  public static GenerateOverlay(dynOverlay: { form_overlays: any[] }): string {
+  public static GenerateOverlay(dynOverlay: { form_overlays: any[] }, capture_base_digest: string): string {
     if (!dynOverlay || typeof dynOverlay !== 'object' || !Array.isArray(dynOverlay['form_overlays'])) {
       console.error('[Form ERROR] Invalid structure. dynOverlay:', dynOverlay);
       throw new Error('Invalid dynOverlay structure. Expected an object with a "form_overlays" array.');
@@ -157,7 +162,7 @@ class FormOverlay implements IFormOverlay {
     
     for (let form_ov of overlays) {
       try {
-        const form_overlay = new FormOverlay(form_ov);
+        const form_overlay = new FormOverlay(form_ov, capture_base_digest);
         const generated = form_overlay.GenerateFormOverlay();
         form_overlays.push(JSON.parse(generated));
       } catch (error) {
