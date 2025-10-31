@@ -1,0 +1,95 @@
+{
+  "d": "EAYwOiyUMICXifTd1I3OMU9PFwPPBQcIxIXh-Q1e1BWd",
+  "type": "oca_package/1.0",
+  "oca_bundle": {
+    "v": "OCAA11JSON000665_",
+    "bundle": {
+      "v": "OCAS11JSON000648_",
+      "d": "EOiqPhwZo4Kaw2iqTxYqBSp7uo0LaMb7Cft7V2bnSPK2",
+      "capture_base": {
+        "d": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+        "type": "spec/capture_base/1.1",
+        "attributes": { "d": "Text", "i": ["Text"], "passed": "Boolean" },
+        "classification": "",
+        "flagged_attributes": []
+      },
+      "overlays": {
+        "character_encoding": {
+          "d": "EJoAw1e6rl2VR2UU1T-utqDMZlbnWALdSXHspoGyxMPx",
+          "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+          "type": "spec/overlays/character_encoding/1.1",
+          "attribute_character_encoding": { "d": "utf-8", "i": "utf-8", "passed": "utf-8" }
+        },
+        "conformance": {
+          "d": "EKCwwqXHABWEMDOVX0iaVjWcaBDbsx1c4qN3f6z2d8I9",
+          "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+          "type": "spec/overlays/conformance/1.1",
+          "attribute_conformance": { "d": "M", "i": "M", "passed": "M" }
+        },
+        "information": [
+          {
+            "d": "EG95pmSeRGoOPW2zMvpQxJR7RHPMeBSfJGI4YGf_2IyY",
+            "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+            "type": "spec/overlays/information/1.1",
+            "language": "eng",
+            "attribute_information": {
+              "d": "Schema digest",
+              "i": "Credential Issuee",
+              "passed": "Enables or disables passing"
+            }
+          }
+        ],
+        "label": [
+          {
+            "d": "EDtsHSEkGAQzyIsgl7YGCIoE_dw5hCtg3AyRkDHAue9x",
+            "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+            "type": "spec/overlays/label/1.1",
+            "language": "eng",
+            "attribute_categories": [],
+            "attribute_labels": {
+              "d": "Schema digest",
+              "i": "Credential Issuee",
+              "passed": "Passed"
+            },
+            "category_labels": {}
+          }
+        ],
+        "meta": [
+          {
+            "d": "EAcuOVE07L7ojLAsblspM1YQWro7h8qpFlZFt-_fj4u0",
+            "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+            "type": "spec/overlays/meta/1.1",
+            "language": "eng",
+            "description": "Entrance credential",
+            "name": "Entrance credential"
+          }
+        ]
+      }
+    },
+    "dependencies": []
+  },
+  "extensions": {
+    "adc": {
+      "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp": {
+        "d": "EJGz00Vhw7dfuOSaYJNUm-1cTxrqCx0CMRZ6cAXw__8R",
+        "type": "community/adc/extension/1.0",
+        "overlays": {
+          "ordering": {
+            "d": "EAWr_dZ0wNe-wT8_aTJOw6jSdw7DXfk-dO3-UV7YLAG4",
+            "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+            "type": "community/overlays/adc/ordering/1.1",
+            "attribute_ordering": ["d", "i", "passed"],
+            "entry_code_ordering": { "i": { "i": ["i"] } }
+          },
+          "separator": {
+            "d": "EIktnZpnr7fsBleANWuKKWXLnBA26aBlL-DhHyDhmLKg",
+            "capture_base": "EF8shTDVfu0Sd3CSigaz9IE8G8q_e039f9bfPOpgJGxp",
+            "type": "community/overlays/adc/separator/1.1",
+            "attribute_separators": { "i": { "delimiter": ",", "escape": "\\" } },
+            "dataset_separator": { "delimiter": "", "escape": "" }
+          }
+        }
+      }
+    }
+  }
+}
