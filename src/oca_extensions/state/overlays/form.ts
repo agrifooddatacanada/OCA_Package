@@ -1,6 +1,7 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
 import canonicalize from '../../../utils/canonical.js';
+import { OVERLAY_VERSION } from '../../../types/types.js';
 
 export interface IFormOverlay {
   dynOverlay: DynOverlay;
@@ -129,7 +130,7 @@ class FormOverlay implements IFormOverlay {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/form/1.1',
+      type: `community/overlays/adc/form/${OVERLAY_VERSION}`,
       language: this.language,
       pages: this.GetPages(),
       page_order: this.GetPageOrder(),

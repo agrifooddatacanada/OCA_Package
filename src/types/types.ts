@@ -1,6 +1,9 @@
 // digest(said) type
 export type Said = string;
 
+// overlay version
+export const OVERLAY_VERSION: string = '1.0';
+
 // oca_bundle_capture_base
 export interface OcaBundleCaptureBase {
   d: Said;

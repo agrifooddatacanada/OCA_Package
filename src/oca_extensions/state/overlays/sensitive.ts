@@ -1,3 +1,4 @@
+import { OVERLAY_VERSION } from '../../../types/types.js';
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
 
@@ -34,7 +35,7 @@ class Sensitive implements ISensitive {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/sensitive/1.1',
+      type: `community/overlays/adc/sensitive/${OVERLAY_VERSION}`,
       sensitive_attributes: this.GetSensitiveAttributes(),
     };
   }

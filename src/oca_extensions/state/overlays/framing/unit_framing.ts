@@ -1,6 +1,7 @@
 import { DynOverlay } from '../../../extensions.js';
 import { saidify } from 'saidify';
 import canonicalize from '../../../../utils/canonical.js';
+import { OVERLAY_VERSION } from '../../../../types/types.js';
 
 // UCUM is used to map units
 // https://ucum.org/
@@ -48,7 +49,7 @@ class UnitFraming implements IUnitFraming {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/unit_framing/1.1',
+      type: `community/overlays/adc/unit_framing/${OVERLAY_VERSION}`,
       framing_metadata: {
         id: this.GetId(),
         label: this.GetLabel(),

@@ -1,6 +1,7 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
 import canonicalize from '../../../utils/canonical.js';
+import { OVERLAY_VERSION } from '../../../types/types.js';
 
 export interface IRange {
   dynOverlay: DynOverlay;
@@ -35,7 +36,7 @@ class Range implements IRange {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/range/1.1',
+      type: `community/overlays/adc/range/${OVERLAY_VERSION}`,
       attributes: this.GetAttributes(),
     };
   }

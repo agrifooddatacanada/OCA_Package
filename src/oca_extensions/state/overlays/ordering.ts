@@ -1,5 +1,6 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
+import { OVERLAY_VERSION } from '../../../types/types.js';
 
 export interface IOrdering {
   dynOverlay: DynOverlay;
@@ -34,7 +35,7 @@ class Ordering implements IOrdering {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/ordering/1.1',
+      type: `community/overlays/adc/ordering/${OVERLAY_VERSION}`,
       attribute_ordering: this.GetAttributeOrdering(),
       entry_code_ordering: this.GetEntryCodeOrdering(),
     };

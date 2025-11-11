@@ -1,6 +1,7 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
 import canonicalize from '../../../utils/canonical.js';
+import { OVERLAY_VERSION } from '../../../types/types.js';
 
 export interface IExampleOverlay {
   dynOverlay: DynOverlay;
@@ -37,7 +38,7 @@ class ExampleOverlay implements IExampleOverlay {
     return {
       d: '',
       capture_base: this.capture_base_digest,
-      type: 'community/overlays/adc/example/1.1',
+      type: `community/overlays/adc/example/${OVERLAY_VERSION}`,
       language: this.language,
       attribute_examples: this.GetAttributeExamples(),
     };
