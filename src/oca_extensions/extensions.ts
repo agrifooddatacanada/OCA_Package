@@ -11,6 +11,9 @@ import Range from './state/overlays/range.js';
 import Sensitive from './state/overlays/sensitive.js';
 import AttributeFraming from './state/overlays/framing/attribute_framing.js';
 import Separator from './state/overlays/separator.js';
+import DecimalSeparator from './state/overlays/decimal_separator.js';
+import FileDelimiter from './state/overlays/file_delimiter.js';
+import ArrayDelimiter from './state/overlays/array_delimiter.js';
 import { Said } from '../types/types.js';
 import { ocabundleDigest, getOcaBundleFromDeps, getDigest, isOcaBundleWithDeps } from '../utils/helpers.js';
 import { saidify } from 'saidify';
@@ -119,6 +122,18 @@ export class Overlay implements DynOverlay {
         const separator_instance = new Separator(this._overlay.separator_overlay, this._capture_base_digest);
         const separator_ov = separator_instance.GenerateOverlay();
         overlay['separator'] = JSON.parse(separator_ov);
+      } else if (ov_type === 'decimal_separator_overlay') {
+        const decimal_instance = new DecimalSeparator(this._overlay.decimal_separator_overlay, this._capture_base_digest);
+        const decimal_ov = decimal_instance.GenerateOverlay();
+        overlay['decimal_separator'] = JSON.parse(decimal_ov);
+      } else if (ov_type === 'file_delimiter_overlay') {
+        const file_instance = new FileDelimiter(this._overlay.file_delimiter_overlay, this._capture_base_digest);
+        const file_ov = file_instance.GenerateOverlay();
+        overlay['file_delimiter'] = JSON.parse(file_ov);
+      } else if (ov_type === 'array_delimiter_overlay') {
+        const array_instance = new ArrayDelimiter(this._overlay.array_delimiter_overlay, this._capture_base_digest);
+        const array_ov = array_instance.GenerateOverlay();
+        overlay['array_delimiter'] = JSON.parse(array_ov);
       } else if (ov_type === 'attribute_framing_overlay') {
         const attribute_framing_instance = new AttributeFraming(
           this._overlay.attribute_framing_overlay,
@@ -128,7 +143,7 @@ export class Overlay implements DynOverlay {
         overlay['attribute_framing'] = JSON.parse(attribute_framing_ov);
       } else {
         throw new Error(
-          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, form_overlay, sensitive_overlay, separator_overlay, attribute_framing_overlay ]`,
+          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, form_overlay, sensitive_overlay, separator_overlay, attribute_framing_overlay, decimal_separator_overlay, file_delimiter_overlay, array_delimiter_overlay ]`,
         );
       }
     }
