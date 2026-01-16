@@ -23,15 +23,15 @@ class FileDelimiter implements IFileDelimiter {
   }
 
   private GetDelimiter(): string {
-    const delim = this.dynOverlay.delimiter;
-    if (typeof delim !== 'string' || delim.length === 0) {
+    const delim: any = (this.dynOverlay as any).delimiter;
+    if (typeof delim !== 'string' || delim === '') {
       throw new Error('delimiter must be a non-empty string');
     }
     return delim;
   }
 
   private GetEscapeChar(): string | undefined {
-    const v = this.dynOverlay.escape_char;
+    const v: any = (this.dynOverlay as any).escape_char;
     if (v === undefined) return undefined;
     if (typeof v !== 'string') {
       throw new Error('escape_char must be a string when provided');
@@ -40,7 +40,7 @@ class FileDelimiter implements IFileDelimiter {
   }
 
   private GetQuoteChar(): string | undefined {
-    const v = this.dynOverlay.quote_char;
+    const v: any = (this.dynOverlay as any).quote_char;
     if (v === undefined) return undefined;
     if (typeof v !== 'string') {
       throw new Error('quote_char must be a string when provided');
@@ -49,7 +49,7 @@ class FileDelimiter implements IFileDelimiter {
   }
 
   private GetLineTerminator(): string | undefined {
-    const v = this.dynOverlay.line_terminator;
+    const v: any = (this.dynOverlay as any).line_terminator;
     if (v === undefined) return undefined;
     if (typeof v !== 'string') {
       throw new Error('line_terminator must be a string when provided');
@@ -58,7 +58,7 @@ class FileDelimiter implements IFileDelimiter {
   }
 
   private GetDataStartRow(): number | undefined {
-    const v = this.dynOverlay.data_start_row;
+    const v: any = (this.dynOverlay as any).data_start_row;
     if (v === undefined) return undefined;
     if (typeof v !== 'number' || !Number.isFinite(v) || v < 1) {
       throw new Error('data_start_row must be a positive integer when provided');
