@@ -112,6 +112,42 @@ class FormOverlay implements IFormOverlay {
           newConfig.input_type = config.input_type;
         }
 
+        if (config.description) {
+          if (typeof config.description === 'object' && config.description !== null) {
+            const description = config.description[this.language] || '';
+            if (description) {
+              newConfig.description = description;
+            }
+          } else {
+            newConfig.description = config.description;
+          }
+        }
+
+        if (config.reference_button_text !== undefined && config.reference_button_text !== null) {
+          if (typeof config.reference_button_text === 'string') {
+            const btn = config.reference_button_text.trim();
+            if (btn) {
+              newConfig.reference_button_text = btn;
+            }
+          } else if (
+            typeof config.reference_button_text === 'object' &&
+            !Array.isArray(config.reference_button_text)
+          ) {
+            const raw =
+              config.reference_button_text[this.language] ||
+              Object.values(config.reference_button_text)[0] ||
+              '';
+            const btn = String(raw).trim();
+            if (btn) {
+              newConfig.reference_button_text = btn;
+            }
+          }
+        }
+
+        if (Array.isArray(config.showing_attribute)) {
+          newConfig.showing_attribute = [...config.showing_attribute];
+        }
+
         languageSpecificArguments[attributeName] = newConfig;
       }
 
