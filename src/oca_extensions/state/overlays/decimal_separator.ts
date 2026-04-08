@@ -1,6 +1,5 @@
 import { DynOverlay } from '../../extensions.js';
 import { saidify } from 'saidify';
-import canonicalize from '../../../utils/canonical.js';
 import { OVERLAY_VERSION } from '../../../types/types.js';
 
 interface IDecimalSeparator {
@@ -31,20 +30,12 @@ class DecimalSeparator implements IDecimalSeparator {
     return sep;
   }
 
-  private GetAttributeOverrides(): any {
-    const overrides = this.dynOverlay.attribute_overrides || {};
-    const canonicalized = canonicalize(overrides);
-    const sorted = JSON.parse(canonicalized);
-    return sorted;
-  }
-
   private toJSON(): object {
     return {
       d: '',
       capture_base: this.capture_base_digest,
       type: `community/overlays/adc/decimal_separator/${OVERLAY_VERSION}`,
-      decimal_separator: this.GetDecimalSeparator(),
-      attribute_overrides: this.GetAttributeOverrides(),
+      delimiter: this.GetDecimalSeparator()
     };
   }
 

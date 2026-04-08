@@ -23,17 +23,6 @@ class ArrayDelimiter implements IArrayDelimiter {
     this.capture_base_digest = capture_base_digest;
   }
 
-  private GetDefaultDelimiter(): string {
-    const delim = this.dynOverlay.delimiter;
-    if (delim === undefined) {
-      return '';
-    }
-    if (typeof delim !== 'string') {
-      throw new Error('delimiter must be a string when provided');
-    }
-    return delim;
-  }
-
   private GetAttributesConfig(): any {
     const attributes = this.dynOverlay.attributes || {};
     const canonicalized = canonicalize(attributes);
@@ -46,8 +35,7 @@ class ArrayDelimiter implements IArrayDelimiter {
       d: '',
       capture_base: this.capture_base_digest,
       type: `community/overlays/adc/array_delimiter/${OVERLAY_VERSION}`,
-      attributes: this.GetAttributesConfig(),
-      delimiter: this.GetDefaultDelimiter(),
+      attributes: this.GetAttributesConfig()
     };
   }
 
