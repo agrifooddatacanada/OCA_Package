@@ -123,7 +123,10 @@ export class Overlay implements DynOverlay {
         const separator_ov = separator_instance.GenerateOverlay();
         overlay['separator'] = JSON.parse(separator_ov);
       } else if (ov_type === 'decimal_separator_overlay') {
-        const decimal_instance = new DecimalSeparator(this._overlay.decimal_separator_overlay, this._capture_base_digest);
+        const decimal_instance = new DecimalSeparator(
+          this._overlay.decimal_separator_overlay,
+          this._capture_base_digest,
+        );
         const decimal_ov = decimal_instance.GenerateOverlay();
         overlay['decimal_separator'] = JSON.parse(decimal_ov);
       } else if (ov_type === 'file_delimiter_overlay') {
@@ -135,11 +138,10 @@ export class Overlay implements DynOverlay {
         const array_ov = array_instance.GenerateOverlay();
         overlay['array_delimiter'] = JSON.parse(array_ov);
       } else if (ov_type === 'attribute_framing_overlay') {
-        const attribute_framing_instance = new AttributeFraming(
+        const attribute_framing_ov = AttributeFraming.GenerateOverlay(
           this._overlay.attribute_framing_overlay,
           this._capture_base_digest,
         );
-        const attribute_framing_ov = attribute_framing_instance.GenerateOverlay();
         overlay['attribute_framing'] = JSON.parse(attribute_framing_ov);
       } else {
         throw new Error(
