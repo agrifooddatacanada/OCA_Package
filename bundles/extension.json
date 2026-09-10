@@ -72,24 +72,56 @@
           },
           "attribute_framing_overlay": {
             "type": "attribute_framing",
-            "framing_metadata": {
-              "id": "FOODON",
-              "label": "FoodOntology",
-              "location": "https://raw.githubusercontent.com/FoodOntology/foodon/master/foodon.owl",
-              "version": "1.0"
-            },
-            "attributes": {
-              "height": {
-                "framing_justification": "",
-                "predicate_id": "",
-                "term_id": ""
+            "attribute_framing_overlays": [
+              {
+                "framing_metadata": {
+                  "id": "FOODON",
+                  "label": "FoodOntology",
+                  "location": "https://raw.githubusercontent.com/FoodOntology/foodon/master/foodon.owl",
+                  "version": "1.0",
+                  "imports": {
+                    "dcterms": {
+                      "id": "dcterms",
+                      "label": "DCMI Metadata Terms",
+                      "location": "http://purl.org/dc/terms/",
+                      "version": "1.1"
+                    },
+                    "foaf": {
+                      "id": "foaf"
+                    }
+                  }
+                },
+                "attributes": {
+                  "height": {
+                    "framing_justification": "semapv:ManualMappingCuration",
+                    "predicate_id": "skos:exactMatch",
+                    "term_id": "FOODON:00001",
+                    "description": "Height of the athlete."
+                  },
+                  "age": {
+                    "framing_justification": "semapv:ManualMappingCuration",
+                    "predicate_id": "skos:closeMatch",
+                    "term_id": "FOODON:00002"
+                  }
+                }
               },
-              "age": {
-                "framing_justification": "",
-                "predicate_id": "",
-                "term_id": ""
+              {
+                "framing_metadata": {
+                  "id": "ENVO",
+                  "label": "Environment Ontology",
+                  "location": "http://purl.obolibrary.org/obo/envo.owl",
+                  "version": "2.0"
+                },
+                "attributes": {
+                  "age": {
+                    "framing_justification": "semapv:LexicalMatching",
+                    "predicate_id": "skos:broadMatch",
+                    "term_id": "ENVO:00010",
+                    "description": "Age as recorded in the environmental sample record."
+                  }
+                }
               }
-            }
+            ]
           }
         }
       ]

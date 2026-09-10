@@ -42,14 +42,26 @@ class AttributeFraming implements IAttributeFraming {
   private GetVersion(): string {
     return this.dynOverlay.framing_metadata.version;
   }
+  private GetImports():
+    | Record<string, { id: string; label?: string; location?: string; version?: string }>
+    | undefined {
+    const imports = this.dynOverlay.framing_metadata.imports;
+    if (!imports) return undefined;
+    return JSON.parse(canonicalize(imports));
+  }
 
   private GetFramingMetadata(): any {
-    return {
+    const metadata: any = {
       id: this.GetId(),
       label: this.GetLabel(),
       location: this.GetLocation(),
       version: this.GetVersion(),
     };
+    const imports = this.GetImports();
+    if (imports !== undefined) {
+      metadata.imports = imports;
+    }
+    return metadata;
   }
 
   private toJSON(): object {
@@ -67,6 +79,46 @@ class AttributeFraming implements IAttributeFraming {
   }
   public GenerateOverlay(): string {
     return JSON.stringify(this.Saidifying());
+  }
+
+  // A framing source is one vocabulary framed against the attributes. Sources arrive wrapped in
+  // "attribute_framing_overlays"; a bare { framing_metadata, attributes } predates multi-source
+  // support and is read as a single source.
+  private static ResolveFramingSources(dynOverlay: { attribute_framing_overlays?: any[]; [key: string]: any }): any[] {
+    if (Array.isArray(dynOverlay.attribute_framing_overlays)) {
+      return dynOverlay.attribute_framing_overlays;
+    }
+    if (dynOverlay.framing_metadata || dynOverlay.attributes) {
+      return [dynOverlay];
+    }
+    throw new Error('Invalid dynOverlay structure. Expected an object with an "attribute_framing_overlays" array.');
+  }
+
+  public static GenerateOverlay(
+    dynOverlay: { attribute_framing_overlays?: any[]; [key: string]: any },
+    capture_base_digest: string,
+  ): string {
+    if (!dynOverlay || typeof dynOverlay !== 'object') {
+      throw new Error('Invalid dynOverlay structure. Expected an object with an "attribute_framing_overlays" array.');
+    }
+
+    const attribute_framing_overlays: any[] = [];
+    const sources = AttributeFraming.ResolveFramingSources(dynOverlay);
+
+    for (let framing_ov of sources) {
+      try {
+        const attribute_framing_overlay = new AttributeFraming(framing_ov, capture_base_digest);
+        attribute_framing_overlays.push(JSON.parse(attribute_framing_overlay.GenerateOverlay()));
+      } catch (error) {
+        console.error('Failed to process attribute framing overlay:', error);
+      }
+    }
+
+    attribute_framing_overlays.sort((a, b) =>
+      (a.framing_metadata?.id ?? '').localeCompare(b.framing_metadata?.id ?? ''),
+    );
+
+    return JSON.stringify(attribute_framing_overlays);
   }
 }
 export default AttributeFraming;
