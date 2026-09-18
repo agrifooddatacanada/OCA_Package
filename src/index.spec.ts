@@ -28,7 +28,7 @@ describe('OCA Package', () => {
     expect(parsedOcaPackage).toHaveProperty('extensions');
 
     // Verify the OCA package
-    const digest = 'EDbJHdL1JZ2UcCW2umPEKU11zAGeBEXrV12kbj6gt7tf';
+    const digest = 'EEaqqx3d5O8SqPj1fySwW5P1OazaJ-x2MDuJVKyocSjK';
     // const isValid = oca_package_instance.VerifyOcaPackage(parsedOcaPackage, digest);
     const isValid = VerifyOcaPackage(parsedOcaPackage, digest);
     expect(isValid).toBe(true);
@@ -172,5 +172,131 @@ describe('Attribute framing overlay', () => {
     };
 
     expect(() => buildAttributeFraming(extension_obj)).toThrow(/attribute_framing_overlays/);
+  });
+});
+
+describe('Entry code framing overlay', () => {
+  const capture_base_digest = 'EJXNTP69W5wu-5ypWqLZX_nY4lQjCE2mdjw0diko-56l';
+
+  const readExtensionInput = () => {
+    const extension_path = path.join(__dirname, '../bundles', 'extension.json');
+    return JSON.parse(fs.readFileSync(extension_path, 'utf8'));
+  };
+
+  const buildEntryCodeFraming = (extension_obj: any) => {
+    const oca_bundle_path = path.join(__dirname, '../bundles', 'oca_bundle.json');
+    const oca_bundle = JSON.parse(fs.readFileSync(oca_bundle_path, 'utf8'));
+
+    const oca_package = JSON.parse(new OcaPackage(extension_obj, oca_bundle).GenerateOcaPackage());
+    return oca_package.extensions.adc[capture_base_digest].overlays.entry_code_framing;
+  };
+
+  it('should return every framing source as an array entry, sorted by framing_metadata id', () => {
+    const entry_code_framing = buildEntryCodeFraming(readExtensionInput());
+
+    expect(Array.isArray(entry_code_framing)).toBe(true);
+    expect(entry_code_framing).toHaveLength(2);
+    expect(entry_code_framing.map((ov: any) => ov.framing_metadata.id)).toEqual(['GLOTTOLOG', 'ISO6392']);
+
+    for (const overlay of entry_code_framing) {
+      expect(overlay.d).toMatch(/^E/);
+      expect(overlay.capture_base).toBe(capture_base_digest);
+      expect(overlay.type).toBe('community/overlays/adc/entry_code_framing/1.0');
+    }
+
+    // each source keeps its own digest
+    expect(entry_code_framing[0].d).not.toBe(entry_code_framing[1].d);
+  });
+
+  it('should preserve framing_metadata imports and per-entry-code framing data of each source', () => {
+    const [glottolog, iso6392] = buildEntryCodeFraming(readExtensionInput());
+
+    expect(iso6392.framing_metadata).toEqual({
+      id: 'ISO6392',
+      label: 'ISO 639-2 Language Codes',
+      location: 'https://www.loc.gov/standards/iso639-2/',
+      version: '1998',
+      imports: {
+        dcterms: {
+          id: 'dcterms',
+          label: 'DCMI Metadata Terms',
+          location: 'http://purl.org/dc/terms/',
+          version: '1.1',
+        },
+      },
+    });
+    expect(iso6392.entry_codes).toEqual({
+      languages: {
+        eng: {
+          framing_justification: 'semapv:ManualMappingCuration',
+          predicate_id: 'skos:exactMatch',
+          term_id: 'eng',
+          description: 'English language.',
+        },
+        fra: {
+          framing_justification: 'semapv:ManualMappingCuration',
+          predicate_id: 'skos:exactMatch',
+          term_id: 'fre',
+        },
+      },
+    });
+
+    // a source without imports is emitted without the key
+    expect(glottolog.framing_metadata).toEqual({
+      id: 'GLOTTOLOG',
+      label: 'Glottolog',
+      location: 'https://glottolog.org/',
+      version: '5.0',
+    });
+    expect(glottolog.entry_codes).toEqual({
+      languages: {
+        eng: {
+          framing_justification: 'semapv:LexicalMatching',
+          predicate_id: 'skos:closeMatch',
+          term_id: 'stan1293',
+          description: 'Standard English.',
+        },
+      },
+    });
+  });
+
+  it('should read a single un-wrapped framing source as a one-entry array', () => {
+    const extension_obj = readExtensionInput();
+    const [first_source] =
+      extension_obj.extensions.adc['EFPGBEwn5Hzl9Cbx1r9Od54IwhkqJXc3vE4Jm7mjvHy2'][0].entry_code_framing_overlay
+        .entry_code_framing_overlays;
+
+    extension_obj.extensions.adc['EFPGBEwn5Hzl9Cbx1r9Od54IwhkqJXc3vE4Jm7mjvHy2'][0].entry_code_framing_overlay = {
+      type: 'entry_code_framing',
+      ...first_source,
+    };
+
+    const entry_code_framing = buildEntryCodeFraming(extension_obj);
+
+    expect(Array.isArray(entry_code_framing)).toBe(true);
+    expect(entry_code_framing).toHaveLength(1);
+    expect(entry_code_framing[0].framing_metadata.id).toBe('ISO6392');
+    expect(entry_code_framing[0].entry_codes.languages.eng.description).toBe('English language.');
+  });
+
+  it('should skip a malformed source instead of failing the whole export', () => {
+    const extension_obj = readExtensionInput();
+    extension_obj.extensions.adc[
+      'EFPGBEwn5Hzl9Cbx1r9Od54IwhkqJXc3vE4Jm7mjvHy2'
+    ][0].entry_code_framing_overlay.entry_code_framing_overlays.push(null);
+
+    const entry_code_framing = buildEntryCodeFraming(extension_obj);
+
+    expect(entry_code_framing).toHaveLength(2);
+    expect(entry_code_framing.map((ov: any) => ov.framing_metadata.id)).toEqual(['GLOTTOLOG', 'ISO6392']);
+  });
+
+  it('should throw when the framing overlay carries neither an array nor a single source', () => {
+    const extension_obj = readExtensionInput();
+    extension_obj.extensions.adc['EFPGBEwn5Hzl9Cbx1r9Od54IwhkqJXc3vE4Jm7mjvHy2'][0].entry_code_framing_overlay = {
+      type: 'entry_code_framing',
+    };
+
+    expect(() => buildEntryCodeFraming(extension_obj)).toThrow(/entry_code_framing_overlays/);
   });
 });
