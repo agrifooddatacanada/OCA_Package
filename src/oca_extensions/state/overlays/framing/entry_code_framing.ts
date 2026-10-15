@@ -14,7 +14,7 @@ class EntryCodeFraming implements IEntryCodeFraming {
 
   constructor(dynOverlay: DynOverlay, capture_base_digest: string) {
     if (!dynOverlay) {
-      throw new Error('a dynamic extension overlay are required');
+      throw new Error('a dynamic extension overlay is required for the entry code framing overlay');
     }
     if (!capture_base_digest) {
       throw new Error('capture_base_digest is required');
