@@ -122,6 +122,60 @@
                 }
               }
             ]
+          },
+          "entry_code_framing_overlay": {
+            "type": "entry_code_framing",
+            "entry_code_framing_overlays": [
+              {
+                "framing_metadata": {
+                  "id": "ISO6392",
+                  "label": "ISO 639-2 Language Codes",
+                  "location": "https://www.loc.gov/standards/iso639-2/",
+                  "version": "1998",
+                  "imports": {
+                    "dcterms": {
+                      "id": "dcterms",
+                      "label": "DCMI Metadata Terms",
+                      "location": "http://purl.org/dc/terms/",
+                      "version": "1.1"
+                    }
+                  }
+                },
+                "entry_codes": {
+                  "languages": {
+                    "eng": {
+                      "framing_justification": "semapv:ManualMappingCuration",
+                      "predicate_id": "skos:exactMatch",
+                      "term_id": "eng",
+                      "description": "English language."
+                    },
+                    "fra": {
+                      "framing_justification": "semapv:ManualMappingCuration",
+                      "predicate_id": "skos:exactMatch",
+                      "term_id": "fre"
+                    }
+                  }
+                }
+              },
+              {
+                "framing_metadata": {
+                  "id": "GLOTTOLOG",
+                  "label": "Glottolog",
+                  "location": "https://glottolog.org/",
+                  "version": "5.0"
+                },
+                "entry_codes": {
+                  "languages": {
+                    "eng": {
+                      "framing_justification": "semapv:LexicalMatching",
+                      "predicate_id": "skos:closeMatch",
+                      "term_id": "stan1293",
+                      "description": "Standard English."
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       ]

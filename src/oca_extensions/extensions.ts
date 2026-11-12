@@ -10,6 +10,7 @@ import FormOverlay from './state/overlays/form.js';
 import Range from './state/overlays/range.js';
 import Sensitive from './state/overlays/sensitive.js';
 import AttributeFraming from './state/overlays/framing/attribute_framing.js';
+import EntryCodeFraming from './state/overlays/framing/entry_code_framing.js';
 import Separator from './state/overlays/separator.js';
 import DecimalSeparator from './state/overlays/decimal_separator.js';
 import FileDelimiter from './state/overlays/file_delimiter.js';
@@ -143,9 +144,15 @@ export class Overlay implements DynOverlay {
           this._capture_base_digest,
         );
         overlay['attribute_framing'] = JSON.parse(attribute_framing_ov);
+      } else if (ov_type === 'entry_code_framing_overlay') {
+        const entry_code_framing_ov = EntryCodeFraming.GenerateOverlay(
+          this._overlay.entry_code_framing_overlay,
+          this._capture_base_digest,
+        );
+        overlay['entry_code_framing'] = JSON.parse(entry_code_framing_ov);
       } else {
         throw new Error(
-          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, form_overlay, sensitive_overlay, separator_overlay, attribute_framing_overlay, decimal_separator_overlay, file_delimiter_overlay, array_delimiter_overlay ]`,
+          `Unsupported overaly type ${ov_type}. Supported extension overlays at ADC are [ ordering_overlay, unit_framing_overlay, range_overlay, example_overlay, form_overlay, sensitive_overlay, separator_overlay, attribute_framing_overlay, entry_code_framing_overlay, decimal_separator_overlay, file_delimiter_overlay, array_delimiter_overlay ]`,
         );
       }
     }
